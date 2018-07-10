@@ -1,3 +1,4 @@
+import { Button } from 'antd-mobile';
 import * as React from 'react';
 import './App.css';
 
@@ -14,7 +15,7 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <h2>hello world</h2>
+        <Button type="primary">Start</Button>
       </div>
     );
   }
