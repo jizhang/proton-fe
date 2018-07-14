@@ -1,24 +1,17 @@
-import { Button } from 'antd-mobile';
-import * as React from 'react';
-import './App.css';
+import * as React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Home } from './routes/Home'
+import { Dashboard } from './routes/Dashboard'
 
-import logo from './logo.svg';
-
-class App extends React.Component {
-  public render() {
+export default class App extends React.Component {
+  public render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <Button type="primary">Start</Button>
-      </div>
-    );
+      <Router>
+        <Switch>
+          <Route exact={true} path="/" component={Home} />
+          <Route path="/dashboard" component={Dashboard} />
+        </Switch>
+      </Router>
+    )
   }
 }
-
-export default App;
