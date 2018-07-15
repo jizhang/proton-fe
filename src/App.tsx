@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Home } from './routes/Home'
+import Home from './routes/Home'
 import { Dashboard } from './routes/Dashboard'
 
 export default class App extends React.Component {

@@ -1,14 +1,20 @@
 import * as React from 'react'
+import { RouteComponentProps } from 'react-router'
 import { Button } from 'antd-mobile'
 import './Home.css'
 
 import logo from '../assets/logo.svg'
 
-export const Home: React.SFC<any> = (props) => {
-  let gotoDashboard = () => props.history.push('/dashboard')
+interface Props extends RouteComponentProps<any> {}
 
-  return (
-    <div className="App">
+export default class Home extends React.Component<Props> {
+  private gotoDashboard = () => {
+    this.props.history.push('/dashboard')
+  }
+
+  public render() {
+    return (
+      <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1 className="App-title">Welcome to React</h1>
@@ -16,7 +22,8 @@ export const Home: React.SFC<any> = (props) => {
       <p className="App-intro">
         To get started, edit <code>src/App.tsx</code> and save to reload.
       </p>
-      <Button type="primary" onClick={gotoDashboard}>Dashboard</Button>
+      <Button type="primary" onClick={this.gotoDashboard}>Dashboard</Button>
     </div>
-  )
+    )
+  }
 }

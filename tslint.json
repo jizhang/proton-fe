@@ -9,6 +9,7 @@
   "rules": {
     "ordered-imports": false,
     "interface-name": false,
-    "prefer-const": false
+    "prefer-const": false,
+    "member-ordering": false
   }
 }
