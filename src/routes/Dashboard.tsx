@@ -1,10 +1,67 @@
 import * as React from 'react'
+import { RouteComponentProps } from 'react-router'
+import { NavBar, Icon, Card, WhiteSpace } from 'antd-mobile'
 import './Dashboard.less'
 
-export const Dashboard: React.SFC = () => {
-  return (
-    <div className="page-dashboard">
-      <div className="title">Dashboard</div>
-    </div>
-  )
+interface Props extends RouteComponentProps<any> {}
+
+export default class Dashboard extends React.Component<Props> {
+  private gotoHome = () => {
+    this.props.history.push('/')
+  }
+
+  public render() {
+    return (
+      <div className="page-dashboard">
+        <NavBar
+          mode="dark"
+          icon={<Icon type="left" />}
+          onLeftClick={this.gotoHome}
+          rightContent={<Icon type="ellipsis" />}
+        >
+          Dashboard
+        </NavBar>
+
+        <WhiteSpace size="sm" />
+
+        <Card full={true}>
+          <Card.Header
+            title="Real time"
+            extra="Last 5 minutes"
+          />
+          <Card.Body>
+            <div className="value-lg">50,000</div>
+            <div className="chart-holder" />
+          </Card.Body>
+        </Card>
+
+        <WhiteSpace size="sm" />
+
+        <Card full={true}>
+          <Card.Header
+            title="Users by time of day"
+            extra={<span>1 week</span>}
+          />
+          <Card.Body>
+            <div className="value-lg">1,400,00</div>
+            <div className="chart-holder" />
+          </Card.Body>
+        </Card>
+
+        <WhiteSpace size="sm" />
+
+        <Card full={true}>
+          <Card.Header
+            title="Users by location"
+            extra={<span>1 day</span>}
+          />
+          <Card.Body>
+            <div className="chart-holder" />
+          </Card.Body>
+        </Card>
+
+        <WhiteSpace size="sm" />
+      </div>
+    )
+  }
 }
