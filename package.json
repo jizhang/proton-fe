@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd-mobile": "^2.2.1",
+    "bizcharts": "^3.1.10",
     "lodash": "^4.17.10",
     "numeral": "^2.0.6",
     "react": "^16.4.1",
