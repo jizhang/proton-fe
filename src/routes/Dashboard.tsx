@@ -36,7 +36,7 @@ export default class Dashboard extends React.Component<Props> {
             extra={<span>1 week</span>}
           />
           <Card.Body>
-            <div className="value-lg">1,400,00</div>
+            <div className="value-lg">140,000</div>
             <div className="chart-holder" />
           </Card.Body>
         </Card>

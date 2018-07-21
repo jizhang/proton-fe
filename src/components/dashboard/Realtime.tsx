@@ -1,15 +1,19 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import { Card } from 'antd-mobile'
-import { Chart, Geom, Axis, Legend } from 'bizcharts'
+import { Chart, Geom } from 'bizcharts'
 import { formatNumber } from '../../services/util'
+import './Realtime.less'
 
 interface State {
   count: number,
+  minutes: number[],
 }
 
 export default class Realtime extends React.Component<any, State> {
   public readonly state: State = {
     count: 0,
+    minutes: [],
   }
 
   private activeUserHandler: number
@@ -18,7 +22,7 @@ export default class Realtime extends React.Component<any, State> {
     this.getActiveUser()
     this.activeUserHandler = window.setInterval(() => {
       this.getActiveUser()
-    }, 3000)
+    }, 5000)
   }
 
   public componentWillUnmount() {
@@ -32,38 +36,27 @@ export default class Realtime extends React.Component<any, State> {
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
-          count: responseJson.payload.count
+          ...responseJson.payload
         })
       })
   }
 
   public render() {
-    const data = [
-      { genre: 'Sports', sold: 275, income: 2300 },
-      { genre: 'Strategy', sold: 115, income: 667 },
-      { genre: 'Action', sold: 120, income: 982 },
-      { genre: 'Shooter', sold: 350, income: 5271 },
-      { genre: 'Other', sold: 150, income: 3710 }
-    ]
-
-    const cols = {
-      sold: { alias: '销售量' },
-      genre: { alias: '游戏种类' }
-    }
+    let data = _.map(this.state.minutes, (value, index) => {
+      return { x: index, y: value }
+    })
 
     return (
-      <Card full={true}>
+      <Card full={true} className="dashboard-realtime">
         <Card.Header
           title="Real time"
           extra="Last 5 minutes"
         />
         <Card.Body>
           <div className="value-lg">{formatNumber(this.state.count)}</div>
-          <Chart forceFit={true} height={280} data={data} scale={cols}>
-            <Axis name="genre" />
-            <Axis name="sold" />
-            <Legend />
-            <Geom type="interval" position="genre*sold" color="genre" />
+          <div className="uv-title">Unique views per minute</div>
+          <Chart forceFit={true} height={100} data={data} padding={[0, 0, 0, 8]}>
+            <Geom type="interval" position="x*y" size={8} />
           </Chart>
         </Card.Body>
       </Card>
