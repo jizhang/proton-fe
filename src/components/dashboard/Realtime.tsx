@@ -2,17 +2,19 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { Card } from 'antd-mobile'
 import { Chart, Geom } from 'bizcharts'
-import { formatNumber } from '../../services/util'
+import CountUp from 'react-countup'
 import './Realtime.less'
 
 interface State {
   count: number,
+  previousCount: number,
   minutes: number[],
 }
 
 export default class Realtime extends React.Component<any, State> {
   public readonly state: State = {
     count: 0,
+    previousCount: 0,
     minutes: [],
   }
 
@@ -36,6 +38,7 @@ export default class Realtime extends React.Component<any, State> {
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
+          previousCount: this.state.count,
           ...responseJson.payload
         })
       })
@@ -53,7 +56,13 @@ export default class Realtime extends React.Component<any, State> {
           extra="Last 5 minutes"
         />
         <Card.Body>
-          <div className="value-lg">{formatNumber(this.state.count)}</div>
+          <CountUp
+            className="value-lg"
+            start={this.state.previousCount}
+            end={this.state.count}
+            duration={2.75}
+            separator=","
+          />
           <div className="uv-title">Unique views per minute</div>
           <Chart forceFit={true} height={100} data={data} padding={[0, 0, 0, 8]}>
             <Geom type="interval" position="x*y" size={8} />
