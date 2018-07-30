@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { NavBar, Icon, Card, WhiteSpace } from 'antd-mobile'
+import { NavBar, Icon, WhiteSpace } from 'antd-mobile'
 import Realtime from '../components/dashboard/Realtime'
 import VisitTime from '../components/dashboard/VisitTime'
+import SourceRegion from '../components/dashboard/SourceRegion'
 import './Dashboard.less'
 
 interface Props extends RouteComponentProps<any> {}
@@ -16,20 +17,7 @@ export default class Dashboard extends React.Component<Props> {
     let cards = [
       { name: 'realtime', component: <Realtime /> },
       { name: 'visit_time', component: <VisitTime /> },
-      {
-        name: 'source_region',
-        component: (
-          <Card full={true}>
-            <Card.Header
-              title="Users by location"
-              extra={<span>1 day</span>}
-            />
-            <Card.Body>
-              <div className="chart-holder" />
-            </Card.Body>
-          </Card>
-        )
-      }
+      { name: 'world_geo', component: <SourceRegion /> },
     ]
 
     return (

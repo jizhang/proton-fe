@@ -11,6 +11,7 @@
     "interface-name": false,
     "prefer-const": false,
     "member-ordering": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "no-console": { "severity": "warning" }
   }
 }
