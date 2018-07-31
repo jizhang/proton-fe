@@ -17,35 +17,39 @@ export default class SourceRegion extends React.Component<any, State> {
   }
 
   public componentDidMount() {
-    fetch('/api/dashboard/geoChina')
-      .then(response => response.json())
-      .then(responseJSON => {
-        let geoChina = responseJSON.payload
-        let geoData = this.processData(geoChina)
-        this.setState({
-          geoData,
-        })
-      })
+    this.requestData()
+    this.calculateHeight()
+  }
 
+  private requestData() {
+    let requests: Array<Promise<any>> = [
+      fetch('/api/dashboard/geoChina'),
+      fetch('/api/dashboard/userGeo'),
+    ]
+
+    requests = _.map(requests, request => {
+      return request
+        .then(response => response.json())
+        .then(responseJSON => responseJSON.payload)
+    })
+
+    Promise.all(requests).then(payloads => {
+      let geoData = this.processData(payloads[0], payloads[1].province)
+      this.setState({ geoData })
+    })
+  }
+
+  private calculateHeight() {
     let chartHeight = _.round((document.documentElement.clientWidth - 30) / 4 * 3)
     this.setState({
       chartHeight,
     })
   }
 
-  private processData(geoJSON: any[]) {
+  private processData(geoChina: any[], userGeo: any) {
     let mapData = {
       type: 'FeatureCollection',
-      features: geoJSON,
-    }
-
-    let userData = []
-    for (let item of geoJSON) {
-      let name = item.properties.name
-      userData.push({
-        name,
-        value: Math.round(Math.random() * 1000),
-      })
+      features: geoChina,
     }
 
     let ds = new DataSet()
@@ -53,7 +57,7 @@ export default class SourceRegion extends React.Component<any, State> {
       type: 'GeoJSON',
     })
 
-    let dvData = ds.createView().source(userData)
+    let dvData = ds.createView().source(userGeo)
     dvData.transform({
       type: 'geo.region',
       field: 'name',
