@@ -3,7 +3,6 @@ import { Card } from 'antd-mobile'
 import { Chart, Geom } from 'bizcharts'
 import DataSet from '@antv/data-set'
 import * as _ from 'lodash'
-import geoChina from '../../assets/geo-china.json'
 import './SourceRegion.less'
 
 interface State {
@@ -18,10 +17,18 @@ export default class SourceRegion extends React.Component<any, State> {
   }
 
   public componentDidMount() {
-    let geoData = this.processData(geoChina)
+    fetch('/api/dashboard/geoChina')
+      .then(response => response.json())
+      .then(responseJSON => {
+        let geoChina = responseJSON.payload
+        let geoData = this.processData(geoChina)
+        this.setState({
+          geoData,
+        })
+      })
+
     let chartHeight = _.round((document.documentElement.clientWidth - 30) / 4 * 3)
     this.setState({
-      geoData,
       chartHeight,
     })
   }

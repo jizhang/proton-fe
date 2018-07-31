@@ -1,4 +1,6 @@
 const _ = require('lodash')
+const fs = require('fs')
+const path = require('path')
 const express = require('express')
 const app = express()
 
@@ -22,6 +24,12 @@ app.get('/api/dashboard/activeHourlyUsers', (req, res) => {
       })
     }
   }
+  res.json({ payload })
+})
+
+app.get('/api/dashboard/geoChina', (req, res) => {
+  let content = fs.readFileSync(path.join(__dirname, 'geo-china.json'))
+  let payload = JSON.parse(content)
   res.json({ payload })
 })
 
