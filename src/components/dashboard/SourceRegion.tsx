@@ -2,21 +2,28 @@ import * as React from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Geom } from 'bizcharts'
 import DataSet from '@antv/data-set'
+import * as _ from 'lodash'
 import geoChina from '../../assets/geo-china.json'
 import './SourceRegion.less'
 
 interface State {
   geoData: object,
+  chartHeight: number,
 }
 
 export default class SourceRegion extends React.Component<any, State> {
   public readonly state: State = {
     geoData: {},
+    chartHeight: 256,
   }
 
   public componentDidMount() {
     let geoData = this.processData(geoChina)
-    this.setState({ geoData })
+    let chartHeight = _.round((document.documentElement.clientWidth - 30) / 4 * 3)
+    this.setState({
+      geoData,
+      chartHeight,
+    })
   }
 
   private processData(geoJSON: any[]) {
@@ -59,9 +66,9 @@ export default class SourceRegion extends React.Component<any, State> {
         />
         <Card.Body>
           <Chart
-            width={320}
-            height={320}
-            padding={0}
+            forceFit={true}
+            height={this.state.chartHeight}
+            padding={[-40, -25, -120, -15]}
             data={this.state.geoData}
           >
             <Geom
