@@ -6,12 +6,13 @@
       "node_modules/**/*.ts"
     ]
   },
+  "defaultSeverity": "warning",
   "rules": {
     "ordered-imports": false,
     "interface-name": false,
     "prefer-const": false,
     "member-ordering": false,
     "object-literal-sort-keys": false,
-    "no-console": { "severity": "warning" }
+    "jsx-no-lambda": false
   }
 }
