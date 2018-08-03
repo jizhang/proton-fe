@@ -1,16 +1,20 @@
 import * as React from 'react'
+import { Chart, Axis, Geom } from 'bizcharts'
+import DataSet from '@antv/data-set'
 import * as _ from 'lodash'
 import './Primary.less'
 
 interface State {
   measures: any[],
-  currentMeasure: string,
+  current: string,
+  dv: any,
 }
 
 export default class Primary extends React.Component<any, State> {
   public readonly state: State = {
     measures: [],
-    currentMeasure: '',
+    current: '',
+    dv: null,
   }
 
   public componentDidMount() {
@@ -41,15 +45,40 @@ export default class Primary extends React.Component<any, State> {
       },
     ]
 
+    let data = [
+      { month: 'Jan', Tokyo: 7.0, London: 3.9 },
+      { month: 'Feb', Tokyo: 6.9, London: 4.2 },
+      { month: 'Mar', Tokyo: 9.5, London: 5.7 },
+      { month: 'Apr', Tokyo: 14.5, London: 8.5 },
+      { month: 'May', Tokyo: 18.4, London: 11.9 },
+      { month: 'Jun', Tokyo: 21.5, London: 15.2 },
+      { month: 'Jul', Tokyo: 25.2, London: 17.0 },
+      { month: 'Aug', Tokyo: 26.5, London: 16.6 },
+      { month: 'Sep', Tokyo: 23.3, London: 14.2 },
+      { month: 'Oct', Tokyo: 18.3, London: 10.3 },
+      { month: 'Nov', Tokyo: 13.9, London: 6.6 },
+      { month: 'Dec', Tokyo: 9.6, London: 4.8 }
+    ]
+
+    let ds = new DataSet()
+    let dv = ds.createView().source(data)
+      .transform({
+        type: 'fold',
+        fields: ['Tokyo', 'London'],
+        key: 'city',
+        value: 'temperature',
+      })
+
     this.setState({
       measures,
-      currentMeasure: measures[0].name,
+      current: measures[0].name,
+      dv,
     })
   }
 
   private handleChangeMeasure = (measureName: string) => {
     this.setState({
-      currentMeasure: measureName,
+      current: measureName,
     })
   }
 
@@ -59,7 +88,7 @@ export default class Primary extends React.Component<any, State> {
         <div className="measure-list">
           {this.state.measures.map(measure => (
             <div
-              className={`measure-item ${measure.name === this.state.currentMeasure ? 'active' : ''}`}
+              className={`measure-item ${measure.name === this.state.current ? 'active' : ''}`}
               key={measure.name}
               onClick={() => this.handleChangeMeasure(measure.name)}
             >
@@ -69,6 +98,25 @@ export default class Primary extends React.Component<any, State> {
               <div className="percent">{measure.percent}</div>
             </div>
           ))}
+        </div>
+
+        <div className="chart">
+          <Chart
+            height={240}
+            forceFit={true}
+            data={this.state.dv}
+            padding={['auto', 'auto']}
+          >
+            <Axis name="month" />
+            <Axis
+              name="temperature"
+              position="right"
+              label={{
+                formatter: (text: string) => `${text}℃`
+              }}
+            />
+            <Geom type="line" position="month*temperature" color="city" />
+          </Chart>
         </div>
       </div>
     )
