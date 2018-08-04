@@ -81,7 +81,7 @@ export default class Primary extends React.Component<any, State> {
           let max = null
 
           if (!_.isEmpty(measure.data)) {
-            let { current, previous } = measure.data[0]
+            let { current, previous } = _.last(measure.data as any[])
             value = this.formatValue(current, measure.format)
             percent = this.formatPercent(current, previous)
             dv = this.createDataView(measure.data)

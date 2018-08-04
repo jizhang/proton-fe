@@ -8,3 +8,7 @@
 yarn install
 yarn start
 ```
+
+## Screenshots
+
+![](public/screenshot.png)
