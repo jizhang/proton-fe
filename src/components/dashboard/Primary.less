@@ -1,0 +1,93 @@
+.dashboard-primary {
+  background-color: white;
+  position: relative;
+
+  .measure-list {
+    display: flex;
+    overflow-y: scroll;
+  }
+
+  .measure-item {
+    position: relative;
+    padding: 18px 15px;
+    flex-shrink: 0;
+
+    .bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 3px;
+      line-height: 3px;
+    }
+
+    .label {
+      font-size: 14px;
+      line-height: 14px;
+      color: rgba(136, 136, 136, 0.6);
+    }
+
+    .value {
+      font-size: 24px;
+      line-height: 24px;
+      margin: 15px 0 8px 0;
+      color: #888;
+    }
+
+    .percent {
+      font-size: 12px;
+      line-height: 12px;
+      color: #888;
+
+      &.up {
+        color: #0f9d58;
+      }
+
+      &.down {
+        color: #db4437;
+      }
+    }
+
+    &.active {
+      .bar {
+        background-color: #108ee9;
+      }
+
+      .label {
+        color: black;
+      }
+
+      .value {
+        color: black;
+      }
+    }
+  }
+
+  .chart {
+    padding: 15px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ddd;
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: bottom center;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #ddd;
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: top center;
+  }
+}
