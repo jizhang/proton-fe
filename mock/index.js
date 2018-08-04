@@ -1,7 +1,10 @@
-const _ = require('lodash')
 const fs = require('fs')
 const path = require('path')
+
+const _ = require('lodash')
+const moment = require('moment')
 const express = require('express')
+
 const app = express()
 
 app.get('/api/dashboard/activeUser', (req, res) => {
@@ -50,6 +53,71 @@ app.get('/api/dashboard/userGeo', (req, res) => {
   res.json({
     payload: {
       province,
+    },
+  })
+})
+
+app.get('/api/dashboard/primaryData', (req, res) => {
+  let users = {
+    name: 'users',
+    label: 'Users',
+    format: 'integer',
+    data: _.times(14, i => {
+      return {
+        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        current: _.random(100000, 200000),
+        previous: _.random(100000, 200000),
+      }
+    }),
+  }
+
+  let sessions = {
+    name: 'session',
+    label: 'Sessions',
+    format: 'integer',
+    data: _.times(14, i => {
+      return {
+        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        current: _.random(200000, 400000),
+        previous: _.random(200000, 400000),
+      }
+    }),
+  }
+
+  let bounceRate = {
+    name: 'bounce_rate',
+    label: 'Bounce Rate',
+    format: 'percent',
+    data: _.times(14, i => {
+      return {
+        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        current: _.random(0.8, 0.9, true),
+        previous: _.random(0.8, 0.9, true),
+      }
+    }),
+  }
+
+  let sessionDuration = {
+    name: 'session_duration',
+    label: 'Session Duration',
+    format: 'interval',
+    data: _.times(14, i => {
+      return {
+        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        current: _.random(300, 600),
+        previous: _.random(300, 600),
+      }
+    }),
+  }
+
+  res.json({
+    payload: {
+      measures: [
+        users,
+        sessions,
+        bounceRate,
+        sessionDuration,
+      ],
     },
   })
 })

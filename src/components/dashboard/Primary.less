@@ -1,14 +1,16 @@
 .dashboard-primary {
   background-color: white;
+  position: relative;
 
   .measure-list {
-
+    display: flex;
+    overflow-y: scroll;
   }
 
   .measure-item {
     position: relative;
-    display: inline-block;
     padding: 18px 15px;
+    flex-shrink: 0;
 
     .bar {
       position: absolute;
@@ -35,7 +37,15 @@
     .percent {
       font-size: 12px;
       line-height: 12px;
-      color: #0f9d58;
+      color: #888;
+
+      &.up {
+        color: #0f9d58;
+      }
+
+      &.down {
+        color: #db4437;
+      }
     }
 
     &.active {
@@ -55,5 +65,29 @@
 
   .chart {
     padding: 15px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ddd;
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: bottom center;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #ddd;
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: top center;
   }
 }
