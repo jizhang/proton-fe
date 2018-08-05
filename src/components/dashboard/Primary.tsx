@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Chart, Axis, Geom } from 'bizcharts'
 import DataSet from '@antv/data-set'
 import * as _ from 'lodash'
-import moment from 'moment'
+import Tabs from './Tabs'
 import './Primary.less'
 
 interface State {
@@ -130,22 +130,26 @@ export default class Primary extends React.Component<any, State> {
       scale.value.max = current.max
     }
 
+    let tabs = _.map(this.state.measures, measure => {
+      return {
+        key: measure.name,
+        element: (
+          <div className={`measure-item ${this.state.current === measure.name ? 'active' : ''}`}>
+            <div className="label">{measure.label}</div>
+            <div className="value">{measure.value}</div>
+            <div className={`percent ${measure.percent.color}`}>{measure.percent.formatted}</div>
+          </div>
+        )
+      }
+    })
+
     return (
       <div className="dashboard-primary">
-        <div className="measure-list">
-          {this.state.measures.map(measure => (
-            <div
-              className={`measure-item ${measure.name === this.state.current ? 'active' : ''}`}
-              key={measure.name}
-              onClick={() => this.handleChangeMeasure(measure.name)}
-            >
-              <div className="bar" />
-              <div className="label">{measure.label}</div>
-              <div className="value">{measure.value}</div>
-              <div className={`percent ${measure.percent.color}`}>{measure.percent.formatted}</div>
-            </div>
-          ))}
-        </div>
+        <Tabs
+          tabs={tabs}
+          current={this.state.current}
+          onChange={this.handleChangeMeasure}
+        />
 
         <div className="chart">
           <Chart
