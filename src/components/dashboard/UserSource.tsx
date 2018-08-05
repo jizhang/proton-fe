@@ -4,7 +4,7 @@ import Tabs from './Tabs'
 import './UserSource.less'
 
 interface State {
-  tabs: Array<{ key: string, element: JSX.Element }>,
+  tabs: Array<{ key: string, element: React.ReactNode }>,
   current: string,
 }
 
@@ -18,7 +18,7 @@ export default class UserSource extends React.Component<any, State> {
     let tabs = _.times(10, i => {
       return {
         key: `tab${i}`,
-        element: <>tab{i}</>,
+        element: `tab${i}`
       }
     })
     let current = tabs[0].key
