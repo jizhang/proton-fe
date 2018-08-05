@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router'
 import { NavBar, Icon, WhiteSpace } from 'antd-mobile'
 import Primary from '../components/dashboard/Primary'
 import Realtime from '../components/dashboard/Realtime'
+import UserSource from '../components/dashboard/UserSource'
 import VisitTime from '../components/dashboard/VisitTime'
 import SourceRegion from '../components/dashboard/SourceRegion'
 import './Dashboard.less'
@@ -18,6 +19,7 @@ export default class Dashboard extends React.Component<Props> {
     let cards = [
       { name: 'primary', component: <Primary /> },
       { name: 'realtime', component: <Realtime /> },
+      { name: 'user_source', component: <UserSource /> },
       { name: 'visit_time', component: <VisitTime /> },
       { name: 'world_geo', component: <SourceRegion /> },
     ]

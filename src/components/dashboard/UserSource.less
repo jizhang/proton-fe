@@ -1,0 +1,28 @@
+.dashboard-user-source {
+  position: relative;
+  background-color: white;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ddd;
+    transform: scaleY(0.5);
+    transform-origin: top center;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ddd;
+    transform: scaleY(0.5);
+    transform-origin: bottom center;
+  }
+}
