@@ -85,7 +85,7 @@ export default class Primary extends React.Component<any, State> {
             value = this.formatValue(current, measure.format)
             percent = this.formatPercent(current, previous)
             dv = this.createDataView(measure.data)
-            max = _(dv.rows).map('value').max()
+            max = _.round(_(dv.rows).map('value').max() * 1.1)
           }
 
           return {
