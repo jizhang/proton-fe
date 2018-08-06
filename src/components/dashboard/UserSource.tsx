@@ -15,6 +15,11 @@ export default class UserSource extends React.Component<any, State> {
   }
 
   public componentDidMount() {
+    fetch('/api/dashboard/userSource')
+      .then(response => response.json())
+      .then(responseJson => {
+
+      })
     let tabs = _.times(10, i => {
       return {
         key: `tab${i}`,
