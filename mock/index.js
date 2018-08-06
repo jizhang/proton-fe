@@ -169,11 +169,13 @@ app.get('/api/dashboard/userSource', (req, res) => {
   }
 
   res.json({
-    payload: [
-      trafficChannel,
-      sourceMedium,
-      referrals,
-    ]
+    payload: {
+      measures: [
+        trafficChannel,
+        sourceMedium,
+        referrals,
+      ],
+    }
   })
 })
 
