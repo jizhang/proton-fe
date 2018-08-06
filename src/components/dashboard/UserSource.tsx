@@ -1,44 +1,107 @@
 import * as React from 'react'
+import { Chart, Axis, Geom, Legend } from 'bizcharts'
 import * as _ from 'lodash'
 import Tabs from './Tabs'
 import './UserSource.less'
 
 interface State {
-  tabs: Array<{ key: string, element: React.ReactNode }>,
+  measures: any[],
   current: string,
 }
 
 export default class UserSource extends React.Component<any, State> {
   public readonly state: State = {
-    tabs: [],
     current: '',
+    measures: [],
   }
 
   public componentDidMount() {
-    let tabs = _.times(10, i => {
-      return {
-        key: `tab${i}`,
-        element: `tab${i}`
-      }
-    })
-    let current = tabs[0].key
-    this.setState({ tabs, current })
+    fetch('/api/dashboard/userSource')
+      .then(response => response.json())
+      .then(responseJson => {
+        let { measures } = responseJson.payload
+        if (!_.isEmpty(measures)) {
+          let current = measures[0].name
+          this.setState({ measures, current })
+        }
+      })
   }
 
   private handleChangeTab = (key: string) => {
     this.setState({ current: key })
   }
 
+  private formatValue(value: number) {
+    let formatted: string
+    if (value < 1000) {
+      formatted = String(_.round(value))
+    } else if (value < 1000 ** 2) {
+      formatted = _.round(value / 1000, 1) + 'K'
+    } else if (value < 1000 ** 3) {
+      formatted = _.round(value / 1000 ** 2, 1) + 'M'
+    } else {
+      formatted = _.round(value / 1000 ** 3, 1) + 'B'
+    }
+    return formatted
+  }
+
   public render() {
+    let tabs = _.map(this.state.measures, measure => {
+      return {
+        key: measure.name,
+        element: measure.label,
+      }
+    })
+
+    let scale: any = {
+      date: {
+        type: 'time',
+        mask: 'M.D',
+      },
+      value: {
+        min: 0,
+      },
+    }
+
+    let current = _.find(this.state.measures, ['name', this.state.current])
+    let data = _.isUndefined(current) ? null : current.data
+
     return (
       <div className="dashboard-user-source">
         <Tabs
-          tabs={this.state.tabs}
+          tabs={tabs}
           current={this.state.current}
           onChange={this.handleChangeTab}
         />
-        <div style={{ padding: 15 }}>
-          <div style={{ height: 240, backgroundColor: '#ddd' }} />
+        <div style={{ padding: '0 15px 10px 15px' }}>
+          <Chart
+            forceFit={true}
+            height={240}
+            data={data}
+            padding={['auto', 'auto']}
+            scale={scale}
+          >
+            <Axis name="date" />
+            <Axis
+              name="value"
+              position="right"
+              label={{
+                formatter: (text: string) => {
+                  if (current) {
+                    return this.formatValue(Number(text))
+                  } else {
+                    return text
+                  }
+                },
+              }}
+            />
+            <Legend />
+            <Geom
+              type="intervalStack"
+              position="date*value"
+              color="key"
+            />
+          </Chart>
         </div>
       </div>
     )

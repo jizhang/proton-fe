@@ -122,6 +122,63 @@ app.get('/api/dashboard/primaryData', (req, res) => {
   })
 })
 
+app.get('/api/dashboard/userSource', (req, res) => {
+  let trafficChannel = {
+    name: 'traffic_channel',
+    label: 'Traffic Channel',
+    data: _.flatMap(_.range(7, 0, -1), i => {
+      let date = moment().subtract(i, 'days').format('YYYY-MM-DD')
+      return _.map(['Organic Search', 'Direct', 'Referral'], key => {
+        return {
+          date,
+          key,
+          value: _.random(5000, 10000),
+        }
+      })
+    }),
+  }
+
+  let sourceMedium = {
+    name: 'source_medium',
+    label: 'Source / Medium',
+    data: _.flatMap(_.range(7, 0, -1), i => {
+      let date = moment().subtract(i, 'days').format('YYYY-MM-DD')
+      return _.map(['google / organic', '(direct) / (none)', 'pbb.lviv.ua / referral'], key => {
+        return {
+          date,
+          key,
+          value: _.random(5000, 10000),
+        }
+      })
+    }),
+  }
+
+  let referrals = {
+    name: 'referrals',
+    label: 'Referrals',
+    data: _.flatMap(_.range(7, 0, -1), i => {
+      let date = moment().subtract(i, 'days').format('YYYY-MM-DD')
+      return _.map(['pbb.lviv.ua', 'we-ping-for-youeed.info', 'earn-moneyen.info'], key => {
+        return {
+          date,
+          key,
+          value: _.random(5000, 10000),
+        }
+      })
+    }),
+  }
+
+  res.json({
+    payload: {
+      measures: [
+        trafficChannel,
+        sourceMedium,
+        referrals,
+      ],
+    }
+  })
+})
+
 const server = app.listen(3001, () => {
   console.log('mock server listening on port ' + server.address().port)
 })
