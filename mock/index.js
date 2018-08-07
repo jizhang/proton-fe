@@ -179,6 +179,29 @@ app.get('/api/dashboard/userSource', (req, res) => {
   })
 })
 
+app.get('/api/dashboard/userDevice', (req, res) => {
+  let devices = [
+    {
+      name: 'iphone',
+      label: 'iPhone',
+      current: _.random(150000, 200000),
+      previous: _.random(150000, 200000),
+    },
+    {
+      name: 'ipad',
+      label: 'iPad',
+      current: _.random(10000, 20000),
+      previous: _.random(10000, 20000),
+    },
+  ]
+
+  res.json({
+    payload: {
+      devices,
+    }
+  })
+})
+
 const server = app.listen(3001, () => {
   console.log('mock server listening on port ' + server.address().port)
 })

@@ -4,8 +4,9 @@ import { NavBar, Icon, WhiteSpace } from 'antd-mobile'
 import Primary from '../components/dashboard/Primary'
 import Realtime from '../components/dashboard/Realtime'
 import UserSource from '../components/dashboard/UserSource'
-import VisitTime from '../components/dashboard/VisitTime'
 import SourceRegion from '../components/dashboard/SourceRegion'
+import VisitTime from '../components/dashboard/VisitTime'
+import UserDevice from '../components/dashboard/UserDevice'
 import './Dashboard.less'
 
 interface Props extends RouteComponentProps<any> {}
@@ -20,8 +21,9 @@ export default class Dashboard extends React.Component<Props> {
       { name: 'primary', component: <Primary /> },
       { name: 'realtime', component: <Realtime /> },
       { name: 'user_source', component: <UserSource /> },
-      { name: 'visit_time', component: <VisitTime /> },
       { name: 'world_geo', component: <SourceRegion /> },
+      { name: 'visit_time', component: <VisitTime /> },
+      { name: 'user_device', component: <UserDevice /> },
     ]
 
     return (
