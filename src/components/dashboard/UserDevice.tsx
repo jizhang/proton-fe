@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { Card, Icon } from 'antd-mobile'
+import { Card } from 'antd-mobile'
 import { Chart, Coord, Geom } from 'bizcharts'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as _ from 'lodash'
 import './UserDevice.less'
 
@@ -63,6 +64,11 @@ export default class UserDevice extends React.Component<any, State> {
   }
 
   public render() {
+    let iconMapping = {
+      'iphone': 'mobile-alt',
+      'ipad': 'tablet-alt',
+    }
+    let getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
     return (
       <Card full={true} className="dashboard-user-device">
         <Card.Header
@@ -74,7 +80,7 @@ export default class UserDevice extends React.Component<any, State> {
             forceFit={true}
             height={240}
             data={this.state.devices}
-            padding={[-25, 0, 0, 0]}
+            padding={[-25, 0, -10, 0]}
           >
             <Coord type="theta" radius={0.75} innerRadius={0.6} />
             <Geom
@@ -89,7 +95,10 @@ export default class UserDevice extends React.Component<any, State> {
           </Chart>
           <div className="device-list">
             {this.state.devices.map(device => (
-              <div className="device-item">
+              <div className="device-item" key={device.name}>
+                <div className="icon">
+                  <FontAwesomeIcon icon={getIcon(device.name)} />
+                </div>
                 <div className="label">{device.label}</div>
                 <div className="value">{this.formatPercentValue(device.current_percent)}</div>
                 <div className={`percent ${device.percent.color}`}>{device.percent.formatted}</div>
