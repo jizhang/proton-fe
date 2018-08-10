@@ -1,23 +1,18 @@
 import * as React from 'react'
+import { observer } from 'mobx-react'
 import * as _ from 'lodash'
 import { Card } from 'antd-mobile'
 import { Chart, Geom } from 'bizcharts'
 import CountUp from 'react-countup'
+import DashboardStore from '../../stores/dashboard'
 import './Realtime.less'
 
-interface State {
-  count: number,
-  previousCount: number,
-  minutes: number[],
+interface Props {
+  dashboardStore?: DashboardStore,
 }
 
-export default class Realtime extends React.Component<any, State> {
-  public readonly state: State = {
-    count: 0,
-    previousCount: 0,
-    minutes: [],
-  }
-
+@observer(['dashboardStore'])
+export default class Realtime extends React.Component<Props> {
   private activeUserHandler: number
 
   public componentDidMount() {
@@ -34,18 +29,12 @@ export default class Realtime extends React.Component<any, State> {
   }
 
   private getActiveUser = () => {
-    fetch('/api/dashboard/activeUser')
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          previousCount: this.state.count,
-          ...responseJson.payload
-        })
-      })
+    this.props.dashboardStore!.fetchActiveUser()
   }
 
   public render() {
-    let data = _.map(this.state.minutes, (value, index) => {
+    let { realtime } = this.props.dashboardStore!
+    let data = _.map(realtime.minutes, (value, index) => {
       return { x: index, y: value }
     })
 
@@ -58,8 +47,8 @@ export default class Realtime extends React.Component<any, State> {
         <Card.Body>
           <CountUp
             className="value-lg"
-            start={this.state.previousCount}
-            end={this.state.count}
+            start={realtime.previousCount}
+            end={realtime.count}
             duration={2.75}
             separator=","
           />
