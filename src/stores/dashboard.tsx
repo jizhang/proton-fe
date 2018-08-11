@@ -11,6 +11,10 @@ export default class DashboardStore {
     minutes: [] as number[],
   }
 
+  @observable public userRetention = {
+    data: [] as any[],
+  }
+
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore
   }
@@ -22,5 +26,11 @@ export default class DashboardStore {
       previousCount: this.realtime.count,
       ...payload,
     })
+  })
+
+  public fetchUserRetention = flow(function * (this: DashboardStore) {
+    let response = yield fetch('/api/dashboard/userRetention')
+    let { payload } = yield response.json()
+    this.userRetention.data = payload.retention
   })
 }

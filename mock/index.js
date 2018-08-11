@@ -202,6 +202,32 @@ app.get('/api/dashboard/userDevice', (req, res) => {
   })
 })
 
+app.get('/api/dashboard/userRetention', (req, res) => {
+  let date = moment().startOf('isoWeek')
+  let retention = _.times(6, i => {
+    let startDate = moment(date).subtract(6 - i, 'weeks')
+    let endDate = moment(startDate).add(6, 'days')
+    return {
+      week: `${startDate.format('M.D')} - ${endDate.format('M.D')}`,
+      data: _.times(6, j => {
+        if (j === 0) {
+          return 1
+        }
+        if (j >= (6 - i)) {
+          return 0
+        }
+        return _.random(0, 1, true)
+      }),
+    }
+  })
+
+  res.json({
+    payload: {
+      retention,
+    }
+  })
+})
+
 const server = app.listen(3001, () => {
   console.log('mock server listening on port ' + server.address().port)
 })

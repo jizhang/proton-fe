@@ -7,6 +7,7 @@ import UserSource from '../components/dashboard/UserSource'
 import SourceRegion from '../components/dashboard/SourceRegion'
 import VisitTime from '../components/dashboard/VisitTime'
 import UserDevice from '../components/dashboard/UserDevice'
+import UserRetention from '../components/dashboard/UserRetention'
 import './Dashboard.less'
 
 interface Props extends RouteComponentProps<any> {}
@@ -24,6 +25,7 @@ export default class Dashboard extends React.Component<Props> {
       { name: 'world_geo', component: <SourceRegion /> },
       { name: 'visit_time', component: <VisitTime /> },
       { name: 'user_device', component: <UserDevice /> },
+      { name: 'user_retention', component: <UserRetention /> },
     ]
 
     return (
