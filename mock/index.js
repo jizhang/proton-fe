@@ -209,7 +209,15 @@ app.get('/api/dashboard/userRetention', (req, res) => {
     let endDate = moment(startDate).add(6, 'days')
     return {
       week: `${startDate.format('M.D')} - ${endDate.format('M.D')}`,
-      data: _.times(6, () => _.random(0, 1, true)),
+      data: _.times(6, j => {
+        if (j === 0) {
+          return 1
+        }
+        if (j >= (6 - i)) {
+          return 0
+        }
+        return _.random(0, 1, true)
+      }),
     }
   })
 
