@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { Chart, Axis, Geom } from 'bizcharts'
-import DataSet from '@antv/data-set'
+import { Chart, Axis, Geom, Tooltip } from 'bizcharts'
 import * as _ from 'lodash'
+import numeral from 'numeral'
+import moment from 'moment'
 import Tabs from './Tabs'
 import './Primary.less'
 
@@ -16,10 +17,10 @@ export default class Primary extends React.Component<any, State> {
     current: '',
   }
 
-  private formatValue(value: number, format: string) {
+  private formatValue(value: number, format: string, short: boolean = false) {
     let formatted: string
     if (format === 'percent') {
-      formatted = _.round(value * 100, 2) + '%'
+      formatted = _.round(value * 100, 1) + '%'
     } else if (format === 'interval') {
       if (value < 60) {
         formatted = '0m ' + _.round(value) + 's'
@@ -28,7 +29,7 @@ export default class Primary extends React.Component<any, State> {
       } else {
         formatted = _.round(value / 3600) + 'h ' + _.round(value % 3600 / 60) + 'm'
       }
-    } else {
+    } else if (short) {
       if (value < 1000) {
         formatted = String(_.round(value))
       } else if (value < 1000 ** 2) {
@@ -38,6 +39,8 @@ export default class Primary extends React.Component<any, State> {
       } else {
         formatted = _.round(value / 1000 ** 3, 1) + 'B'
       }
+    } else {
+      formatted = numeral(value).format('0,0')
     }
     return formatted
   }
@@ -59,15 +62,17 @@ export default class Primary extends React.Component<any, State> {
     return { formatted, color }
   }
 
-  private createDataView(data: any[]) {
-    return new DataSet.View()
-      .source(data)
-      .transform({
-        type: 'fold',
-        fields: ['current', 'previous'],
-        key: 'key',
-        value: 'value',
+  private transformData(data: any[]) {
+    return _.flatMap(data, item => {
+      return _.map(['current', 'previous'], key => {
+        return {
+          date: item.date,
+          key,
+          value: item[key],
+          dateKey: `${item.date}|${key}`,
+        }
       })
+    })
   }
 
   public componentDidMount() {
@@ -82,10 +87,10 @@ export default class Primary extends React.Component<any, State> {
 
           if (!_.isEmpty(measure.data)) {
             let { current, previous } = _.last(measure.data as any[])
-            value = this.formatValue(current, measure.format)
+            value = this.formatValue(current, measure.format, true)
             percent = this.formatPercent(current, previous)
-            dv = this.createDataView(measure.data)
-            max = _.round(_(dv.rows).map('value').max() * 1.1)
+            dv = this.transformData(measure.data)
+            max = _.round(_(dv).map('value').max() * 1.1)
           }
 
           return {
@@ -166,13 +171,14 @@ export default class Primary extends React.Component<any, State> {
               label={{
                 formatter: (text: string) => {
                   if (current) {
-                    return this.formatValue(Number(text), current.format)
+                    return this.formatValue(Number(text), current.format, true)
                   } else {
                     return text
                   }
                 },
               }}
             />
+            <Tooltip showTitle={false} />
             <Geom
               type="line"
               position="date*value"
@@ -184,6 +190,20 @@ export default class Primary extends React.Component<any, State> {
                 lineWidth(key: any) {
                   return key === 'previous' ? 1 : 1.5
                 },
+              }]}
+              tooltip={['dateKey*value', (dateKey, value) => {
+                let [date, key] = dateKey.split('|')
+                let name: string
+                if (key === 'previous') {
+                  name = moment(date).subtract(7, 'days').format('M.D')
+                } else {
+                  name = moment(date).format('M.D')
+                }
+
+                return {
+                  name,
+                  value: this.formatValue(value, current.format, false),
+                }
               }]}
             />
           </Chart>

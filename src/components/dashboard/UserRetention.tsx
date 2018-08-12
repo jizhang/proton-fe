@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import { Card } from 'antd-mobile'
 import * as _ from 'lodash'
 import DashboardStore from '../../stores/dashboard'
@@ -9,7 +9,8 @@ interface Props {
   dashboardStore?: DashboardStore,
 }
 
-@observer(['dashboardStore'])
+@inject('dashboardStore')
+@observer
 export default class UserRention extends React.Component<Props> {
   public componentDidMount() {
     this.props.dashboardStore!.fetchUserRetention()

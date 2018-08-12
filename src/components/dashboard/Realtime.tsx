@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import * as _ from 'lodash'
 import { Card } from 'antd-mobile'
 import { Chart, Geom } from 'bizcharts'
@@ -11,7 +11,8 @@ interface Props {
   dashboardStore?: DashboardStore,
 }
 
-@observer(['dashboardStore'])
+@inject('dashboardStore')
+@observer
 export default class Realtime extends React.Component<Props> {
   private activeUserHandler: number
 
