@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { Button } from 'antd-mobile'
+import { Button, WhiteSpace } from 'antd-mobile'
 import './Home.css'
 
 import logo from '../assets/logo.svg'
@@ -10,6 +10,10 @@ interface Props extends RouteComponentProps<any> {}
 export default class Home extends React.Component<Props> {
   private gotoDashboard = () => {
     this.props.history.push('/dashboard')
+  }
+
+  private gotoLogin = () => {
+    this.props.history.push('/login')
   }
 
   public render() {
@@ -22,6 +26,8 @@ export default class Home extends React.Component<Props> {
       <p className="App-intro">
         To get started, edit <code>src/App.tsx</code> and save to reload.
       </p>
+      <Button type="primary" onClick={this.gotoLogin}>Login</Button>
+      <WhiteSpace />
       <Button type="primary" onClick={this.gotoDashboard}>Dashboard</Button>
     </div>
     )
