@@ -1,3 +1,28 @@
 .page-login {
-  font-size: 24px;
+  .app-title {
+    text-align: center;
+    background-color: #222;
+    padding: 30px;
+
+    img {
+      animation: app-title-img infinite 20s linear;
+      height: 80px;
+    }
+
+    @keyframes app-title-img {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .greeting {
+      color: white;
+      font-size: 24px;
+      line-height: 24px;
+      margin: 20px 0 10px 0;
+    }
+  }
+
+  .label-title {
+    color: #108ee9;
+  }
 }

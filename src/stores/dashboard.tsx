@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { observable, flow, action } from 'mobx'
+import { observable, flow } from 'mobx'
 import RootStore from './root'
 
 export default class DashboardStore {
