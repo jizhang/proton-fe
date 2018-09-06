@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
 import * as qs from 'qs'
+import * as request from '../services/request'
 import RootStore from './root'
 import { observable, flow, action } from 'mobx'
 
@@ -16,6 +17,8 @@ export default class LoginStore {
     nickname: '',
   }
 
+  @observable public loggingOut = false
+
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore
   }
@@ -30,18 +33,18 @@ export default class LoginStore {
   }
 
   public login = flow(function * (this: LoginStore) {
-    let response = yield fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: qs.stringify(this.form),
-    })
-    let responseJson = yield response.json()
-    if (responseJson.code === 200) {
-      _.assign(this.currentUser, responseJson.payload)
-    } else {
-      throw new Error(responseJson.payload.message)
+    let payload = yield request.post('/api/login', this.form)
+    _.assign(this.currentUser, payload)
+  })
+
+  public logout = flow(function * (this: LoginStore) {
+    this.loggingOut = true
+    try {
+      yield request.post('/api/logout')
+      this.currentUser.id = 0
+      this.currentUser.nickname = ''
+    } finally {
+      this.loggingOut = false
     }
   })
 }

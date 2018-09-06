@@ -232,22 +232,26 @@ app.get('/api/dashboard/userRetention', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   let { username, password } = req.body
-  let code, payload
   if (username === 'admin' && password === '888888') {
-    code = 200
-    payload = {
-      id: 1,
-      nickname: 'Jerry',
-    }
+    res.json({
+      payload: {
+        id: 1,
+        nickname: 'Jerry',
+      },
+    })
   } else {
-    code = 401
-    payload = {
-      message: 'invalid username or password',
-    }
+    res.status(400).json({
+      code: 400,
+      payload: {
+        message: 'invalid username or password',
+      },
+    })
   }
+})
+
+app.post('/api/logout', (req, res) => {
   res.json({
-    code,
-    payload,
+    payload: 'ok',
   })
 })
 

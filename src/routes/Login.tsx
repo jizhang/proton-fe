@@ -1,4 +1,5 @@
 import * as React from 'react'
+import _ from 'lodash'
 import { RouteComponentProps } from 'react-router'
 import { inject, observer } from 'mobx-react'
 import { WhiteSpace, List, InputItem, Button, WingBlank, Toast } from 'antd-mobile'
@@ -21,12 +22,10 @@ export default class Login extends React.Component<Props> {
   private handleLogin = () => {
     this.props.loginStore!.login().then(() => {
       let { nickname } = this.props.loginStore!.currentUser
-      Toast.success(`Welcome, ${nickname}!`, 3, () => {
+      Toast.success(`Welcome, ${nickname}!`, 1, () => {
         this.props.history.push('/')
       })
-    }, (error: Error) => {
-      Toast.fail(String(error))
-    })
+    }, _.noop)
   }
 
   private handleChangeUsername = (value: string) => {
