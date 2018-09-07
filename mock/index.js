@@ -4,8 +4,10 @@ const path = require('path')
 const _ = require('lodash')
 const moment = require('moment')
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const app = express()
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/api/dashboard/activeUser', (req, res) => {
   res.json({
@@ -225,6 +227,31 @@ app.get('/api/dashboard/userRetention', (req, res) => {
     payload: {
       retention,
     }
+  })
+})
+
+app.post('/api/login', (req, res) => {
+  let { username, password } = req.body
+  if (username === 'admin' && password === '888888') {
+    res.json({
+      payload: {
+        id: 1,
+        nickname: 'Jerry',
+      },
+    })
+  } else {
+    res.status(400).json({
+      code: 400,
+      payload: {
+        message: 'invalid username or password',
+      },
+    })
+  }
+})
+
+app.post('/api/logout', (req, res) => {
+  res.json({
+    payload: 'ok',
   })
 })
 
