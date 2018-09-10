@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Coord, Geom } from 'bizcharts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as _ from 'lodash'
+import _ from 'lodash'
+import * as request from '../../services/request'
 import './UserDevice.less'
 
 interface State {
@@ -15,16 +16,14 @@ export default class UserDevice extends React.Component<any, State> {
   }
 
   public componentDidMount() {
-    fetch('/api/dashboard/userDevice')
-      .then(response => response.json())
-      .then(responseJson => {
-        let { devices } = responseJson.payload
-        if (!_.isEmpty(devices)) {
-           this.setState({
-             devices: this.transformData(devices),
-           })
-        }
-      })
+    request.get('/api/dashboard/userDevice').then(payload => {
+      let { devices } = payload
+      if (!_.isEmpty(devices)) {
+         this.setState({
+           devices: this.transformData(devices),
+         })
+      }
+    })
   }
 
   private transformData(devices: any[]) {
