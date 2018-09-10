@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Geom, Coord, Axis } from 'bizcharts'
 import DataSet from '@antv/data-set'
-import * as _ from 'lodash'
+import _ from 'lodash'
+import * as request from '../../services/request'
 import './SourceRegion.less'
 
 interface State {
@@ -24,16 +25,10 @@ export default class SourceRegion extends React.Component<any, State> {
   }
 
   private requestData() {
-    let requests: Array<Promise<any>> = [
-      fetch('/api/dashboard/geoChina'),
-      fetch('/api/dashboard/userGeo'),
+    let requests = [
+      request.get('/api/dashboard/geoChina'),
+      request.get('/api/dashboard/userGeo'),
     ]
-
-    requests = _.map(requests, request => {
-      return request
-        .then(response => response.json())
-        .then(responseJSON => responseJSON.payload)
-    })
 
     Promise.all(requests).then(payloads => {
       let geoChina = payloads[0]

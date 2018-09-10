@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Geom, Axis, Legend } from 'bizcharts'
 import { AxisLabel } from '@antv/g2/src'
+import * as request from '../../services/request'
 import './VisitTime.less'
 
 interface State {
@@ -14,13 +15,11 @@ export default class VisitTime extends React.Component<any, State> {
   }
 
   public componentDidMount() {
-    fetch('/api/dashboard/activeHourlyUsers')
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          data: responseJson.payload,
-        })
+    request.get('/api/dashboard/activeHourlyUsers').then(payload => {
+      this.setState({
+        data: payload,
       })
+    })
   }
 
   public render() {

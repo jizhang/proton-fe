@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Chart, Axis, Geom, Legend } from 'bizcharts'
-import * as _ from 'lodash'
+import _ from 'lodash'
+import * as request from '../../services/request'
 import Tabs from './Tabs'
 import './UserSource.less'
 
@@ -16,15 +17,13 @@ export default class UserSource extends React.Component<any, State> {
   }
 
   public componentDidMount() {
-    fetch('/api/dashboard/userSource')
-      .then(response => response.json())
-      .then(responseJson => {
-        let { measures } = responseJson.payload
-        if (!_.isEmpty(measures)) {
-          let current = measures[0].name
-          this.setState({ measures, current })
-        }
-      })
+    request.get('/api/dashboard/userSource').then(payload => {
+      let { measures } = payload
+      if (!_.isEmpty(measures)) {
+        let current = measures[0].name
+        this.setState({ measures, current })
+      }
+    })
   }
 
   private handleChangeTab = (key: string) => {

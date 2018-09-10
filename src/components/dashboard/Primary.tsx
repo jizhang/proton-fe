@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Chart, Axis, Geom, Tooltip } from 'bizcharts'
-import * as _ from 'lodash'
+import _ from 'lodash'
 import numeral from 'numeral'
 import moment from 'moment'
+import * as request from '../../services/request'
 import Tabs from './Tabs'
 import './Primary.less'
 
@@ -76,39 +77,37 @@ export default class Primary extends React.Component<any, State> {
   }
 
   public componentDidMount() {
-    fetch('/api/dashboard/primaryData')
-      .then(response => response.json())
-      .then(responseJson => {
-        let measures = _.map(responseJson.payload.measures, measure => {
-          let value = '-'
-          let percent = { formatted: '-', color: '' }
-          let dv = null
-          let max = null
+    request.get('/api/dashboard/primaryData').then(payload => {
+      let measures = _.map(payload.measures, measure => {
+        let value = '-'
+        let percent = { formatted: '-', color: '' }
+        let dv = null
+        let max = null
 
-          if (!_.isEmpty(measure.data)) {
-            let { current, previous } = _.last(measure.data as any[])
-            value = this.formatValue(current, measure.format, true)
-            percent = this.formatPercent(current, previous)
-            dv = this.transformData(measure.data)
-            max = _.round(_(dv).map('value').max() * 1.1)
-          }
+        if (!_.isEmpty(measure.data)) {
+          let { current, previous } = _.last(measure.data as any[])
+          value = this.formatValue(current, measure.format, true)
+          percent = this.formatPercent(current, previous)
+          dv = this.transformData(measure.data)
+          max = _.round(_(dv).map('value').max() * 1.1)
+        }
 
-          return {
-            name: measure.name,
-            label: measure.label,
-            format: measure.format,
-            value,
-            percent,
-            dv,
-            max,
-          }
-        })
-
-        this.setState({
-          measures,
-          current: _.isEmpty(measures) ? '' : measures[0].name,
-        })
+        return {
+          name: measure.name,
+          label: measure.label,
+          format: measure.format,
+          value,
+          percent,
+          dv,
+          max,
+        }
       })
+
+      this.setState({
+        measures,
+        current: _.isEmpty(measures) ? '' : measures[0].name,
+      })
+    })
   }
 
   private handleChangeMeasure = (measureName: string) => {
