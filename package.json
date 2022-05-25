@@ -2,12 +2,13 @@
   "name": "proton",
   "version": "0.1.0",
   "private": true,
+  "source": "src/index.html",
   "dependencies": {
     "@antv/data-set": "^0.8.9",
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/react-fontawesome": "^0.1.1",
-    "antd-mobile": "^2.2.1",
+    "antd-mobile": "^2.3.4",
     "bizcharts": "^3.1.10",
     "lodash": "^4.17.10",
     "mobx": "^5.0.3",
@@ -20,17 +21,22 @@
     "react-countup": "^3.0.3",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.16.0"
+    "react-scripts-ts": "2.16.0",
+    "rmc-steps": "^1.0.1"
   },
   "scripts": {
+    "start": "npm-run-all --parallel dev mock",
+    "dev": "parcel",
+    "build": "parcel build",
     "start-js": "react-app-rewired start --scripts-version react-scripts-ts",
-    "build": "react-app-rewired build --scripts-version react-scripts-ts",
+    "build-legacy": "react-app-rewired build --scripts-version react-scripts-ts",
     "test": "react-app-rewired test --scripts-version react-scripts-ts --env=jsdom",
     "eject": "react-scripts-ts eject",
     "mock": "nodemon --watch mock mock/index.js",
-    "start": "npm-run-all --parallel start-js mock"
+    "start-legacy": "npm-run-all --parallel start-js mock"
   },
   "devDependencies": {
+    "@parcel/transformer-less": "2.5.0",
     "@types/jest": "^23.1.4",
     "@types/lodash": "^4.14.112",
     "@types/node": "^10.5.2",
@@ -41,8 +47,10 @@
     "@types/react-dom": "^16.0.6",
     "@types/react-router-dom": "^4.2.7",
     "express": "^4.16.3",
+    "http-proxy-middleware": "^2.0.6",
     "nodemon": "^1.18.3",
     "npm-run-all": "^4.1.3",
+    "parcel": "^2.5.0",
     "react-app-rewire-less": "^2.1.2",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.2",
