@@ -18,7 +18,7 @@ ReactDOM.render(
   <Provider {...rootStore}>
     <App />
   </Provider>,
-  document.getElementById('root') as HTMLElement
+  document.getElementById('app') as HTMLElement
 )
 
 registerServiceWorker()
