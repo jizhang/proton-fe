@@ -15,25 +15,19 @@
     "mobx-react": "^5.2.3",
     "moment": "^2.22.2",
     "numeral": "^2.0.6",
+    "prop-types": "^15.8.1",
     "qs": "^6.5.2",
     "rc-form": "^2.2.2",
     "react": "^16.4.1",
     "react-countup": "^3.0.3",
     "react-dom": "^16.4.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.16.0",
-    "rmc-steps": "^1.0.1"
+    "react-router-dom": "^4.3.1"
   },
   "scripts": {
     "start": "npm-run-all --parallel dev mock",
     "dev": "parcel",
-    "build": "parcel build",
-    "start-js": "react-app-rewired start --scripts-version react-scripts-ts",
-    "build-legacy": "react-app-rewired build --scripts-version react-scripts-ts",
-    "test": "react-app-rewired test --scripts-version react-scripts-ts --env=jsdom",
-    "eject": "react-scripts-ts eject",
     "mock": "nodemon --watch mock mock/index.js",
-    "start-legacy": "npm-run-all --parallel start-js mock"
+    "build": "parcel build"
   },
   "devDependencies": {
     "@parcel/transformer-less": "2.5.0",
@@ -49,12 +43,9 @@
     "express": "^4.16.3",
     "http-proxy-middleware": "^2.0.6",
     "nodemon": "^1.18.3",
-    "npm-run-all": "^4.1.3",
+    "npm-run-all": "^4.1.5",
     "parcel": "^2.5.0",
-    "react-app-rewire-less": "^2.1.2",
-    "react-app-rewire-mobx": "^1.0.8",
-    "react-app-rewired": "^1.5.2",
+    "process": "^0.11.10",
     "typescript": "^2.9.2"
-  },
-  "proxy": "http://localhost:3001/"
+  }
 }
