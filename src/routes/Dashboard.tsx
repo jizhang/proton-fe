@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { NavBar, Icon, WhiteSpace } from 'antd-mobile'
+import { NavBar, Icon, WhiteSpace } from 'antd-mobile-v2'
 import Primary from '../components/dashboard/Primary'
 import Realtime from '../components/dashboard/Realtime'
 import UserSource from '../components/dashboard/UserSource'

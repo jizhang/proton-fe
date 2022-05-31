@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { inject, observer } from 'mobx-react'
-import { Button, WhiteSpace } from 'antd-mobile'
+import { Button, Space } from 'antd-mobile'
 import LoginStore from '../stores/login'
 import './Home.css'
 
@@ -37,19 +37,22 @@ export default class Home extends React.Component<Props> {
       <p className="App-intro">
         To get started, edit <code>src/App.tsx</code> and save to reload.
       </p>
-      {currentUser.id > 0 ? (
-        <Button
-          type="primary"
-          onClick={this.handleLogout}
-          loading={loggingOut}
-        >
-          Hi {currentUser.nickname}! Logout
-        </Button>
-      ) : (
-        <Button type="primary" onClick={this.handleLogin}>Login</Button>
-      )}
-      <WhiteSpace />
-      <Button type="primary" onClick={this.gotoDashboard}>Dashboard</Button>
+
+      <Space direction="vertical" block>
+        {currentUser.id > 0 ? (
+          <Button
+            color="primary"
+            onClick={this.handleLogout}
+            loading={loggingOut}
+            block
+          >
+            Hi {currentUser.nickname}! Logout
+          </Button>
+        ) : (
+          <Button color="primary" onClick={this.handleLogin} block>Login</Button>
+        )}
+        <Button color="primary" onClick={this.gotoDashboard} block>Dashboard</Button>
+      </Space>
     </div>
     )
   }

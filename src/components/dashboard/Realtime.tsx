@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer, inject } from 'mobx-react'
 import * as _ from 'lodash'
-import { Card } from 'antd-mobile'
+import { Card } from 'antd-mobile-v2'
 import { Chart, Geom } from 'bizcharts'
 import CountUp from 'react-countup'
 import DashboardStore from '../../stores/dashboard'

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { observer, inject } from 'mobx-react'
-import { Card } from 'antd-mobile'
+import { Card } from 'antd-mobile-v2'
 import * as _ from 'lodash'
 import DashboardStore from '../../stores/dashboard'
 import './UserRetention.less'

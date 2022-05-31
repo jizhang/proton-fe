@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card } from 'antd-mobile'
+import { Card } from 'antd-mobile-v2'
 import { Chart, Geom, Axis, Legend } from 'bizcharts'
 import { AxisLabel } from '@antv/g2/src'
 import * as request from '../../services/request'

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import qs from 'qs'
-import { Toast } from 'antd-mobile'
+import { Toast } from 'antd-mobile-v2'
 
 class RequestError {
   constructor(public code: number, public payload: any) {}

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card } from 'antd-mobile'
+import { Card } from 'antd-mobile-v2'
 import { Chart, Geom, Coord, Axis } from 'bizcharts'
 import DataSet from '@antv/data-set'
 import _ from 'lodash'
