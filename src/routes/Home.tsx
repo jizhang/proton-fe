@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { inject, observer } from 'mobx-react'
-import { Button, WhiteSpace } from 'antd-mobile'
+import { Button, WhiteSpace } from 'antd-mobile-v2'
 import LoginStore from '../stores/login'
 import './Home.css'
 

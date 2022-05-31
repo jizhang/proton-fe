@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card } from 'antd-mobile'
+import { Card } from 'antd-mobile-v2'
 import { Chart, Coord, Geom } from 'bizcharts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import _ from 'lodash'

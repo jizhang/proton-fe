@@ -4,5 +4,8 @@ node_modules
 dist
 yarn-error.log*
 
+# IDE
+.vscode
+
 # Misc
 .DS_Store
