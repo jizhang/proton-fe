@@ -24,10 +24,9 @@
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
-    "rc-form": "^2.2.2",
-    "react": "^16.4.1",
+    "react": "^16.8.0",
     "react-countup": "^3.0.3",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.8.0",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
@@ -38,8 +37,8 @@
     "@types/numeral": "^0.0.23",
     "@types/prop-types": "^15.5.3",
     "@types/qs": "^6.5.1",
-    "@types/react": "^16.4.6",
-    "@types/react-dom": "^16.0.6",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
     "@types/react-router-dom": "^4.2.7",
     "concurrently": "^7.2.1",
     "express": "^4.18.2",
@@ -48,5 +47,9 @@
     "parcel": "^2.5.0",
     "process": "^0.11.10",
     "typescript": "^2.9.2"
+  },
+  "engines": {
+    "node": ">=12.22.0",
+    "yarn": "^1.22.0"
   }
 }

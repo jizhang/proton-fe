@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import qs from 'qs'
-import { Toast } from 'antd-mobile-v2'
+import { Toast } from 'antd-mobile'
 
 class RequestError {
   constructor(public code: number, public payload: any) {}
@@ -13,7 +13,7 @@ export async function request(url: string, config?: RequestInit) {
   try {
     response = await fetch(url, config)
   } catch (error) {
-    Toast.fail(String(error))
+    Toast.show({icon: 'fail', content: String(error)})
     throw new RequestError(0, {
       message: String(error),
       error,
@@ -31,7 +31,7 @@ export async function request(url: string, config?: RequestInit) {
     let failure = await response.json()
     // global toast
     if (failure.code === 400) {
-      Toast.fail(failure.payload.message)
+      Toast.show({icon: 'fail', content: failure.payload.message});
     }
     // raise error for downstream processing
     throw new RequestError(failure.code, failure.payload)
