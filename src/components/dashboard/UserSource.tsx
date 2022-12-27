@@ -63,7 +63,7 @@ export default class UserSource extends React.Component<any, State> {
     }
 
     let current = _.find(this.state.measures, ['name', this.state.current])
-    let data = _.isUndefined(current) ? null : current.data
+    let data = _.isUndefined(current) ? [] : current.data
 
     return (
       <div className="dashboard-user-source">
@@ -74,10 +74,10 @@ export default class UserSource extends React.Component<any, State> {
         />
         <div style={{ padding: '0 15px 10px 15px' }}>
           <Chart
-            forceFit={true}
+            autoFit
             height={240}
             data={data}
-            padding={['auto', 'auto']}
+            padding="auto"
             scale={scale}
           >
             <Axis name="date" />
@@ -96,7 +96,8 @@ export default class UserSource extends React.Component<any, State> {
             />
             <Legend />
             <Geom
-              type="intervalStack"
+              type="interval"
+              adjust="stack"
               position="date*value"
               color="key"
             />

@@ -76,14 +76,15 @@ export default class UserDevice extends React.Component<any, State> {
         style={{ borderRadius: 0 }}
       >
         <Chart
-          forceFit={true}
+          autoFit
           height={240}
           data={this.state.devices}
           padding={[-25, 0, -10, 0]}
         >
           <Coord type="theta" radius={0.75} innerRadius={0.6} />
           <Geom
-            type="intervalStack"
+            type="interval"
+            adjust="stack"
             position="current"
             color="name"
             style={{

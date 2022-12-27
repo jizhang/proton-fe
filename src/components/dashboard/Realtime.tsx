@@ -54,7 +54,7 @@ export default class Realtime extends React.Component<Props> {
           separator=","
         />
         <div className="uv-title">Unique views per minute</div>
-        <Chart forceFit={true} height={100} data={data} padding={[0, 0, 0, 8]}>
+        <Chart autoFit height={100} data={data} padding={[0, 8, 0, 8]}>
           <Geom type="interval" position="x*y" size={8} />
         </Chart>
       </Card>

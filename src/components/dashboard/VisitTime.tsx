@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Geom, Axis, Legend } from 'bizcharts'
-import { AxisLabel } from '@antv/g2/src'
 import * as request from '../../services/request'
 import './VisitTime.less'
 
@@ -37,16 +36,6 @@ export default class VisitTime extends React.Component<any, State> {
       },
     }
 
-    let label: AxisLabel = {
-      textStyle: {
-        textAlign: 'right',
-      },
-      offset: 45,
-      formatter(text, item, index) {
-        return (index % 2 === 0) ? '' : text
-      },
-    }
-
     let legendItemFormatter = (item: number): string | number => {
       if (Math.abs(item) >= 1000) {
         const itemK = Math.round(item / 1000);
@@ -65,14 +54,22 @@ export default class VisitTime extends React.Component<any, State> {
         <Chart
           data={this.state.data}
           height={450}
-          padding={[0, 45, 90, 0]}
+          padding={[0, 45, 50, 0]}
           scale={scale}
-          forceFit={true}
+          autoFit
         >
           <Axis
             name="hour"
             position="right"
-            label={label}
+            label={{
+              style: {
+                textAlign: 'right',
+              },
+              offset: 45,
+              formatter(text, item, index) {
+                return (index % 2 === 0) ? '' : text
+              },
+            }}
           />
           <Axis
             name="day"
@@ -80,7 +77,6 @@ export default class VisitTime extends React.Component<any, State> {
           />
           <Legend
             slidable={false}
-            offsetY={-30}
             itemFormatter={legendItemFormatter}
           />
           <Geom

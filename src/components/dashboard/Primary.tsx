@@ -127,7 +127,7 @@ export default class Primary extends React.Component<any, State> {
       },
     }
 
-    let dv = null
+    let dv = []
     let current = _.find(this.state.measures, ['name', this.state.current])
     if (current && current.dv) {
       dv = current.dv
@@ -158,9 +158,9 @@ export default class Primary extends React.Component<any, State> {
         <div className="chart">
           <Chart
             height={240}
-            forceFit={true}
+            autoFit
             data={dv}
-            padding={['auto', 'auto']}
+            padding="auto"
             scale={scale}
           >
             <Axis name="date" />
@@ -182,13 +182,11 @@ export default class Primary extends React.Component<any, State> {
               type="line"
               position="date*value"
               color="key"
-              style={['key', {
-                lineDash(key: any) {
-                  return key === 'previous' ? [3, 3] : []
-                },
-                lineWidth(key: any) {
-                  return key === 'previous' ? 1 : 1.5
-                },
+              style={['key', (key) => {
+                return {
+                  lineDash: key === 'previous' ? [3, 3] : [],
+                  lineWidth: key === 'previous' ? 1 : 1.5,
+                }
               }]}
               tooltip={['dateKey*value', (dateKey, value) => {
                 let [date, key] = dateKey.split('|')

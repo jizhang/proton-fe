@@ -10,12 +10,12 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@antv/data-set": "^0.8.9",
+    "@antv/data-set": "^0.11.8",
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/react-fontawesome": "^0.1.1",
     "antd-mobile": "^5.12.6",
-    "bizcharts": "^3.1.10",
+    "bizcharts": "^4.1.22",
     "lodash": "^4.17.10",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
@@ -23,9 +23,9 @@
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
-    "react": "^16.8.0",
+    "react": "^16.13.0",
     "react-countup": "^3.0.3",
-    "react-dom": "^16.8.0",
+    "react-dom": "^16.13.0",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {

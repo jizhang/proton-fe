@@ -14,7 +14,7 @@ interface State {
 
 export default class SourceRegion extends React.Component<any, State> {
   public readonly state: State = {
-    geoData: {},
+    geoData: [],
     chartHeight: 256,
     barData: [],
   }
@@ -68,7 +68,7 @@ export default class SourceRegion extends React.Component<any, State> {
       as: ['longitude', 'latitude'],
     })
 
-    return dvData
+    return dvData.rows
   }
 
   private processBarData(province: any[]) {
@@ -95,10 +95,11 @@ export default class SourceRegion extends React.Component<any, State> {
         style={{ borderRadius: 0 }}
       >
         <Chart
-          forceFit={true}
+          autoFit
           height={this.state.chartHeight}
-          padding={[-40, -25, -120, -15]}
+          padding={[0, 0, -80, 0]}
           data={this.state.geoData}
+          pure
         >
           <Geom
             type="polygon"
@@ -110,9 +111,9 @@ export default class SourceRegion extends React.Component<any, State> {
 
         <Chart
           height={240}
-          forceFit={true}
+          autoFit
           data={this.state.barData}
-          padding={['auto', 'auto']}
+          padding="auto"
           style={{
             marginTop: 10,
           }}
@@ -122,7 +123,7 @@ export default class SourceRegion extends React.Component<any, State> {
             name="province"
             label={{
               offset: 12,
-              textStyle: {
+              style: {
                 fill: '#888',
               },
             }}
@@ -133,7 +134,7 @@ export default class SourceRegion extends React.Component<any, State> {
               formatter: (text: string) => {
                 return Number(text) * 100 + '%'
               },
-              textStyle: {
+              style: {
                 fill: '#888',
               },
             }}
