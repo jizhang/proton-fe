@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card } from 'antd-mobile-v2'
+import { Card } from 'antd-mobile'
 import { Chart, Geom, Coord, Axis } from 'bizcharts'
 import DataSet from '@antv/data-set'
 import _ from 'lodash'
@@ -88,62 +88,61 @@ export default class SourceRegion extends React.Component<any, State> {
 
   public render() {
     return (
-      <Card full={true} className="dashboard-source-region">
-        <Card.Header
-          title="Users by location"
-          extra={<span>1 day</span>}
-        />
-        <Card.Body>
-          <Chart
-            forceFit={true}
-            height={this.state.chartHeight}
-            padding={[-40, -25, -120, -15]}
-            data={this.state.geoData}
-          >
-            <Geom
-              type="polygon"
-              position="longitude*latitude"
-              style={{ stroke: '#fff', lineWidth: 1 }}
-              color={['value', '#BAE7FF-#1890FF-#0050B3']}
-            />
-          </Chart>
+      <Card
+        className="dashboard-source-region"
+        title="Users by location"
+        extra={<span>1 day</span>}
+        style={{ borderRadius: 0 }}
+      >
+        <Chart
+          forceFit={true}
+          height={this.state.chartHeight}
+          padding={[-40, -25, -120, -15]}
+          data={this.state.geoData}
+        >
+          <Geom
+            type="polygon"
+            position="longitude*latitude"
+            style={{ stroke: '#fff', lineWidth: 1 }}
+            color={['value', '#BAE7FF-#1890FF-#0050B3']}
+          />
+        </Chart>
 
-          <Chart
-            height={240}
-            forceFit={true}
-            data={this.state.barData}
-            padding={['auto', 'auto']}
-            style={{
-              marginTop: 10,
+        <Chart
+          height={240}
+          forceFit={true}
+          data={this.state.barData}
+          padding={['auto', 'auto']}
+          style={{
+            marginTop: 10,
+          }}
+        >
+          <Coord transpose={true} />
+          <Axis
+            name="province"
+            label={{
+              offset: 12,
+              textStyle: {
+                fill: '#888',
+              },
             }}
-          >
-            <Coord transpose={true} />
-            <Axis
-              name="province"
-              label={{
-                offset: 12,
-                textStyle: {
-                  fill: '#888',
-                },
-              }}
-            />
-            <Axis
-              name="percent"
-              label={{
-                formatter: (text: string) => {
-                  return Number(text) * 100 + '%'
-                },
-                textStyle: {
-                  fill: '#888',
-                },
-              }}
-            />
-            <Geom
-              type="interval"
-              position="province*percent"
-            />
-          </Chart>
-        </Card.Body>
+          />
+          <Axis
+            name="percent"
+            label={{
+              formatter: (text: string) => {
+                return Number(text) * 100 + '%'
+              },
+              textStyle: {
+                fill: '#888',
+              },
+            }}
+          />
+          <Geom
+            type="interval"
+            position="province*percent"
+          />
+        </Chart>
       </Card>
     )
   }

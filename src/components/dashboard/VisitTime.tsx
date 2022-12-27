@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card } from 'antd-mobile-v2'
+import { Card } from 'antd-mobile'
 import { Chart, Geom, Axis, Legend } from 'bizcharts'
 import { AxisLabel } from '@antv/g2/src'
 import * as request from '../../services/request'
@@ -56,43 +56,42 @@ export default class VisitTime extends React.Component<any, State> {
     }
 
     return (
-      <Card full={true} className="dashboard-visit-time">
-        <Card.Header
-          title="Users by time of day"
-          extra={<span>1 week</span>}
-        />
-        <Card.Body>
-          <Chart
-            data={this.state.data}
-            height={450}
-            padding={[0, 45, 90, 0]}
-            scale={scale}
-            forceFit={true}
-          >
-            <Axis
-              name="hour"
-              position="right"
-              label={label}
-            />
-            <Axis
-              name="day"
-              tickLine={{ length: 0 }}
-            />
-            <Legend
-              slidable={false}
-              offsetY={-30}
-              itemFormatter={legendItemFormatter}
-            />
-            <Geom
-              type="polygon"
-              position="day*hour"
-              color={['users', '#BAE7FF-#1890FF-#0050B3']}
-              shape="spline"
-              style={{ lineWidth: 3, stroke: '#fff' }}
-              size={2}
-            />
-          </Chart>
-        </Card.Body>
+      <Card
+        className="dashboard-visit-time"
+        title="Users by time of day"
+        extra={<span>1 week</span>}
+        style={{ borderRadius: 0 }}
+      >
+        <Chart
+          data={this.state.data}
+          height={450}
+          padding={[0, 45, 90, 0]}
+          scale={scale}
+          forceFit={true}
+        >
+          <Axis
+            name="hour"
+            position="right"
+            label={label}
+          />
+          <Axis
+            name="day"
+            tickLine={{ length: 0 }}
+          />
+          <Legend
+            slidable={false}
+            offsetY={-30}
+            itemFormatter={legendItemFormatter}
+          />
+          <Geom
+            type="polygon"
+            position="day*hour"
+            color={['users', '#BAE7FF-#1890FF-#0050B3']}
+            shape="spline"
+            style={{ lineWidth: 3, stroke: '#fff' }}
+            size={2}
+          />
+        </Chart>
       </Card>
     )
   }

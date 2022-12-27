@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card } from 'antd-mobile-v2'
+import { Card } from 'antd-mobile'
 import { Chart, Coord, Geom } from 'bizcharts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import _ from 'lodash'
@@ -69,42 +69,41 @@ export default class UserDevice extends React.Component<any, State> {
     }
     let getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
     return (
-      <Card full={true} className="dashboard-user-device">
-        <Card.Header
-          title="Users by device"
-          extra="1 day"
-        />
-        <Card.Body>
-          <Chart
-            forceFit={true}
-            height={240}
-            data={this.state.devices}
-            padding={[-25, 0, -10, 0]}
-          >
-            <Coord type="theta" radius={0.75} innerRadius={0.6} />
-            <Geom
-              type="intervalStack"
-              position="current"
-              color="name"
-              style={{
-                lineWidth: 1,
-                stroke: '#fff',
-              }}
-            />
-          </Chart>
-          <div className="device-list">
-            {this.state.devices.map(device => (
-              <div className="device-item" key={device.name}>
-                <div className="icon">
-                  <FontAwesomeIcon icon={getIcon(device.name)} />
-                </div>
-                <div className="label">{device.label}</div>
-                <div className="value">{this.formatPercentValue(device.current_percent)}</div>
-                <div className={`percent ${device.percent.color}`}>{device.percent.formatted}</div>
+      <Card
+        className="dashboard-user-device"
+        title="Users by device"
+        extra="1 day"
+        style={{ borderRadius: 0 }}
+      >
+        <Chart
+          forceFit={true}
+          height={240}
+          data={this.state.devices}
+          padding={[-25, 0, -10, 0]}
+        >
+          <Coord type="theta" radius={0.75} innerRadius={0.6} />
+          <Geom
+            type="intervalStack"
+            position="current"
+            color="name"
+            style={{
+              lineWidth: 1,
+              stroke: '#fff',
+            }}
+          />
+        </Chart>
+        <div className="device-list">
+          {this.state.devices.map(device => (
+            <div className="device-item" key={device.name}>
+              <div className="icon">
+                <FontAwesomeIcon icon={getIcon(device.name)} />
               </div>
-            ))}
-          </div>
-        </Card.Body>
+              <div className="label">{device.label}</div>
+              <div className="value">{this.formatPercentValue(device.current_percent)}</div>
+              <div className={`percent ${device.percent.color}`}>{device.percent.formatted}</div>
+            </div>
+          ))}
+        </div>
       </Card>
     )
   }

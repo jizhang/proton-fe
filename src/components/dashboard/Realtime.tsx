@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer, inject } from 'mobx-react'
 import * as _ from 'lodash'
-import { Card } from 'antd-mobile-v2'
+import { Card } from 'antd-mobile'
 import { Chart, Geom } from 'bizcharts'
 import CountUp from 'react-countup'
 import DashboardStore from '../../stores/dashboard'
@@ -40,24 +40,23 @@ export default class Realtime extends React.Component<Props> {
     })
 
     return (
-      <Card full={true} className="dashboard-realtime">
-        <Card.Header
-          title="Real time"
-          extra="Last 5 minutes"
+      <Card
+        className="dashboard-realtime"
+        title="Real time"
+        extra="Last 5 minutes"
+        style={{ borderRadius: 0 }}
+      >
+        <CountUp
+          className="value-lg"
+          start={realtime.previousCount}
+          end={realtime.count}
+          duration={2.75}
+          separator=","
         />
-        <Card.Body>
-          <CountUp
-            className="value-lg"
-            start={realtime.previousCount}
-            end={realtime.count}
-            duration={2.75}
-            separator=","
-          />
-          <div className="uv-title">Unique views per minute</div>
-          <Chart forceFit={true} height={100} data={data} padding={[0, 0, 0, 8]}>
-            <Geom type="interval" position="x*y" size={8} />
-          </Chart>
-        </Card.Body>
+        <div className="uv-title">Unique views per minute</div>
+        <Chart forceFit={true} height={100} data={data} padding={[0, 0, 0, 8]}>
+          <Geom type="interval" position="x*y" size={8} />
+        </Chart>
       </Card>
     )
   }

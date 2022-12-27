@@ -15,7 +15,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/react-fontawesome": "^0.1.1",
     "antd-mobile": "^5.12.6",
-    "antd-mobile-v2": "^2.3.4",
     "bizcharts": "^3.1.10",
     "lodash": "^4.17.10",
     "mobx": "^5.0.3",
