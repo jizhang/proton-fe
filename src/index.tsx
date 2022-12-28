@@ -1,9 +1,7 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import { configure } from 'mobx'
-import { Provider } from 'mobx-react'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import App from './App'
-import RootStore from './stores/root'
+import { rootStore, RootStoreContext } from './stores'
 import './index.css'
 import registerServiceWorker from './registerServiceWorker'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -11,13 +9,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 library.add(fas)
 
-configure({ enforceActions: true })
-const rootStore = new RootStore()
-
 ReactDOM.render(
-  <Provider {...rootStore}>
+  <RootStoreContext.Provider value={rootStore}>
     <App />
-  </Provider>,
+  </RootStoreContext.Provider>,
   document.getElementById('app') as HTMLElement
 )
 
