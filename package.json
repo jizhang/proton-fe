@@ -24,7 +24,7 @@
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
     "react": "^16.13.0",
-    "react-countup": "^3.0.3",
+    "react-countup": "^6.4.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^4.3.1"
   },
@@ -48,7 +48,7 @@
     "typescript": "^2.9.2"
   },
   "engines": {
-    "node": ">=12.22.0",
+    "node": ">=18.0.0",
     "yarn": "^1.22.0"
   }
 }
