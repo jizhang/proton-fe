@@ -18,7 +18,7 @@
     "bizcharts": "^4.1.22",
     "lodash": "^4.17.10",
     "mobx": "^6.7.0",
-    "mobx-react": "^7.6.0",
+    "mobx-react-lite": "^3.4.0",
     "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
