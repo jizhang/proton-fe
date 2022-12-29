@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
+import { RouteComponentProps } from 'react-router'
 import { Form, Input, Button, Toast } from 'antd-mobile'
 import * as loginService from '../services/login'
 import './Login.less'
 import logo from '../assets/logo.svg'
 
-export default (props: any) => {
+interface Props extends RouteComponentProps<any> {}
+
+export default (props: Props) => {
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = (values: any) => {

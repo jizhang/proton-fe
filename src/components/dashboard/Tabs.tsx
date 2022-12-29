@@ -1,31 +1,29 @@
-import * as React from 'react'
+import React from 'react'
 import TabItem from './TabItem'
 import './Tabs.less'
 
 export interface Tab {
-  key: React.Key,
+  key: string,
   element: React.ReactNode,
 }
 
 interface Props {
   tabs: Tab[],
-  current: React.Key,
-  onChange: (key: React.Key) => void,
+  current: string,
+  onChange: (key: string) => void,
 }
 
-export default class Tabs extends React.Component<Props> {
-  public render() {
-    return (
-      <div className="dashboard-tabs">
-        {this.props.tabs.map(tab => (
-          <TabItem
-            tab={tab}
-            key={tab.key}
-            active={this.props.current === tab.key}
-            onClick={this.props.onChange}
-          />
-        ))}
-      </div>
-    )
-  }
+export default (props: Props) => {
+  return (
+    <div className="dashboard-tabs">
+      {props.tabs.map(tab => (
+        <TabItem
+          tab={tab}
+          key={tab.key}
+          active={props.current === tab.key}
+          onClick={props.onChange}
+        />
+      ))}
+    </div>
+  )
 }
