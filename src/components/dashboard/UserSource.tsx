@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Chart, Axis, Geom, Legend } from 'bizcharts'
 import _ from 'lodash'
-import * as request from '../../services/request'
+import * as request from '~/src/common/request'
 import Tabs from './Tabs'
 import './UserSource.less'
 

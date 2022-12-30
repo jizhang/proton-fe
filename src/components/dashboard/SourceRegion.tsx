@@ -3,7 +3,7 @@ import { Card } from 'antd-mobile'
 import { Chart, Geom, Coord, Axis } from 'bizcharts'
 import DataSet from '@antv/data-set'
 import _ from 'lodash'
-import * as request from '../../services/request'
+import * as request from '~/src/common/request'
 import './SourceRegion.less'
 
 export default () => {

@@ -3,7 +3,7 @@ import { Chart, Axis, Geom, Tooltip } from 'bizcharts'
 import _ from 'lodash'
 import numeral from 'numeral'
 import moment from 'moment'
-import * as request from '../../services/request'
+import * as request from '~/src/common/request'
 import Tabs from './Tabs'
 import './Primary.less'
 

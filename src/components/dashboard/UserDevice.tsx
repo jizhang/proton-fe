@@ -3,7 +3,7 @@ import { Card } from 'antd-mobile'
 import { Chart, Coord, Geom } from 'bizcharts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import _ from 'lodash'
-import * as request from '../../services/request'
+import * as request from '~/src/common/request'
 import './UserDevice.less'
 
 export default () => {

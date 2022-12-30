@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Geom, Axis, Legend } from 'bizcharts'
-import * as request from '../../services/request'
+import * as request from '~/src/common/request'
 import './VisitTime.less'
 
 export default () => {
