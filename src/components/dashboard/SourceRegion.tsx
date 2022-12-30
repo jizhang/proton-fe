@@ -3,7 +3,7 @@ import { Card } from 'antd-mobile'
 import { Chart, Geom, Coord, Axis } from 'bizcharts'
 import DataSet from '@antv/data-set'
 import _ from 'lodash'
-import * as request from '../../services/request'
+import { getGeoChina, getUserGeo } from '~/src/services/dashboard'
 import './SourceRegion.less'
 
 export default () => {
@@ -17,11 +17,7 @@ export default () => {
   }, [])
 
   function requestData() {
-    let requests = [
-      request.get('/api/dashboard/geoChina'),
-      request.get('/api/dashboard/userGeo'),
-    ]
-
+    const requests = [getGeoChina(), getUserGeo()]
     Promise.all(requests).then(payloads => {
       let geoChina = payloads[0]
       let { province } = payloads[1]

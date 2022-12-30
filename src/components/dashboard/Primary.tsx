@@ -3,7 +3,7 @@ import { Chart, Axis, Geom, Tooltip } from 'bizcharts'
 import _ from 'lodash'
 import numeral from 'numeral'
 import moment from 'moment'
-import * as request from '../../services/request'
+import { getPrimaryData } from '~/src/services/dashboard'
 import Tabs from './Tabs'
 import './Primary.less'
 
@@ -70,7 +70,7 @@ export default () => {
   }
 
   useEffect(() => {
-    request.get('/api/dashboard/primaryData').then(payload => {
+    getPrimaryData().then(payload => {
       let measures = _.map(payload.measures, measure => {
         let value = '-'
         let percent = { formatted: '-', color: '' }
