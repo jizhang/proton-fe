@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { makeAutoObservable } from 'mobx'
 import RootStore from './root'
+import * as service from '~/src/services/dashboard'
 
 export default class DashboardStore {
   rootStore
@@ -21,8 +22,7 @@ export default class DashboardStore {
   }
 
   *fetchActiveUser(): any {
-    let response = yield fetch('/api/dashboard/activeUser')
-    let { payload } = yield response.json()
+    const payload = yield service.getActiveUser()
     _.assign(this.realtime, {
       previousCount: this.realtime.count,
       ...payload,
@@ -30,8 +30,7 @@ export default class DashboardStore {
   }
 
   *fetchUserRetention(): any {
-    let response = yield fetch('/api/dashboard/userRetention')
-    let { payload } = yield response.json()
+    const payload = yield service.getUserRetention()
     this.userRetention.data = payload.retention
   }
 }

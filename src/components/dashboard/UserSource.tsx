@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Chart, Axis, Geom, Legend } from 'bizcharts'
 import _ from 'lodash'
-import * as request from '~/src/common/request'
+import { getUserSource } from '~/src/services/dashboard'
 import Tabs from './Tabs'
 import './UserSource.less'
 
@@ -10,7 +10,7 @@ export default () => {
   const [current, setCurrent] = useState('')
 
   useEffect(() => {
-    request.get('/api/dashboard/userSource').then(payload => {
+    getUserSource().then(payload => {
       let { measures } = payload
       if (!_.isEmpty(measures)) {
         setMeasures(measures)

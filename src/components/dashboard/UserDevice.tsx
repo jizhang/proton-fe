@@ -3,14 +3,14 @@ import { Card } from 'antd-mobile'
 import { Chart, Coord, Geom } from 'bizcharts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import _ from 'lodash'
-import * as request from '~/src/common/request'
+import { getUserDevice } from '~/src/services/dashboard'
 import './UserDevice.less'
 
 export default () => {
   const [devices, setDevices] = useState<any[]>([])
 
   useEffect(() => {
-    request.get('/api/dashboard/userDevice').then(payload => {
+    getUserDevice().then(payload => {
       let { devices } = payload
       if (!_.isEmpty(devices)) {
         setDevices(transformData(devices))

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Geom, Axis, Legend } from 'bizcharts'
-import * as request from '~/src/common/request'
+import { getActiveHourlyUsers } from '~/src/services/dashboard'
 import './VisitTime.less'
 
 export default () => {
   const [data, setData] = useState<any[]>([])
 
   useEffect(() => {
-    request.get('/api/dashboard/activeHourlyUsers').then(payload => {
+    getActiveHourlyUsers().then(payload => {
       setData(payload)
     })
   }, [])
