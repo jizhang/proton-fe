@@ -1,17 +1,19 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './routes/Home'
 import Dashboard from './routes/Dashboard'
 import Login from './routes/Login'
 
+const router = createBrowserRouter([
+  { path: '/', element: <Home /> },
+  { path: '/login', element: <Login /> },
+  { path: '/dashboard', element: <Dashboard /> },
+])
+
 export default () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-      </Switch>
-    </Router>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
   )
 }

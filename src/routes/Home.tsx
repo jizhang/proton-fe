@@ -1,18 +1,18 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { Button, Space } from 'antd-mobile'
 import './Home.css'
 import logo from '../assets/logo.svg'
 
-interface Props extends RouteComponentProps<any> {}
+export default () => {
+  const navigate = useNavigate()
 
-export default (props: Props) => {
   function gotoDashboard() {
-    props.history.push('/dashboard')
+    navigate('/dashboard')
   }
 
   function handleLogin() {
-    props.history.push('/login')
+    navigate('/login')
   }
 
   return (

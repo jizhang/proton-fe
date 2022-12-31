@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { NavBar } from 'antd-mobile'
 import Primary from '../components/dashboard/Primary'
 import Realtime from '../components/dashboard/Realtime'
@@ -10,9 +10,9 @@ import UserDevice from '../components/dashboard/UserDevice'
 import UserRetention from '../components/dashboard/UserRetention'
 import './Dashboard.less'
 
-interface Props extends RouteComponentProps<any> {}
+export default () => {
+  const navigate = useNavigate()
 
-export default (props: Props) => {
   const cards = [
     { name: 'primary', component: <Primary /> },
     { name: 'realtime', component: <Realtime /> },
@@ -24,7 +24,7 @@ export default (props: Props) => {
   ]
 
   const gotoHome = () => {
-    props.history.push('/')
+    navigate('/')
   }
 
   return (
