@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { RouteComponentProps } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Toast } from 'antd-mobile'
 import * as loginService from '../services/login'
 import './Login.less'
 import logo from '../assets/logo.svg'
 
-interface Props extends RouteComponentProps<any> {}
-
-export default (props: Props) => {
+export default () => {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = (values: any) => {
@@ -17,7 +16,7 @@ export default (props: Props) => {
         icon: 'success',
         content: `Welcome, ${payload.nickname}!`,
         afterClose: () => {
-          props.history.push('/')
+          navigate('/')
         },
       })
     }, () => {
