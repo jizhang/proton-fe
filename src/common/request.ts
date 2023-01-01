@@ -22,13 +22,13 @@ export async function request(url: string, config?: RequestInit) {
 
   // success
   if (response.ok) {
-    let success = await response.json()
+    const success = await response.json()
     return success.payload
   }
 
   // 400 Bad Request
   if (response.status === 400) {
-    let failure = await response.json()
+    const failure = await response.json()
     // global toast
     if (failure.code === 400) {
       Toast.show({icon: 'fail', content: failure.payload.message});
@@ -54,7 +54,7 @@ export async function get(url: string, args?: any) {
 }
 
 export async function post(url: string, form?: any) {
-  let config: RequestInit = {
+  const config: RequestInit = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

@@ -11,7 +11,7 @@ export default () => {
 
   useEffect(() => {
     getUserSource().then(payload => {
-      let { measures } = payload
+      const { measures } = payload
       if (!_.isEmpty(measures)) {
         setMeasures(measures)
         setCurrent(measures[0].name)
@@ -37,14 +37,14 @@ export default () => {
     return formatted
   }
 
-  let tabs = _.map(measures, measure => {
+  const tabs = _.map(measures, measure => {
     return {
       key: measure.name,
       element: measure.label,
     }
   })
 
-  let scale: any = {
+  const scale: any = {
     date: {
       type: 'time',
       mask: 'M.D',
@@ -54,8 +54,8 @@ export default () => {
     },
   }
 
-  let measure = _.find(measures, ['name', current])
-  let data = _.isUndefined(measure) ? [] : measure.data
+  const measure = _.find(measures, ['name', current])
+  const data = _.isUndefined(measure) ? [] : measure.data
 
   return (
     <div className="dashboard-user-source">

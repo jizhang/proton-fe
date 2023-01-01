@@ -11,7 +11,7 @@ export default () => {
   const [measures, setMeasures] = useState<any[]>([])
   const [current, setCurrent] = useState('')
 
-  function formatValue(value: number, format: string, short: boolean = false) {
+  function formatValue(value: number, format: string, short = false) {
     let formatted: string
     if (format === 'percent') {
       formatted = _.round(value * 100, 1) + '%'
@@ -40,7 +40,7 @@ export default () => {
   }
 
   function formatPercent(current: number, previous: number) {
-    let percent = _.round((current - previous) / previous * 100, 1)
+    const percent = _.round((current - previous) / previous * 100, 1)
     let formatted: string
     let color: string
     if (percent > 0) {
@@ -71,14 +71,14 @@ export default () => {
 
   useEffect(() => {
     getPrimaryData().then(payload => {
-      let measures = _.map(payload.measures, measure => {
+      const measures = _.map(payload.measures, measure => {
         let value = '-'
         let percent = { formatted: '-', color: '' }
         let dv: any[] | null = null
         let max: number | null = null
 
         if (!_.isEmpty(measure.data)) {
-          let { current, previous } = _.last(measure.data as any[])
+          const { current, previous } = _.last(measure.data as any[])
           value = formatValue(current, measure.format, true)
           percent = formatPercent(current, previous)
           dv = transformData(measure.data)
@@ -105,7 +105,7 @@ export default () => {
     setCurrent(measureName)
   }
 
-  let scale: any = {
+  const scale: any = {
     date: {
       type: 'time',
       mask: 'M.D',
@@ -116,13 +116,13 @@ export default () => {
   }
 
   let dv = []
-  let measure = _.find(measures, ['name', current])
+  const measure = _.find(measures, ['name', current])
   if (measure && measure.dv) {
     dv = measure.dv
     scale.value.max = measure.max
   }
 
-  let tabs = _.map(measures, measure => {
+  const tabs = _.map(measures, measure => {
     return {
       key: measure.name,
       element: (
@@ -177,7 +177,7 @@ export default () => {
               }
             }]}
             tooltip={['dateKey*value', (dateKey, value) => {
-              let [date, key] = dateKey.split('|')
+              const [date, key] = dateKey.split('|')
               let name: string
               if (key === 'previous') {
                 name = moment(date).subtract(7, 'days').format('M.D')

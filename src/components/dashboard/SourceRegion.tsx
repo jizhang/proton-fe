@@ -19,8 +19,8 @@ export default () => {
   function requestData() {
     const requests = [getGeoChina(), getUserGeo()]
     Promise.all(requests).then(payloads => {
-      let geoChina = payloads[0]
-      let { province } = payloads[1]
+      const geoChina = payloads[0]
+      const { province } = payloads[1]
       setGeoData(processData(geoChina, province))
       setBarData(processBarData(province))
     })
@@ -31,17 +31,17 @@ export default () => {
   }
 
   function processData(geoChina: any[], userGeo: any) {
-    let mapData = {
+    const mapData = {
       type: 'FeatureCollection',
       features: geoChina,
     }
 
-    let ds = new DataSet()
-    let geoDataView = ds.createView().source(mapData, {
+    const ds = new DataSet()
+    const geoDataView = ds.createView().source(mapData, {
       type: 'GeoJSON',
     })
 
-    let dvData = ds.createView().source(userGeo)
+    const dvData = ds.createView().source(userGeo)
     dvData.transform({
       type: 'geo.region',
       field: 'name',
@@ -53,7 +53,7 @@ export default () => {
   }
 
   function processBarData(province: any[]) {
-    let total = _(province).map('value').sum()
+    const total = _(province).map('value').sum()
     return _(province)
       .orderBy(['value'], ['desc'])
       .take(5)

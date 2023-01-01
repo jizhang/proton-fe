@@ -11,7 +11,7 @@ export default () => {
 
   useEffect(() => {
     getUserDevice().then(payload => {
-      let { devices } = payload
+      const { devices } = payload
       if (!_.isEmpty(devices)) {
         setDevices(transformData(devices))
       }
@@ -19,7 +19,7 @@ export default () => {
   }, [])
 
   function transformData(devices: any[]) {
-    let totals = _(['current', 'previous'])
+    const totals = _(['current', 'previous'])
       .map(key => ([key, _(devices).map(key).sum()]))
       .fromPairs()
       .value()
@@ -34,7 +34,7 @@ export default () => {
   }
 
   function formatPercent(current: number, previous: number) {
-    let percent = _.round((current - previous) / previous * 100, 1)
+    const percent = _.round((current - previous) / previous * 100, 1)
     let formatted: string
     let color: string
     if (percent > 0) {
@@ -54,11 +54,11 @@ export default () => {
     return _.round(value * 100, 1) + '%'
   }
 
-  let iconMapping = {
+  const iconMapping = {
     'iphone': 'mobile-alt',
     'ipad': 'tablet-alt',
   }
-  let getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
+  const getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
   return (
     <Card
       className="dashboard-user-device"

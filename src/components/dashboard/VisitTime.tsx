@@ -13,7 +13,7 @@ export default () => {
     })
   }, [])
 
-  let scale = {
+  const scale = {
     hour: {
       type: 'cat',
       values: [
@@ -27,7 +27,7 @@ export default () => {
     },
   }
 
-  let legendItemFormatter = (item: number): string | number => {
+  const legendItemFormatter = (item: number): string | number => {
     if (Math.abs(item) >= 1000) {
       const itemK = Math.round(item / 1000);
       return `${itemK}k`;
