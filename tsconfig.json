@@ -21,8 +21,5 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true
   },
-  "include": [
-    "src",
-    "images.d.ts"
-  ]
+  "include": ["src", "images.d.ts"]
 }

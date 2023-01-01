@@ -35,14 +35,14 @@ export default observer(() => {
         <tbody>
           <tr>
             <th />
-            {_.times(6, i => (
+            {_.times(6, (i) => (
               <th key={i}>W{i}</th>
             ))}
           </tr>
-          {userRetention.data.map(row => (
+          {userRetention.data.map((row) => (
             <tr key={row.week}>
               <th style={{ textAlign: 'left' }}>{row.week}</th>
-              {_.times(6, i => {
+              {_.times(6, (i) => {
                 const value = _.get(row.data, i, 0)
                 const cell = formatValue(value)
                 return (

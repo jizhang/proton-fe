@@ -18,7 +18,7 @@ export default () => {
 
   function requestData() {
     const requests = [getGeoChina(), getUserGeo()]
-    Promise.all(requests).then(payloads => {
+    Promise.all(requests).then((payloads) => {
       const geoChina = payloads[0]
       const { province } = payloads[1]
       setGeoData(processData(geoChina, province))
@@ -27,7 +27,7 @@ export default () => {
   }
 
   function calculateHeight() {
-    setChartHeight(_.round((document.documentElement.clientWidth - 30) / 4 * 3))
+    setChartHeight(_.round(((document.documentElement.clientWidth - 30) / 4) * 3))
   }
 
   function processData(geoChina: any[], userGeo: any) {
@@ -57,7 +57,7 @@ export default () => {
     return _(province)
       .orderBy(['value'], ['desc'])
       .take(5)
-      .map(item => {
+      .map((item) => {
         return {
           province: item.name,
           percent: _.round(item.value / total, 4),
@@ -74,13 +74,7 @@ export default () => {
       extra={<span>1 day</span>}
       style={{ borderRadius: 0 }}
     >
-      <Chart
-        autoFit
-        height={chartHeight}
-        padding={[0, 0, -80, 0]}
-        data={geoData}
-        pure
-      >
+      <Chart autoFit height={chartHeight} padding={[0, 0, -80, 0]} data={geoData} pure>
         <Geom
           type="polygon"
           position="longitude*latitude"
@@ -119,10 +113,7 @@ export default () => {
             },
           }}
         />
-        <Geom
-          type="interval"
-          position="province*percent"
-        />
+        <Geom type="interval" position="province*percent" />
       </Chart>
     </Card>
   )

@@ -29,10 +29,7 @@ export default () => {
 
   return (
     <div className="page-dashboard">
-      <NavBar
-        className="nav"
-        onBack={gotoHome}
-      >
+      <NavBar className="nav" onBack={gotoHome}>
         Dashboard
       </NavBar>
 

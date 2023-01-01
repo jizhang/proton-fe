@@ -1,0 +1,3 @@
+dist
+mock/geo-china.json
+src/registerServiceWorker.ts

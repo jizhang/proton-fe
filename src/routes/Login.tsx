@@ -11,17 +11,20 @@ export default () => {
 
   const handleSubmit = (values: any) => {
     setLoading(true)
-    loginService.login(values).then(payload => {
-      Toast.show({
-        icon: 'success',
-        content: `Welcome, ${payload.nickname}!`,
-        afterClose: () => {
-          navigate('/')
-        },
-      })
-    }, () => {
-      setLoading(false)
-    })
+    loginService.login(values).then(
+      (payload) => {
+        Toast.show({
+          icon: 'success',
+          content: `Welcome, ${payload.nickname}!`,
+          afterClose: () => {
+            navigate('/')
+          },
+        })
+      },
+      () => {
+        setLoading(false)
+      }
+    )
   }
 
   return (
@@ -35,12 +38,9 @@ export default () => {
         layout="horizontal"
         onFinish={handleSubmit}
         footer={
-          <Button
-            type="submit"
-            color="primary"
-            block
-            loading={loading}
-          >Login</Button>
+          <Button type="submit" color="primary" block loading={loading}>
+            Login
+          </Button>
         }
       >
         <Form.Item name="username" label="Username">

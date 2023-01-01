@@ -8,7 +8,7 @@ export default () => {
   const [data, setData] = useState<any[]>([])
 
   useEffect(() => {
-    getActiveHourlyUsers().then(payload => {
+    getActiveHourlyUsers().then((payload) => {
       setData(payload)
     })
   }, [])
@@ -17,8 +17,30 @@ export default () => {
     hour: {
       type: 'cat',
       values: [
-        '11pm', '10pm', '9pm', '8pm', '7pm', '6pm', '5pm', '4pm', '3pm', '2pm', '1pm', '12pm',
-        '11am', '10am', '9am', '8am', '7am', '6am', '5am', '4am', '3am', '2am', '1am', '12am',
+        '11pm',
+        '10pm',
+        '9pm',
+        '8pm',
+        '7pm',
+        '6pm',
+        '5pm',
+        '4pm',
+        '3pm',
+        '2pm',
+        '1pm',
+        '12pm',
+        '11am',
+        '10am',
+        '9am',
+        '8am',
+        '7am',
+        '6am',
+        '5am',
+        '4am',
+        '3am',
+        '2am',
+        '1am',
+        '12am',
       ],
     },
     day: {
@@ -29,10 +51,10 @@ export default () => {
 
   const legendItemFormatter = (item: number): string | number => {
     if (Math.abs(item) >= 1000) {
-      const itemK = Math.round(item / 1000);
-      return `${itemK}k`;
+      const itemK = Math.round(item / 1000)
+      return `${itemK}k`
     }
-    return item;
+    return item
   }
 
   return (
@@ -42,13 +64,7 @@ export default () => {
       extra={<span>1 week</span>}
       style={{ borderRadius: 0 }}
     >
-      <Chart
-        data={data}
-        height={450}
-        padding={[0, 45, 50, 0]}
-        scale={scale}
-        autoFit
-      >
+      <Chart data={data} height={450} padding={[0, 45, 50, 0]} scale={scale} autoFit>
         <Axis
           name="hour"
           position="right"
@@ -58,18 +74,12 @@ export default () => {
             },
             offset: 45,
             formatter(text, item, index) {
-              return (index % 2 === 0) ? '' : text
+              return index % 2 === 0 ? '' : text
             },
           }}
         />
-        <Axis
-          name="day"
-          tickLine={{ length: 0 }}
-        />
-        <Legend
-          slidable={false}
-          itemFormatter={legendItemFormatter}
-        />
+        <Axis name="day" tickLine={{ length: 0 }} />
+        <Legend slidable={false} itemFormatter={legendItemFormatter} />
         <Geom
           type="polygon"
           position="day*hour"

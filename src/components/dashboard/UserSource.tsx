@@ -10,7 +10,7 @@ export default () => {
   const [current, setCurrent] = useState('')
 
   useEffect(() => {
-    getUserSource().then(payload => {
+    getUserSource().then((payload) => {
       const { measures } = payload
       if (!_.isEmpty(measures)) {
         setMeasures(measures)
@@ -37,7 +37,7 @@ export default () => {
     return formatted
   }
 
-  const tabs = _.map(measures, measure => {
+  const tabs = _.map(measures, (measure) => {
     return {
       key: measure.name,
       element: measure.label,
@@ -59,19 +59,9 @@ export default () => {
 
   return (
     <div className="dashboard-user-source">
-      <Tabs
-        tabs={tabs}
-        current={current}
-        onChange={handleChangeTab}
-      />
+      <Tabs tabs={tabs} current={current} onChange={handleChangeTab} />
       <div style={{ padding: '0 15px 10px 15px' }}>
-        <Chart
-          autoFit
-          height={240}
-          data={data}
-          padding="auto"
-          scale={scale}
-        >
+        <Chart autoFit height={240} data={data} padding="auto" scale={scale}>
           <Axis name="date" />
           <Axis
             name="value"
@@ -87,12 +77,7 @@ export default () => {
             }}
           />
           <Legend />
-          <Geom
-            type="interval"
-            adjust="stack"
-            position="date*value"
-            color="key"
-          />
+          <Geom type="interval" adjust="stack" position="date*value" color="key" />
         </Chart>
       </div>
     </div>

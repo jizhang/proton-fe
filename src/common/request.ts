@@ -13,7 +13,7 @@ export async function request(url: string, config?: RequestInit) {
   try {
     response = await fetch(url, config)
   } catch (error) {
-    Toast.show({icon: 'fail', content: String(error)})
+    Toast.show({ icon: 'fail', content: String(error) })
     throw new RequestError(0, {
       message: String(error),
       error,
@@ -31,7 +31,7 @@ export async function request(url: string, config?: RequestInit) {
     const failure = await response.json()
     // global toast
     if (failure.code === 400) {
-      Toast.show({icon: 'fail', content: failure.payload.message});
+      Toast.show({ icon: 'fail', content: failure.payload.message })
     }
     // raise error for downstream processing
     throw new RequestError(failure.code, failure.payload)
