@@ -10,8 +10,8 @@ export default () => {
   const [current, setCurrent] = useState('')
 
   useEffect(() => {
-    getUserSource().then(payload => {
-      let { measures } = payload
+    getUserSource().then((payload) => {
+      const { measures } = payload
       if (!_.isEmpty(measures)) {
         setMeasures(measures)
         setCurrent(measures[0].name)
@@ -37,14 +37,14 @@ export default () => {
     return formatted
   }
 
-  let tabs = _.map(measures, measure => {
+  const tabs = _.map(measures, (measure) => {
     return {
       key: measure.name,
       element: measure.label,
     }
   })
 
-  let scale: any = {
+  const scale: any = {
     date: {
       type: 'time',
       mask: 'M.D',
@@ -54,24 +54,14 @@ export default () => {
     },
   }
 
-  let measure = _.find(measures, ['name', current])
-  let data = _.isUndefined(measure) ? [] : measure.data
+  const measure = _.find(measures, ['name', current])
+  const data = _.isUndefined(measure) ? [] : measure.data
 
   return (
     <div className="dashboard-user-source">
-      <Tabs
-        tabs={tabs}
-        current={current}
-        onChange={handleChangeTab}
-      />
+      <Tabs tabs={tabs} current={current} onChange={handleChangeTab} />
       <div style={{ padding: '0 15px 10px 15px' }}>
-        <Chart
-          autoFit
-          height={240}
-          data={data}
-          padding="auto"
-          scale={scale}
-        >
+        <Chart autoFit height={240} data={data} padding="auto" scale={scale}>
           <Axis name="date" />
           <Axis
             name="value"
@@ -87,12 +77,7 @@ export default () => {
             }}
           />
           <Legend />
-          <Geom
-            type="interval"
-            adjust="stack"
-            position="date*value"
-            color="key"
-          />
+          <Geom type="interval" adjust="stack" position="date*value" color="key" />
         </Chart>
       </div>
     </div>

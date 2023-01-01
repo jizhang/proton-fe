@@ -13,7 +13,7 @@ export default observer(() => {
   }, [])
 
   function formatValue(value: number) {
-    let rounded = _.round(value * 100, 1)
+    const rounded = _.round(value * 100, 1)
     let formatted = '0.0%'
     let color = 'white'
     if (rounded) {
@@ -35,16 +35,16 @@ export default observer(() => {
         <tbody>
           <tr>
             <th />
-            {_.times(6, i => (
+            {_.times(6, (i) => (
               <th key={i}>W{i}</th>
             ))}
           </tr>
-          {userRetention.data.map(row => (
+          {userRetention.data.map((row) => (
             <tr key={row.week}>
               <th style={{ textAlign: 'left' }}>{row.week}</th>
-              {_.times(6, i => {
-                let value = _.get(row.data, i, 0)
-                let cell = formatValue(value)
+              {_.times(6, (i) => {
+                const value = _.get(row.data, i, 0)
+                const cell = formatValue(value)
                 return (
                   <td key={i}>
                     <div

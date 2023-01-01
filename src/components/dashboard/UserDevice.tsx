@@ -10,8 +10,8 @@ export default () => {
   const [devices, setDevices] = useState<any[]>([])
 
   useEffect(() => {
-    getUserDevice().then(payload => {
-      let { devices } = payload
+    getUserDevice().then((payload) => {
+      const { devices } = payload
       if (!_.isEmpty(devices)) {
         setDevices(transformData(devices))
       }
@@ -19,13 +19,13 @@ export default () => {
   }, [])
 
   function transformData(devices: any[]) {
-    let totals = _(['current', 'previous'])
-      .map(key => ([key, _(devices).map(key).sum()]))
+    const totals = _(['current', 'previous'])
+      .map((key) => [key, _(devices).map(key).sum()])
       .fromPairs()
       .value()
 
-    return _.map(devices, row => {
-      _.forEach(['current', 'previous'], key => {
+    return _.map(devices, (row) => {
+      _.forEach(['current', 'previous'], (key) => {
         row[`${key}_percent`] = row[key] / totals[key]
       })
       row.percent = formatPercent(row.current_percent, row.previous_percent)
@@ -34,14 +34,14 @@ export default () => {
   }
 
   function formatPercent(current: number, previous: number) {
-    let percent = _.round((current - previous) / previous * 100, 1)
+    const percent = _.round(((current - previous) / previous) * 100, 1)
     let formatted: string
     let color: string
     if (percent > 0) {
       formatted = '↑' + percent + '%'
       color = 'up'
     } else if (percent < 0) {
-      formatted = '↓' + (-percent) + '%'
+      formatted = '↓' + -percent + '%'
       color = 'down'
     } else {
       formatted = '0.0%'
@@ -54,11 +54,11 @@ export default () => {
     return _.round(value * 100, 1) + '%'
   }
 
-  let iconMapping = {
-    'iphone': 'mobile-alt',
-    'ipad': 'tablet-alt',
+  const iconMapping = {
+    iphone: 'mobile-alt',
+    ipad: 'tablet-alt',
   }
-  let getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
+  const getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
   return (
     <Card
       className="dashboard-user-device"
@@ -66,12 +66,7 @@ export default () => {
       extra="1 day"
       style={{ borderRadius: 0 }}
     >
-      <Chart
-        autoFit
-        height={240}
-        data={devices}
-        padding={[-25, 0, -10, 0]}
-      >
+      <Chart autoFit height={240} data={devices} padding={[-25, 0, -10, 0]}>
         <Coord type="theta" radius={0.75} innerRadius={0.6} />
         <Geom
           type="interval"
@@ -85,7 +80,7 @@ export default () => {
         />
       </Chart>
       <div className="device-list">
-        {devices.map(device => (
+        {devices.map((device) => (
           <div className="device-item" key={device.name}>
             <div className="icon">
               <FontAwesomeIcon icon={getIcon(device.name)} />

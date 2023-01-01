@@ -14,7 +14,7 @@ app.get('/api/dashboard/activeUser', (req, res) => {
     payload: {
       count: _.random(40000, 50000),
       minutes: _.times(30, () => _.random(10000, 20000)),
-    }
+    },
   })
 })
 
@@ -45,7 +45,7 @@ app.get('/api/dashboard/geoChina', (req, res) => {
 })
 
 app.get('/api/dashboard/userGeo', (req, res) => {
-  let province = _.map(getGeoChina(), item => {
+  let province = _.map(getGeoChina(), (item) => {
     return {
       name: item.properties.name,
       value: _.random(5000, 20000),
@@ -64,9 +64,11 @@ app.get('/api/dashboard/primaryData', (req, res) => {
     name: 'users',
     label: 'Users',
     format: 'integer',
-    data: _.times(14, i => {
+    data: _.times(14, (i) => {
       return {
-        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        date: moment()
+          .subtract(14 - i, 'days')
+          .format('YYYY-MM-DD'),
         current: _.random(100000, 200000),
         previous: _.random(100000, 200000),
       }
@@ -77,9 +79,11 @@ app.get('/api/dashboard/primaryData', (req, res) => {
     name: 'session',
     label: 'Sessions',
     format: 'integer',
-    data: _.times(14, i => {
+    data: _.times(14, (i) => {
       return {
-        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        date: moment()
+          .subtract(14 - i, 'days')
+          .format('YYYY-MM-DD'),
         current: _.random(200000, 400000),
         previous: _.random(200000, 400000),
       }
@@ -90,9 +94,11 @@ app.get('/api/dashboard/primaryData', (req, res) => {
     name: 'bounce_rate',
     label: 'Bounce Rate',
     format: 'percent',
-    data: _.times(14, i => {
+    data: _.times(14, (i) => {
       return {
-        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        date: moment()
+          .subtract(14 - i, 'days')
+          .format('YYYY-MM-DD'),
         current: _.random(0.8, 0.9, true),
         previous: _.random(0.8, 0.9, true),
       }
@@ -103,9 +109,11 @@ app.get('/api/dashboard/primaryData', (req, res) => {
     name: 'session_duration',
     label: 'Session Duration',
     format: 'interval',
-    data: _.times(14, i => {
+    data: _.times(14, (i) => {
       return {
-        date: moment().subtract(14 - i, 'days').format('YYYY-MM-DD'),
+        date: moment()
+          .subtract(14 - i, 'days')
+          .format('YYYY-MM-DD'),
         current: _.random(300, 600),
         previous: _.random(300, 600),
       }
@@ -114,12 +122,7 @@ app.get('/api/dashboard/primaryData', (req, res) => {
 
   res.json({
     payload: {
-      measures: [
-        users,
-        sessions,
-        bounceRate,
-        sessionDuration,
-      ],
+      measures: [users, sessions, bounceRate, sessionDuration],
     },
   })
 })
@@ -128,9 +131,9 @@ app.get('/api/dashboard/userSource', (req, res) => {
   let trafficChannel = {
     name: 'traffic_channel',
     label: 'Traffic Channel',
-    data: _.flatMap(_.range(7, 0, -1), i => {
+    data: _.flatMap(_.range(7, 0, -1), (i) => {
       let date = moment().subtract(i, 'days').format('YYYY-MM-DD')
-      return _.map(['Organic Search', 'Direct', 'Referral'], key => {
+      return _.map(['Organic Search', 'Direct', 'Referral'], (key) => {
         return {
           date,
           key,
@@ -143,9 +146,9 @@ app.get('/api/dashboard/userSource', (req, res) => {
   let sourceMedium = {
     name: 'source_medium',
     label: 'Source / Medium',
-    data: _.flatMap(_.range(7, 0, -1), i => {
+    data: _.flatMap(_.range(7, 0, -1), (i) => {
       let date = moment().subtract(i, 'days').format('YYYY-MM-DD')
-      return _.map(['google / organic', '(direct) / (none)', 'pbb.lviv.ua / referral'], key => {
+      return _.map(['google / organic', '(direct) / (none)', 'pbb.lviv.ua / referral'], (key) => {
         return {
           date,
           key,
@@ -158,9 +161,9 @@ app.get('/api/dashboard/userSource', (req, res) => {
   let referrals = {
     name: 'referrals',
     label: 'Referrals',
-    data: _.flatMap(_.range(7, 0, -1), i => {
+    data: _.flatMap(_.range(7, 0, -1), (i) => {
       let date = moment().subtract(i, 'days').format('YYYY-MM-DD')
-      return _.map(['pbb.lviv.ua', 'we-ping-for-youeed.info', 'earn-moneyen.info'], key => {
+      return _.map(['pbb.lviv.ua', 'we-ping-for-youeed.info', 'earn-moneyen.info'], (key) => {
         return {
           date,
           key,
@@ -172,12 +175,8 @@ app.get('/api/dashboard/userSource', (req, res) => {
 
   res.json({
     payload: {
-      measures: [
-        trafficChannel,
-        sourceMedium,
-        referrals,
-      ],
-    }
+      measures: [trafficChannel, sourceMedium, referrals],
+    },
   })
 })
 
@@ -200,22 +199,22 @@ app.get('/api/dashboard/userDevice', (req, res) => {
   res.json({
     payload: {
       devices,
-    }
+    },
   })
 })
 
 app.get('/api/dashboard/userRetention', (req, res) => {
   let date = moment().startOf('isoWeek')
-  let retention = _.times(6, i => {
+  let retention = _.times(6, (i) => {
     let startDate = moment(date).subtract(6 - i, 'weeks')
     let endDate = moment(startDate).add(6, 'days')
     return {
       week: `${startDate.format('M.D')} - ${endDate.format('M.D')}`,
-      data: _.times(6, j => {
+      data: _.times(6, (j) => {
         if (j === 0) {
           return 1
         }
-        if (j >= (6 - i)) {
+        if (j >= 6 - i) {
           return 0
         }
         return _.random(0, 1, true)
@@ -226,7 +225,7 @@ app.get('/api/dashboard/userRetention', (req, res) => {
   res.json({
     payload: {
       retention,
-    }
+    },
   })
 })
 

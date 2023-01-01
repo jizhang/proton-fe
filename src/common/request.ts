@@ -13,7 +13,7 @@ export async function request(url: string, config?: RequestInit) {
   try {
     response = await fetch(url, config)
   } catch (error) {
-    Toast.show({icon: 'fail', content: String(error)})
+    Toast.show({ icon: 'fail', content: String(error) })
     throw new RequestError(0, {
       message: String(error),
       error,
@@ -22,16 +22,16 @@ export async function request(url: string, config?: RequestInit) {
 
   // success
   if (response.ok) {
-    let success = await response.json()
+    const success = await response.json()
     return success.payload
   }
 
   // 400 Bad Request
   if (response.status === 400) {
-    let failure = await response.json()
+    const failure = await response.json()
     // global toast
     if (failure.code === 400) {
-      Toast.show({icon: 'fail', content: failure.payload.message});
+      Toast.show({ icon: 'fail', content: failure.payload.message })
     }
     // raise error for downstream processing
     throw new RequestError(failure.code, failure.payload)
@@ -54,7 +54,7 @@ export async function get(url: string, args?: any) {
 }
 
 export async function post(url: string, form?: any) {
-  let config: RequestInit = {
+  const config: RequestInit = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

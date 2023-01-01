@@ -11,7 +11,7 @@ export default () => {
   const [measures, setMeasures] = useState<any[]>([])
   const [current, setCurrent] = useState('')
 
-  function formatValue(value: number, format: string, short: boolean = false) {
+  function formatValue(value: number, format: string, short = false) {
     let formatted: string
     if (format === 'percent') {
       formatted = _.round(value * 100, 1) + '%'
@@ -21,7 +21,7 @@ export default () => {
       } else if (value < 3600) {
         formatted = _.round(value / 60) + 'm ' + _.round(value % 60) + 's'
       } else {
-        formatted = _.round(value / 3600) + 'h ' + _.round(value % 3600 / 60) + 'm'
+        formatted = _.round(value / 3600) + 'h ' + _.round((value % 3600) / 60) + 'm'
       }
     } else if (short) {
       if (value < 1000) {
@@ -40,14 +40,14 @@ export default () => {
   }
 
   function formatPercent(current: number, previous: number) {
-    let percent = _.round((current - previous) / previous * 100, 1)
+    const percent = _.round(((current - previous) / previous) * 100, 1)
     let formatted: string
     let color: string
     if (percent > 0) {
       formatted = '↑' + percent + '%'
       color = 'up'
     } else if (percent < 0) {
-      formatted = '↓' + (-percent) + '%'
+      formatted = '↓' + -percent + '%'
       color = 'down'
     } else {
       formatted = '0.0%'
@@ -57,8 +57,8 @@ export default () => {
   }
 
   function transformData(data: any[]) {
-    return _.flatMap(data, item => {
-      return _.map(['current', 'previous'], key => {
+    return _.flatMap(data, (item) => {
+      return _.map(['current', 'previous'], (key) => {
         return {
           date: item.date,
           key,
@@ -70,15 +70,15 @@ export default () => {
   }
 
   useEffect(() => {
-    getPrimaryData().then(payload => {
-      let measures = _.map(payload.measures, measure => {
+    getPrimaryData().then((payload) => {
+      const measures = _.map(payload.measures, (measure) => {
         let value = '-'
         let percent = { formatted: '-', color: '' }
         let dv: any[] | null = null
         let max: number | null = null
 
         if (!_.isEmpty(measure.data)) {
-          let { current, previous } = _.last(measure.data as any[])
+          const { current, previous } = _.last(measure.data as any[])
           value = formatValue(current, measure.format, true)
           percent = formatPercent(current, previous)
           dv = transformData(measure.data)
@@ -105,7 +105,7 @@ export default () => {
     setCurrent(measureName)
   }
 
-  let scale: any = {
+  const scale: any = {
     date: {
       type: 'time',
       mask: 'M.D',
@@ -116,13 +116,13 @@ export default () => {
   }
 
   let dv = []
-  let measure = _.find(measures, ['name', current])
+  const measure = _.find(measures, ['name', current])
   if (measure && measure.dv) {
     dv = measure.dv
     scale.value.max = measure.max
   }
 
-  let tabs = _.map(measures, measure => {
+  const tabs = _.map(measures, (measure) => {
     return {
       key: measure.name,
       element: (
@@ -131,26 +131,16 @@ export default () => {
           <div className="value">{measure.value}</div>
           <div className={`percent ${measure.percent.color}`}>{measure.percent.formatted}</div>
         </div>
-      )
+      ),
     }
   })
 
   return (
     <div className="dashboard-primary">
-      <Tabs
-        tabs={tabs}
-        current={current}
-        onChange={handleChangeMeasure}
-      />
+      <Tabs tabs={tabs} current={current} onChange={handleChangeMeasure} />
 
       <div className="chart">
-        <Chart
-          height={240}
-          autoFit
-          data={dv}
-          padding="auto"
-          scale={scale}
-        >
+        <Chart height={240} autoFit data={dv} padding="auto" scale={scale}>
           <Axis name="date" />
           <Axis
             name="value"
@@ -170,26 +160,32 @@ export default () => {
             type="line"
             position="date*value"
             color="key"
-            style={['key', (key) => {
-              return {
-                lineDash: key === 'previous' ? [3, 3] : [],
-                lineWidth: key === 'previous' ? 1 : 1.5,
-              }
-            }]}
-            tooltip={['dateKey*value', (dateKey, value) => {
-              let [date, key] = dateKey.split('|')
-              let name: string
-              if (key === 'previous') {
-                name = moment(date).subtract(7, 'days').format('M.D')
-              } else {
-                name = moment(date).format('M.D')
-              }
+            style={[
+              'key',
+              (key) => {
+                return {
+                  lineDash: key === 'previous' ? [3, 3] : [],
+                  lineWidth: key === 'previous' ? 1 : 1.5,
+                }
+              },
+            ]}
+            tooltip={[
+              'dateKey*value',
+              (dateKey, value) => {
+                const [date, key] = dateKey.split('|')
+                let name: string
+                if (key === 'previous') {
+                  name = moment(date).subtract(7, 'days').format('M.D')
+                } else {
+                  name = moment(date).format('M.D')
+                }
 
-              return {
-                name,
-                value: formatValue(value, measure.format, false),
-              }
-            }]}
+                return {
+                  name,
+                  value: formatValue(value, measure.format, false),
+                }
+              },
+            ]}
           />
         </Chart>
       </div>

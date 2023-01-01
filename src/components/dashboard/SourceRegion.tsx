@@ -18,30 +18,30 @@ export default () => {
 
   function requestData() {
     const requests = [getGeoChina(), getUserGeo()]
-    Promise.all(requests).then(payloads => {
-      let geoChina = payloads[0]
-      let { province } = payloads[1]
+    Promise.all(requests).then((payloads) => {
+      const geoChina = payloads[0]
+      const { province } = payloads[1]
       setGeoData(processData(geoChina, province))
       setBarData(processBarData(province))
     })
   }
 
   function calculateHeight() {
-    setChartHeight(_.round((document.documentElement.clientWidth - 30) / 4 * 3))
+    setChartHeight(_.round(((document.documentElement.clientWidth - 30) / 4) * 3))
   }
 
   function processData(geoChina: any[], userGeo: any) {
-    let mapData = {
+    const mapData = {
       type: 'FeatureCollection',
       features: geoChina,
     }
 
-    let ds = new DataSet()
-    let geoDataView = ds.createView().source(mapData, {
+    const ds = new DataSet()
+    const geoDataView = ds.createView().source(mapData, {
       type: 'GeoJSON',
     })
 
-    let dvData = ds.createView().source(userGeo)
+    const dvData = ds.createView().source(userGeo)
     dvData.transform({
       type: 'geo.region',
       field: 'name',
@@ -53,11 +53,11 @@ export default () => {
   }
 
   function processBarData(province: any[]) {
-    let total = _(province).map('value').sum()
+    const total = _(province).map('value').sum()
     return _(province)
       .orderBy(['value'], ['desc'])
       .take(5)
-      .map(item => {
+      .map((item) => {
         return {
           province: item.name,
           percent: _.round(item.value / total, 4),
@@ -74,13 +74,7 @@ export default () => {
       extra={<span>1 day</span>}
       style={{ borderRadius: 0 }}
     >
-      <Chart
-        autoFit
-        height={chartHeight}
-        padding={[0, 0, -80, 0]}
-        data={geoData}
-        pure
-      >
+      <Chart autoFit height={chartHeight} padding={[0, 0, -80, 0]} data={geoData} pure>
         <Geom
           type="polygon"
           position="longitude*latitude"
@@ -119,10 +113,7 @@ export default () => {
             },
           }}
         />
-        <Geom
-          type="interval"
-          position="province*percent"
-        />
+        <Geom type="interval" position="province*percent" />
       </Chart>
     </Card>
   )

@@ -2,9 +2,9 @@ import React from 'react'
 import { Tab } from './Tabs'
 
 interface Props {
-  tab: Tab,
-  active: boolean,
-  onClick: (key: string) => void,
+  tab: Tab
+  active: boolean
+  onClick: (key: string) => void
 }
 
 export default (props: Props) => {
@@ -14,11 +14,7 @@ export default (props: Props) => {
 
   const { tab, active } = props
   return (
-    <div
-      className={`tab-item ${active ? 'active' : ''}`}
-      key={tab.key}
-      onClick={handleClick}
-    >
+    <div className={`tab-item ${active ? 'active' : ''}`} key={tab.key} onClick={handleClick}>
       <div className="bar" />
       {tab.element}
     </div>

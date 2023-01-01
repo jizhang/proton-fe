@@ -9,8 +9,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 library.add(fas)
 
-const container = document.getElementById('app')
-const root = createRoot(container!)
+const container = document.getElementById('app') as HTMLElement
+const root = createRoot(container)
 root.render(
   <RootStoreContext.Provider value={rootStore}>
     <App />
