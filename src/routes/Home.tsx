@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Space } from 'antd-mobile'
+import { observer } from 'mobx-react-lite'
+import { RootStoreContext } from '~/src/stores'
+import logo from '~/src/assets/logo.svg'
 import './Home.css'
-import logo from '../assets/logo.svg'
 
-export default () => {
+export default observer(() => {
+  const { loginStore } = useContext(RootStoreContext)
   const navigate = useNavigate()
 
   function gotoDashboard() {
@@ -13,6 +16,10 @@ export default () => {
 
   function handleLogin() {
     navigate('/login')
+  }
+
+  function handleLogout() {
+    loginStore.logout()
   }
 
   return (
@@ -26,13 +33,19 @@ export default () => {
       </p>
 
       <Space direction="vertical" block>
-        <Button color="primary" onClick={handleLogin} block>
-          Login
-        </Button>
+        {loginStore.currentUser.id > 0 ? (
+          <Button color="primary" onClick={handleLogout} block loading={loginStore.loggingOut}>
+            Hi, {loginStore.currentUser.nickname}! Logout
+          </Button>
+        ) : (
+          <Button color="primary" onClick={handleLogin} block>
+            Login
+          </Button>
+        )}
         <Button color="primary" onClick={gotoDashboard} block>
           Dashboard
         </Button>
       </Space>
     </div>
   )
-}
+})

@@ -1,5 +1,19 @@
-import * as request from '~/src/common/request'
+import { post } from '~/src/common/request'
 
-export async function login(data: object) {
-  return request.post('/api/login', data)
+export interface LoginRequest {
+  username: string
+  password: string
+}
+
+export interface LoginResponse {
+  id: number
+  nickname: string
+}
+
+export async function login(data: LoginRequest): Promise<LoginResponse> {
+  return post('/api/login', data)
+}
+
+export async function logout() {
+  return post('/api/logout')
 }

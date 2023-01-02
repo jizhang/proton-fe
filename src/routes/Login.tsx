@@ -1,30 +1,27 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Toast } from 'antd-mobile'
-import * as loginService from '../services/login'
+import { observer } from 'mobx-react-lite'
+import _ from 'lodash'
+import { LoginRequest } from '~/src/services/login'
+import { RootStoreContext } from '~/src/stores'
+import logo from '~/src/assets/logo.svg'
 import './Login.less'
-import logo from '../assets/logo.svg'
 
-export default () => {
+export default observer(() => {
+  const { loginStore } = useContext(RootStoreContext)
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (values: any) => {
-    setLoading(true)
-    loginService.login(values).then(
-      (payload) => {
-        Toast.show({
-          icon: 'success',
-          content: `Welcome, ${payload.nickname}!`,
-          afterClose: () => {
-            navigate('/')
-          },
-        })
-      },
-      () => {
-        setLoading(false)
-      }
-    )
+  const handleSubmit = (values: LoginRequest) => {
+    loginStore.login(values).then(() => {
+      Toast.show({
+        icon: 'success',
+        content: `Welcome, ${loginStore.currentUser.nickname}!`,
+        afterClose: () => {
+          navigate('/')
+        },
+      })
+    }, _.noop)
   }
 
   return (
@@ -38,7 +35,7 @@ export default () => {
         layout="horizontal"
         onFinish={handleSubmit}
         footer={
-          <Button type="submit" color="primary" block loading={loading}>
+          <Button type="submit" color="primary" block loading={loginStore.loggingIn}>
             Login
           </Button>
         }
@@ -52,4 +49,4 @@ export default () => {
       </Form>
     </div>
   )
-}
+})
