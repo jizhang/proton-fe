@@ -4,7 +4,7 @@ import { Button, Space } from 'antd-mobile'
 import { observer } from 'mobx-react-lite'
 import { RootStoreContext } from '~/src/stores'
 import logo from '~/src/assets/logo.svg'
-import './Home.css'
+import * as styles from './Home.module.css'
 
 export default observer(() => {
   const { loginStore } = useContext(RootStoreContext)
@@ -23,12 +23,12 @@ export default observer(() => {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="App-title">Welcome to React</h1>
+    <div className={styles.App}>
+      <header className={styles['App-header']}>
+        <img src={logo} className={styles['App-logo']} alt="logo" />
+        <h1 className={styles['App-title']}>Welcome to React</h1>
       </header>
-      <p className="App-intro">
+      <p className={styles['App-intro']}>
         To get started, edit <code>src/App.tsx</code> and save to reload.
       </p>
 
