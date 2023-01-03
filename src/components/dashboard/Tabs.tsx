@@ -1,6 +1,6 @@
 import React from 'react'
 import TabItem from './TabItem'
-import './Tabs.less'
+import * as styles from './Tabs.module.less'
 
 export interface Tab {
   key: string
@@ -15,7 +15,7 @@ interface Props {
 
 export default (props: Props) => {
   return (
-    <div className="dashboard-tabs">
+    <div className={styles.tabs}>
       {props.tabs.map((tab) => (
         <TabItem
           tab={tab}
