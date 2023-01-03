@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Card } from 'antd-mobile'
 import _ from 'lodash'
-import { RootStoreContext } from '../../stores'
-import './UserRetention.less'
+import { RootStoreContext } from '~/src/stores'
+import * as styles from './UserRetention.module.less'
 
 export default observer(() => {
   const { dashboardStore } = useContext(RootStoreContext)
@@ -26,12 +26,11 @@ export default observer(() => {
   const { userRetention } = dashboardStore
   return (
     <Card
-      className="dashboard-user-retention"
       title="User retention"
       extra="6 weeks"
       style={{ borderRadius: 0 }}
     >
-      <table className="data-table">
+      <table className={styles.dataTable}>
         <tbody>
           <tr>
             <th />
@@ -48,7 +47,7 @@ export default observer(() => {
                 return (
                   <td key={i}>
                     <div
-                      className="value"
+                      className={styles.value}
                       title={cell.formatted}
                       style={{
                         backgroundColor: cell.color,

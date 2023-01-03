@@ -3,7 +3,7 @@ import { Chart, Axis, Geom, Legend } from 'bizcharts'
 import _ from 'lodash'
 import { getUserSource } from '~/src/services/dashboard'
 import Tabs from './Tabs'
-import './UserSource.less'
+import * as styles from './UserSource.module.less'
 
 export default () => {
   const [measures, setMeasures] = useState<any[]>([])
@@ -58,7 +58,7 @@ export default () => {
   const data = _.isUndefined(measure) ? [] : measure.data
 
   return (
-    <div className="dashboard-user-source">
+    <div className={styles.userSource}>
       <Tabs tabs={tabs} current={current} onChange={handleChangeTab} />
       <div style={{ padding: '0 15px 10px 15px' }}>
         <Chart autoFit height={240} data={data} padding="auto" scale={scale}>

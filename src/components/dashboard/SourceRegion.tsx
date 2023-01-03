@@ -4,7 +4,6 @@ import { Chart, Geom, Coord, Axis } from 'bizcharts'
 import DataSet from '@antv/data-set'
 import _ from 'lodash'
 import { getGeoChina, getUserGeo } from '~/src/services/dashboard'
-import './SourceRegion.less'
 
 export default () => {
   const [geoData, setGeoData] = useState<any[]>([])
@@ -69,7 +68,6 @@ export default () => {
 
   return (
     <Card
-      className="dashboard-source-region"
       title="Users by location"
       extra={<span>1 day</span>}
       style={{ borderRadius: 0 }}

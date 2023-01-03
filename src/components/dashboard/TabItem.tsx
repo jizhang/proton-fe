@@ -1,5 +1,6 @@
 import React from 'react'
 import { Tab } from './Tabs'
+import * as styles from './Tabs.module.less'
 
 interface Props {
   tab: Tab
@@ -14,8 +15,8 @@ export default (props: Props) => {
 
   const { tab, active } = props
   return (
-    <div className={`tab-item ${active ? 'active' : ''}`} key={tab.key} onClick={handleClick}>
-      <div className="bar" />
+    <div className={`${styles.tabItem} ${active ? styles.active : ''}`} key={tab.key} onClick={handleClick}>
+      <div className={styles.bar} />
       {tab.element}
     </div>
   )

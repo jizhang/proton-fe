@@ -5,7 +5,7 @@ import numeral from 'numeral'
 import moment from 'moment'
 import { getPrimaryData } from '~/src/services/dashboard'
 import Tabs from './Tabs'
-import './Primary.less'
+import * as styles from './Primary.module.less'
 
 export default () => {
   const [measures, setMeasures] = useState<any[]>([])
@@ -126,20 +126,20 @@ export default () => {
     return {
       key: measure.name,
       element: (
-        <div className={`measure-item ${current === measure.name ? 'active' : ''}`}>
-          <div className="label">{measure.label}</div>
-          <div className="value">{measure.value}</div>
-          <div className={`percent ${measure.percent.color}`}>{measure.percent.formatted}</div>
+        <div className={`${styles.measureItem} ${current === measure.name ? styles.active : ''}`}>
+          <div className={styles.label}>{measure.label}</div>
+          <div className={styles.value}>{measure.value}</div>
+          <div className={`${styles.percent} ${styles[measure.percent.color]}`}>{measure.percent.formatted}</div>
         </div>
       ),
     }
   })
 
   return (
-    <div className="dashboard-primary">
+    <div className={styles.primary}>
       <Tabs tabs={tabs} current={current} onChange={handleChangeMeasure} />
 
-      <div className="chart">
+      <div className={styles.chart}>
         <Chart height={240} autoFit data={dv} padding="auto" scale={scale}>
           <Axis name="date" />
           <Axis

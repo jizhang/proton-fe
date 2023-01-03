@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Geom, Axis, Legend } from 'bizcharts'
 import { getActiveHourlyUsers } from '~/src/services/dashboard'
-import './VisitTime.less'
 
 export default () => {
   const [data, setData] = useState<any[]>([])
@@ -59,7 +58,6 @@ export default () => {
 
   return (
     <Card
-      className="dashboard-visit-time"
       title="Users by time of day"
       extra={<span>1 week</span>}
       style={{ borderRadius: 0 }}

@@ -1,11 +1,11 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App'
-import { rootStore, RootStoreContext } from './stores'
-import './index.css'
-import registerServiceWorker from './registerServiceWorker'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { rootStore, RootStoreContext } from './stores'
+import registerServiceWorker from './registerServiceWorker'
+import App from './App'
+import './index.css'
 
 library.add(fas)
 

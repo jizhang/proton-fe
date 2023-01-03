@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { LoginRequest } from '~/src/services/login'
 import { RootStoreContext } from '~/src/stores'
 import logo from '~/src/assets/logo.svg'
-import './Login.less'
+import * as styles from './Login.module.less'
 
 export default observer(() => {
   const { loginStore } = useContext(RootStoreContext)
@@ -25,10 +25,10 @@ export default observer(() => {
   }
 
   return (
-    <div className="page-login">
-      <div className="app-title">
+    <div>
+      <div className={styles.appTitle}>
         <img src={logo} />
-        <div className="greeting">Welcome to Proton</div>
+        <div className={styles.greeting}>Welcome to Proton</div>
       </div>
 
       <Form
