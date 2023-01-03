@@ -4,7 +4,7 @@ import { Chart, Coord, Geom } from 'bizcharts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import _ from 'lodash'
 import { getUserDevice } from '~/src/services/dashboard'
-import './UserDevice.less'
+import * as styles from './UserDevice.module.less'
 
 export default () => {
   const [devices, setDevices] = useState<any[]>([])
@@ -61,7 +61,6 @@ export default () => {
   const getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
   return (
     <Card
-      className="dashboard-user-device"
       title="Users by device"
       extra="1 day"
       style={{ borderRadius: 0 }}
@@ -79,15 +78,15 @@ export default () => {
           }}
         />
       </Chart>
-      <div className="device-list">
+      <div className={styles.deviceList}>
         {devices.map((device) => (
-          <div className="device-item" key={device.name}>
-            <div className="icon">
+          <div className={styles.deviceItem} key={device.name}>
+            <div className={styles.icon}>
               <FontAwesomeIcon icon={getIcon(device.name)} />
             </div>
-            <div className="label">{device.label}</div>
-            <div className="value">{formatPercentValue(device.current_percent)}</div>
-            <div className={`percent ${device.percent.color}`}>{device.percent.formatted}</div>
+            <div className={styles.label}>{device.label}</div>
+            <div className={styles.value}>{formatPercentValue(device.current_percent)}</div>
+            <div className={`${styles.percent} ${styles[device.percent.color]}`}>{device.percent.formatted}</div>
           </div>
         ))}
       </div>
