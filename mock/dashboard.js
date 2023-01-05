@@ -1,24 +1,19 @@
 const fs = require('fs')
 const path = require('path')
-
 const _ = require('lodash')
 const moment = require('moment')
-const express = require('express')
-const bodyParser = require('body-parser')
+const sendJson = require('send-data/json')
 
-const app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.get('/api/dashboard/activeUser', (req, res) => {
-  res.json({
+function getActiveUser(req, res) {
+  sendJson(req, res, {
     payload: {
       count: _.random(40000, 50000),
       minutes: _.times(30, () => _.random(10000, 20000)),
     },
   })
-})
+}
 
-app.get('/api/dashboard/activeHourlyUsers', (req, res) => {
+function getActiveHourlyUsers(req, res) {
   let payload = []
   for (let day = 0; day < 7; ++day) {
     for (let hour = 23; hour >= 0; --hour) {
@@ -29,37 +24,37 @@ app.get('/api/dashboard/activeHourlyUsers', (req, res) => {
       })
     }
   }
-  res.json({ payload })
-})
+  sendJson(req, res, { payload })
+}
 
-function getGeoChina() {
+function getGeoChinaData() {
   let content = fs.readFileSync(path.join(__dirname, 'geo-china.json'))
   let payload = JSON.parse(content)
   return payload
 }
 
-app.get('/api/dashboard/geoChina', (req, res) => {
-  res.json({
-    payload: getGeoChina(),
+function getGeoChina(req, res) {
+  sendJson(req, res, {
+    payload: getGeoChinaData(),
   })
-})
+}
 
-app.get('/api/dashboard/userGeo', (req, res) => {
-  let province = _.map(getGeoChina(), (item) => {
+function getUserGeo(req, res) {
+  let province = _.map(getGeoChinaData(), (item) => {
     return {
       name: item.properties.name,
       value: _.random(5000, 20000),
     }
   })
 
-  res.json({
+  sendJson(req, res, {
     payload: {
       province,
     },
   })
-})
+}
 
-app.get('/api/dashboard/primaryData', (req, res) => {
+function getPrimaryData(req, res) {
   let users = {
     name: 'users',
     label: 'Users',
@@ -120,14 +115,14 @@ app.get('/api/dashboard/primaryData', (req, res) => {
     }),
   }
 
-  res.json({
+  sendJson(req, res, {
     payload: {
       measures: [users, sessions, bounceRate, sessionDuration],
     },
   })
-})
+}
 
-app.get('/api/dashboard/userSource', (req, res) => {
+function getUserSource(req, res) {
   let trafficChannel = {
     name: 'traffic_channel',
     label: 'Traffic Channel',
@@ -173,14 +168,14 @@ app.get('/api/dashboard/userSource', (req, res) => {
     }),
   }
 
-  res.json({
+  sendJson(req, res, {
     payload: {
       measures: [trafficChannel, sourceMedium, referrals],
     },
   })
-})
+}
 
-app.get('/api/dashboard/userDevice', (req, res) => {
+function getUserDevice(req, res) {
   let devices = [
     {
       name: 'iphone',
@@ -196,14 +191,14 @@ app.get('/api/dashboard/userDevice', (req, res) => {
     },
   ]
 
-  res.json({
+  sendJson(req, res, {
     payload: {
       devices,
     },
   })
-})
+}
 
-app.get('/api/dashboard/userRetention', (req, res) => {
+function getUserRetention(req, res) {
   let date = moment().startOf('isoWeek')
   let retention = _.times(6, (i) => {
     let startDate = moment(date).subtract(6 - i, 'weeks')
@@ -222,38 +217,20 @@ app.get('/api/dashboard/userRetention', (req, res) => {
     }
   })
 
-  res.json({
+  sendJson(req, res, {
     payload: {
       retention,
     },
   })
-})
+}
 
-app.post('/api/login', (req, res) => {
-  let { username, password } = req.body
-  if (username === 'admin' && password === '888888') {
-    res.json({
-      payload: {
-        id: 1,
-        nickname: 'Jerry',
-      },
-    })
-  } else {
-    res.status(400).json({
-      code: 400,
-      payload: {
-        message: 'invalid username or password',
-      },
-    })
-  }
-})
-
-app.post('/api/logout', (req, res) => {
-  res.json({
-    payload: 'ok',
-  })
-})
-
-const server = app.listen(3001, () => {
-  console.log('mock server listening on port ' + server.address().port)
-})
+module.exports = {
+  'GET /api/dashboard/activeUser': getActiveUser,
+  'GET /api/dashboard/activeHourlyUsers': getActiveHourlyUsers,
+  'GET /api/dashboard/geoChina': getGeoChina,
+  'GET /api/dashboard/userGeo': getUserGeo,
+  'GET /api/dashboard/primaryData': getPrimaryData,
+  'GET /api/dashboard/userSource': getUserSource,
+  'GET /api/dashboard/userDevice': getUserDevice,
+  'GET /api/dashboard/userRetention': getUserRetention,
+}
