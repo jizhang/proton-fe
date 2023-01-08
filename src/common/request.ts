@@ -53,7 +53,20 @@ export async function get(url: string, args?: any) {
   return await request(url)
 }
 
-export async function post(url: string, form?: any) {
+export async function post(url: string, json?: any) {
+  const config: RequestInit = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  if (!_.isEmpty(json)) {
+    config.body = JSON.stringify(json)
+  }
+  return request(url, config)
+}
+
+export async function postForm(url: string, form?: any) {
   const config: RequestInit = {
     method: 'POST',
     headers: {

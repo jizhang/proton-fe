@@ -5,11 +5,10 @@ const bodyParser = require('body-parser')
 module.exports = function (app) {
   if (process.env.MOCK === 'none') {
     const proxy = createProxyMiddleware('/api', {
-      target: 'http://localhost:3001/',
+      target: 'http://localhost:8080/',
     })
     app.use(proxy)
   } else {
-    app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
     app.use(createMockMiddleware('./mock'))
   }
