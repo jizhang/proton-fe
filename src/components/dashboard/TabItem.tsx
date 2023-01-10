@@ -15,7 +15,11 @@ export default (props: Props) => {
 
   const { tab, active } = props
   return (
-    <div className={`${styles.tabItem} ${active ? styles.active : ''}`} key={tab.key} onClick={handleClick}>
+    <div
+      className={`${styles.tabItem} ${active ? styles.active : ''}`}
+      key={tab.key}
+      onClick={handleClick}
+    >
       <div className={styles.bar} />
       {tab.element}
     </div>

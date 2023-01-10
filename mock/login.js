@@ -1,3 +1,5 @@
+const qs = require('qs')
+const url = require('url')
 const sendJson = require('send-data/json')
 
 function login(req, res) {
@@ -29,4 +31,9 @@ function logout(req, res) {
 module.exports = {
   'POST /api/login': login,
   'POST /api/logout': logout,
+  'GET /:controller/:action': (req, res, params) => {
+    const { query } = url.parse(req.url)
+    console.log(params, qs.parse(query))
+    res.end()
+  },
 }

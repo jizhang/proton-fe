@@ -60,11 +60,7 @@ export default () => {
   }
   const getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
   return (
-    <Card
-      title="Users by device"
-      extra="1 day"
-      style={{ borderRadius: 0 }}
-    >
+    <Card title="Users by device" extra="1 day" style={{ borderRadius: 0 }}>
       <Chart autoFit height={240} data={devices} padding={[-25, 0, -10, 0]}>
         <Coord type="theta" radius={0.75} innerRadius={0.6} />
         <Geom
@@ -86,7 +82,9 @@ export default () => {
             </div>
             <div className={styles.label}>{device.label}</div>
             <div className={styles.value}>{formatPercentValue(device.current_percent)}</div>
-            <div className={`${styles.percent} ${styles[device.percent.color]}`}>{device.percent.formatted}</div>
+            <div className={`${styles.percent} ${styles[device.percent.color]}`}>
+              {device.percent.formatted}
+            </div>
           </div>
         ))}
       </div>

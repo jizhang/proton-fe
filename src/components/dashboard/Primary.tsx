@@ -129,7 +129,9 @@ export default () => {
         <div className={`${styles.measureItem} ${current === measure.name ? styles.active : ''}`}>
           <div className={styles.label}>{measure.label}</div>
           <div className={styles.value}>{measure.value}</div>
-          <div className={`${styles.percent} ${styles[measure.percent.color]}`}>{measure.percent.formatted}</div>
+          <div className={`${styles.percent} ${styles[measure.percent.color]}`}>
+            {measure.percent.formatted}
+          </div>
         </div>
       ),
     }

@@ -57,11 +57,7 @@ export default () => {
   }
 
   return (
-    <Card
-      title="Users by time of day"
-      extra={<span>1 week</span>}
-      style={{ borderRadius: 0 }}
-    >
+    <Card title="Users by time of day" extra={<span>1 week</span>} style={{ borderRadius: 0 }}>
       <Chart data={data} height={450} padding={[0, 45, 50, 0]} scale={scale} autoFit>
         <Axis
           name="hour"

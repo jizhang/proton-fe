@@ -33,11 +33,7 @@ export default observer(() => {
   })
 
   return (
-    <Card
-      title="Real time"
-      extra="Last 5 minutes"
-      style={{ borderRadius: 0 }}
-    >
+    <Card title="Real time" extra="Last 5 minutes" style={{ borderRadius: 0 }}>
       <CountUp
         className={styles.value}
         start={realtime.previousCount}

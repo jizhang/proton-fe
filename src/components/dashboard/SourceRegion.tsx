@@ -67,11 +67,7 @@ export default () => {
   }
 
   return (
-    <Card
-      title="Users by location"
-      extra={<span>1 day</span>}
-      style={{ borderRadius: 0 }}
-    >
+    <Card title="Users by location" extra={<span>1 day</span>} style={{ borderRadius: 0 }}>
       <Chart autoFit height={chartHeight} padding={[0, 0, -80, 0]} data={geoData} pure>
         <Geom
           type="polygon"

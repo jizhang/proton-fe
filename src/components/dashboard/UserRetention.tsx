@@ -25,11 +25,7 @@ export default observer(() => {
 
   const { userRetention } = dashboardStore
   return (
-    <Card
-      title="User retention"
-      extra="6 weeks"
-      style={{ borderRadius: 0 }}
-    >
+    <Card title="User retention" extra="6 weeks" style={{ borderRadius: 0 }}>
       <table className={styles.dataTable}>
         <tbody>
           <tr>
