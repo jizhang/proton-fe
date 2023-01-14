@@ -23,19 +23,19 @@ export async function request(url: string, config?: RequestInit) {
 
   // success
   if (response.ok) {
-    const success = await response.json()
-    return success.payload
+    const payload = await response.json()
+    return payload.payload || payload
   }
 
   // 400 Bad Request
   if (response.status === 400) {
-    const failure = await response.json()
+    const payload = await response.json()
     // global toast
-    if (failure.code === 400) {
-      Toast.show({ icon: 'fail', content: failure.payload.message })
+    if (payload.code === 400) {
+      Toast.show({ icon: 'fail', content: payload.message })
     }
     // raise error for downstream processing
-    throw new RequestError(failure.code, failure.payload)
+    throw new RequestError(payload.code, payload)
   }
 
   // 401 Unauthorized
