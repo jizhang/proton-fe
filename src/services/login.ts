@@ -1,4 +1,4 @@
-import { request, post } from '~/src/common/request'
+import { request, post, clearCsrfToken } from '~/src/common/request'
 
 export interface LoginRequest {
   username: string
@@ -15,7 +15,11 @@ export async function login(data: LoginRequest): Promise<CurrentUser> {
 }
 
 export async function logout() {
-  return post('/api/logout')
+  try {
+    return await post('/api/logout')
+  } finally {
+    clearCsrfToken()
+  }
 }
 
 export async function getCurrentUser(): Promise<CurrentUser> {

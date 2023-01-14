@@ -1,7 +1,10 @@
 import _ from 'lodash'
 import qs from 'qs'
+import moment from 'moment'
 import { Toast } from 'antd-mobile'
 import router from '~/src/router'
+
+const CSRF_STORAGE_KEY = 'csrf'
 
 class RequestError {
   constructor(public code: number, public payload: any) {}
@@ -85,6 +88,22 @@ export async function postForm(url: string, form?: any) {
 }
 
 async function getCsrfToken() {
-  const payload = await request('/api/csrf') // TODO Local storage
-  return payload.token
+  const value = localStorage.getItem(CSRF_STORAGE_KEY)
+  if (value) {
+    const csrf = JSON.parse(value)
+    if (moment().isBefore(csrf.expire)) {
+      return csrf.token
+    }
+  }
+  const payload = await request('/api/csrf')
+  const csrf = {
+    token: payload.token,
+    expire: moment().add(5, 'minutes'),
+  }
+  localStorage.setItem(CSRF_STORAGE_KEY, JSON.stringify(csrf))
+  return csrf.token
+}
+
+export function clearCsrfToken() {
+  localStorage.removeItem(CSRF_STORAGE_KEY)
 }
