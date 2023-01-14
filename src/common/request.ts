@@ -61,6 +61,7 @@ export async function post(url: string, json?: any) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': await getCsrfToken(),
     },
   }
   if (!_.isEmpty(json)) {
@@ -74,10 +75,16 @@ export async function postForm(url: string, form?: any) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRF-TOKEN': await getCsrfToken(),
     },
   }
   if (!_.isEmpty(form)) {
     config.body = qs.stringify(form)
   }
   return await request(url, config)
+}
+
+async function getCsrfToken() {
+  const payload = await request('/api/csrf') // TODO Local storage
+  return payload.token
 }

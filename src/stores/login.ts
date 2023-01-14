@@ -14,7 +14,7 @@ export default class LoingStore {
 
   loggingIn = false
   loggingOut = false
-  currentUser: service.LoginResponse = getDefaultCurrentUser()
+  currentUser: service.CurrentUser = getDefaultCurrentUser()
 
   constructor(rootStore: RootStore) {
     makeAutoObservable(this, { rootStore: false })
@@ -47,5 +47,12 @@ export default class LoingStore {
         this.loggingOut = false
       })
     }
+  }
+
+  async getCurrentUser() {
+    const payload = await service.getCurrentUser()
+    runInAction(() => {
+      this.currentUser = payload
+    })
   }
 }

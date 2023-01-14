@@ -35,8 +35,15 @@ function getCurrentUser(req, res) {
   })
 }
 
+function getCsrfToken(req, res) {
+  sendJson(req, res, {
+    token: 'mock-token',
+  })
+}
+
 module.exports = {
   'POST /api/login': login,
   'POST /api/logout': logout,
   'GET /api/current-user': getCurrentUser,
+  'GET /api/csrf': getCsrfToken,
 }
