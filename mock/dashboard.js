@@ -116,8 +116,11 @@ function getPrimaryData(req, res) {
   }
 
   sendJson(req, res, {
-    payload: {
-      measures: [users, sessions, bounceRate, sessionDuration],
+    statusCode: 200,
+    body: {
+      payload: {
+        measures: [users, sessions, bounceRate, sessionDuration],
+      },
     },
   })
 }

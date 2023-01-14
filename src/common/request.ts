@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import qs from 'qs'
 import { Toast } from 'antd-mobile'
+import router from '~/src/router'
 
 class RequestError {
   constructor(public code: number, public payload: any) {}
@@ -39,10 +40,12 @@ export async function request(url: string, config?: RequestInit) {
 
   // 401 Unauthorized
   if (response.status === 401) {
-    // TODO redirect to /login
+    router.navigate('/login')
+    throw new RequestError(401, null)
   }
 
   // other error
+  Toast.show({ icon: 'fail', content: response.status + ' ' + response.statusText })
   throw new RequestError(response.status, response.statusText)
 }
 
