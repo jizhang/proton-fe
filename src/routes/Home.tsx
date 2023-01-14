@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Space } from 'antd-mobile'
 import { observer } from 'mobx-react-lite'
@@ -9,6 +9,10 @@ import * as styles from './Home.module.css'
 export default observer(() => {
   const { loginStore } = useContext(RootStoreContext)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    loginStore.getCurrentUser()
+  }, [])
 
   function gotoDashboard() {
     navigate('/dashboard')

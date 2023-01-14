@@ -1,39 +1,49 @@
-const qs = require('qs')
-const url = require('url')
 const sendJson = require('send-data/json')
 
 function login(req, res) {
   let { username, password } = req.body
   if (username === 'admin' && password === '888888') {
     sendJson(req, res, {
-      payload: {
+      statusCode: 200,
+      body: {
         id: 1,
         nickname: 'Jerry',
       },
     })
   } else {
-    res.statusCode = 400
     sendJson(req, res, {
-      code: 400,
-      payload: {
-        message: 'invalid username or password',
+      statusCode: 400,
+      body: {
+        code: 400,
+        message: 'Invalid username or password',
       },
     })
   }
 }
 
 function logout(req, res) {
+  sendJson(req, res, {})
+}
+
+function getCurrentUser(req, res) {
   sendJson(req, res, {
-    payload: 'ok',
+    statusCode: 200,
+    body: {
+      id: 1,
+      nickname: 'Jerry',
+    },
+  })
+}
+
+function getCsrfToken(req, res) {
+  sendJson(req, res, {
+    token: 'mock-token',
   })
 }
 
 module.exports = {
   'POST /api/login': login,
   'POST /api/logout': logout,
-  'GET /:controller/:action': (req, res, params) => {
-    const { query } = url.parse(req.url)
-    console.log(params, qs.parse(query))
-    res.end()
-  },
+  'GET /api/current-user': getCurrentUser,
+  'GET /api/csrf': getCsrfToken,
 }

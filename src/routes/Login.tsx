@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Toast } from 'antd-mobile'
 import { observer } from 'mobx-react-lite'
@@ -11,9 +11,11 @@ import * as styles from './Login.module.less'
 export default observer(() => {
   const { loginStore } = useContext(RootStoreContext)
   const navigate = useNavigate()
+  const [loginDisabled, setLoginDisabled] = useState(false)
 
   const handleSubmit = (values: LoginRequest) => {
     loginStore.login(values).then(() => {
+      setLoginDisabled(true)
       Toast.show({
         icon: 'success',
         content: `Welcome, ${loginStore.currentUser.nickname}!`,
@@ -35,7 +37,13 @@ export default observer(() => {
         layout="horizontal"
         onFinish={handleSubmit}
         footer={
-          <Button type="submit" color="primary" block loading={loginStore.loggingIn}>
+          <Button
+            type="submit"
+            color="primary"
+            block
+            loading={loginStore.loggingIn}
+            disabled={loginDisabled}
+          >
             Login
           </Button>
         }
