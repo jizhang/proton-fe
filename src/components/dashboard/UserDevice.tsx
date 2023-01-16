@@ -58,7 +58,11 @@ export default () => {
     iphone: 'mobile-alt',
     ipad: 'tablet-alt',
   }
-  const getIcon = (name: string) => _.get(iconMapping, name, 'desktop')
+
+  function getIcon(name: string) {
+    return _.get(iconMapping, name, 'desktop')
+  }
+
   return (
     <Card title="Users by device" extra="1 day" style={{ borderRadius: 0 }}>
       <Chart autoFit height={240} data={devices} padding={[-25, 0, -10, 0]}>

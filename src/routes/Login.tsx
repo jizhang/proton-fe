@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Toast } from 'antd-mobile'
+import { UserOutline, KeyOutline } from 'antd-mobile-icons'
 import { observer } from 'mobx-react-lite'
 import _ from 'lodash'
 import { LoginRequest } from '~/src/services/login'
@@ -36,6 +37,7 @@ export default observer(() => {
       <Form
         layout="horizontal"
         onFinish={handleSubmit}
+        requiredMarkStyle="none"
         footer={
           <Button
             type="submit"
@@ -47,11 +49,22 @@ export default observer(() => {
             Login
           </Button>
         }
+        style={{
+          '--prefix-width': '2em',
+        }}
       >
-        <Form.Item name="username" label="Username">
+        <Form.Item
+          name="username"
+          label={<UserOutline />}
+          rules={[{ required: true, message: 'Username cannot be empty' }]}
+        >
           <Input placeholder="Username" />
         </Form.Item>
-        <Form.Item name="password" label="Password">
+        <Form.Item
+          name="password"
+          label={<KeyOutline />}
+          rules={[{ required: true, message: 'Password cannot be empty' }]}
+        >
           <Input type="password" placeholder="Password" />
         </Form.Item>
       </Form>
