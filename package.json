@@ -7,6 +7,7 @@
     "start": "parcel",
     "start:local": "cross-env MOCK=none parcel",
     "lint": "eslint --fix . && prettier --write .",
+    "lint:ci": "eslint . && prettier --check .",
     "build": "parcel build",
     "prepare": "is-ci || husky install"
   },
