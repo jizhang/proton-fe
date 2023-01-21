@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import Home from './routes/Home'
-import Dashboard from './routes/Dashboard'
 import Login from './routes/Login'
+
+const Dashboard = lazy(() => import('./routes/Dashboard'))
 
 export default createBrowserRouter([
   { path: '/', element: <Home /> },
