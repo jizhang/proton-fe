@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Card } from 'antd-mobile'
 import { Chart, Coord, Geom } from 'bizcharts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faMobileScreenButton,
+  faTabletScreenButton,
+  faDesktop,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons'
 import _ from 'lodash'
 import { getUserDevice } from '~/src/services/dashboard'
 import * as styles from './UserDevice.module.less'
@@ -54,13 +60,13 @@ export default () => {
     return _.round(value * 100, 1) + '%'
   }
 
-  const iconMapping = {
-    iphone: 'mobile-alt',
-    ipad: 'tablet-alt',
+  const iconMapping: Record<string, IconDefinition> = {
+    iphone: faMobileScreenButton,
+    ipad: faTabletScreenButton,
   }
 
   function getIcon(name: string) {
-    return _.get(iconMapping, name, 'desktop')
+    return _.get(iconMapping, name, faDesktop)
   }
 
   return (
