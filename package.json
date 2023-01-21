@@ -31,7 +31,7 @@
     "react-router-dom": "^6.6.1"
   },
   "devDependencies": {
-    "@parcel/transformer-less": "^2.8.2",
+    "@parcel/transformer-less": "^2.8.3",
     "@types/lodash": "^4.14.112",
     "@types/node": "^18.0.0",
     "@types/numeral": "^0.0.23",
@@ -49,7 +49,7 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^13.1.0",
-    "parcel": "^2.8.2",
+    "parcel": "^2.8.3",
     "prettier": "^2.8.1",
     "process": "^0.11.10",
     "routes": "^2.1.0",
