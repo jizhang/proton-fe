@@ -5,7 +5,7 @@
     "paths": {
       "~/*": ["./*"]
     },
-    "module": "es6",
+    "module": "esnext",
     "target": "es6",
     "lib": ["es6", "dom"],
     "sourceMap": true,
