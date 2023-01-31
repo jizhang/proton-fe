@@ -8,7 +8,7 @@ export default () => {
 
   useEffect(() => {
     getActiveHourlyUsers().then((payload) => {
-      setData(payload)
+      setData(payload.data)
     })
   }, [])
 

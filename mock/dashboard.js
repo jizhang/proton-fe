@@ -6,36 +6,34 @@ const sendJson = require('send-data/json')
 
 function getActiveUser(req, res) {
   sendJson(req, res, {
-    payload: {
-      count: _.random(40000, 50000),
-      minutes: _.times(30, () => _.random(10000, 20000)),
-    },
+    count: _.random(40000, 50000),
+    minutes: _.times(30, () => _.random(10000, 20000)),
   })
 }
 
 function getActiveHourlyUsers(req, res) {
-  let payload = []
+  let data = []
   for (let day = 0; day < 7; ++day) {
     for (let hour = 23; hour >= 0; --hour) {
-      payload.push({
+      data.push({
         day,
         hour,
         users: _.random(100000, 200000),
       })
     }
   }
-  sendJson(req, res, { payload })
+  sendJson(req, res, { data })
 }
 
 function getGeoChinaData() {
   let content = fs.readFileSync(path.join(__dirname, 'geo-china.json'))
-  let payload = JSON.parse(content)
-  return payload
+  let data = JSON.parse(content)
+  return data
 }
 
 function getGeoChina(req, res) {
   sendJson(req, res, {
-    payload: getGeoChinaData(),
+    geoChina: getGeoChinaData(),
   })
 }
 
@@ -48,9 +46,7 @@ function getUserGeo(req, res) {
   })
 
   sendJson(req, res, {
-    payload: {
-      province,
-    },
+    province,
   })
 }
 
@@ -118,9 +114,7 @@ function getPrimaryData(req, res) {
   sendJson(req, res, {
     statusCode: 200,
     body: {
-      payload: {
-        measures: [users, sessions, bounceRate, sessionDuration],
-      },
+      measures: [users, sessions, bounceRate, sessionDuration],
     },
   })
 }
@@ -172,9 +166,7 @@ function getUserSource(req, res) {
   }
 
   sendJson(req, res, {
-    payload: {
-      measures: [trafficChannel, sourceMedium, referrals],
-    },
+    measures: [trafficChannel, sourceMedium, referrals],
   })
 }
 
@@ -195,9 +187,7 @@ function getUserDevice(req, res) {
   ]
 
   sendJson(req, res, {
-    payload: {
-      devices,
-    },
+    devices,
   })
 }
 
@@ -221,9 +211,7 @@ function getUserRetention(req, res) {
   })
 
   sendJson(req, res, {
-    payload: {
-      retention,
-    },
+    retention,
   })
 }
 

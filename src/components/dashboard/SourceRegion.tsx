@@ -18,7 +18,7 @@ export default () => {
   function requestData() {
     const requests = [getGeoChina(), getUserGeo()]
     Promise.all(requests).then((payloads) => {
-      const geoChina = payloads[0]
+      const { geoChina } = payloads[0]
       const { province } = payloads[1]
       setGeoData(processData(geoChina, province))
       setBarData(processBarData(province))

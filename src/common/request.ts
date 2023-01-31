@@ -26,8 +26,7 @@ export async function request(url: string, config?: RequestInit) {
 
   // success
   if (response.ok) {
-    const payload = await response.json()
-    return payload.payload || payload
+    return await response.json()
   }
 
   // 400 Bad Request
