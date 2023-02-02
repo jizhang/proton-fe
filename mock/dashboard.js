@@ -51,17 +51,20 @@ function getUserGeo(req, res) {
 }
 
 function getPrimaryData(req, res) {
+  const days = 14
+
   let users = {
     name: 'users',
     label: 'Users',
     format: 'integer',
-    data: _.times(14, (i) => {
+    data: _.times(days, (i) => {
+      const date = moment().subtract(days - i, 'days')
+      const previousDate = moment(date).subtract(days, 'days')
       return {
-        date: moment()
-          .subtract(14 - i, 'days')
-          .format('YYYY-MM-DD'),
+        date: date.format('YYYY-MM-DD'),
         current: _.random(100000, 200000),
         previous: _.random(100000, 200000),
+        previousDate: previousDate.format('YYYY-MM-DD'),
       }
     }),
   }
@@ -71,12 +74,13 @@ function getPrimaryData(req, res) {
     label: 'Sessions',
     format: 'integer',
     data: _.times(14, (i) => {
+      const date = moment().subtract(days - i, 'days')
+      const previousDate = moment(date).subtract(days, 'days')
       return {
-        date: moment()
-          .subtract(14 - i, 'days')
-          .format('YYYY-MM-DD'),
+        date: date.format('YYYY-MM-DD'),
         current: _.random(200000, 400000),
         previous: _.random(200000, 400000),
+        previousDate: previousDate.format('YYYY-MM-DD'),
       }
     }),
   }
@@ -86,12 +90,13 @@ function getPrimaryData(req, res) {
     label: 'Bounce Rate',
     format: 'percent',
     data: _.times(14, (i) => {
+      const date = moment().subtract(days - i, 'days')
+      const previousDate = moment(date).subtract(days, 'days')
       return {
-        date: moment()
-          .subtract(14 - i, 'days')
-          .format('YYYY-MM-DD'),
+        date: date.format('YYYY-MM-DD'),
         current: _.random(0.8, 0.9, true),
         previous: _.random(0.8, 0.9, true),
+        previousDate: previousDate.format('YYYY-MM-DD'),
       }
     }),
   }
@@ -101,12 +106,13 @@ function getPrimaryData(req, res) {
     label: 'Session Duration',
     format: 'interval',
     data: _.times(14, (i) => {
+      const date = moment().subtract(days - i, 'days')
+      const previousDate = moment(date).subtract(days, 'days')
       return {
-        date: moment()
-          .subtract(14 - i, 'days')
-          .format('YYYY-MM-DD'),
+        date: date.format('YYYY-MM-DD'),
         current: _.random(300, 600),
         previous: _.random(300, 600),
+        previousDate: previousDate.format('YYYY-MM-DD'),
       }
     }),
   }

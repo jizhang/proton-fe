@@ -63,7 +63,7 @@ export default () => {
           date: item.date,
           key,
           value: item[key],
-          dateKey: `${item.date}|${key}`,
+          displayDate: key === 'current' ? item.date : item.previousDate,
         }
       })
     })
@@ -82,7 +82,7 @@ export default () => {
           value = formatValue(current, measure.format, true)
           percent = formatPercent(current, previous)
           dv = transformData(measure.data)
-          max = _.round(_(dv).map('value').max() * 1.1)
+          max = _(dv).map('value').max() * 1.1
         }
 
         return {
@@ -172,18 +172,10 @@ export default () => {
               },
             ]}
             tooltip={[
-              'dateKey*value',
-              (dateKey, value) => {
-                const [date, key] = dateKey.split('|')
-                let name: string
-                if (key === 'previous') {
-                  name = moment(date).subtract(7, 'days').format('M.D')
-                } else {
-                  name = moment(date).format('M.D')
-                }
-
+              'displayDate*value',
+              (displayDate, value) => {
                 return {
-                  name,
+                  name: moment(displayDate).format('M.D'),
                   value: formatValue(value, measure.format, false),
                 }
               },
