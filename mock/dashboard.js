@@ -32,9 +32,7 @@ function getGeoChinaData() {
 }
 
 function getGeoChina(req, res) {
-  sendJson(req, res, {
-    geoChina: getGeoChinaData(),
-  })
+  sendJson(req, res, getGeoChinaData())
 }
 
 function getUserGeo(req, res) {
