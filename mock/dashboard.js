@@ -12,16 +12,13 @@ function getActiveUser(req, res) {
 }
 
 function getActiveHourlyUsers(req, res) {
-  let data = []
-  for (let day = 0; day < 7; ++day) {
-    for (let hour = 23; hour >= 0; --hour) {
-      data.push({
-        day,
-        hour,
-        users: _.random(100000, 200000),
-      })
+  const startDate = moment().startOf('day').subtract(7, 'days')
+  const data = _.times(7 * 24, (i) => {
+    return {
+      report_hour: moment(startDate).add(i, 'hours').format('YYYY-MM-DD HH:00:00'),
+      user_count: _.random(10000, 20000),
     }
-  }
+  })
   sendJson(req, res, { data })
 }
 
