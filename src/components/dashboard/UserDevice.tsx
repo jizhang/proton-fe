@@ -90,7 +90,7 @@ export default () => {
             <div className={styles.icon}>
               <FontAwesomeIcon icon={getIcon(device.name)} />
             </div>
-            <div className={styles.label}>{device.label}</div>
+            <div className={styles.label}>{device.name}</div>
             <div className={styles.value}>{formatPercentValue(device.current_percent)}</div>
             <div className={`${styles.percent} ${styles[device.percent.color]}`}>
               {device.percent.formatted}

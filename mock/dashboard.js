@@ -172,18 +172,22 @@ function getUserSource(req, res) {
 }
 
 function getUserDevice(req, res) {
-  let devices = [
+  const devices = [
     {
-      name: 'iphone',
-      label: 'iPhone',
-      current: _.random(150000, 200000),
-      previous: _.random(150000, 200000),
-    },
-    {
-      name: 'ipad',
-      label: 'iPad',
+      name: 'Desktop',
       current: _.random(10000, 20000),
       previous: _.random(10000, 20000),
+    },
+    {
+      name: 'iPhone',
+      current: _.random(5000, 10000),
+      previous: _.random(5000, 10000),
+    },
+
+    {
+      name: 'iPad',
+      current: _.random(1000, 2000),
+      previous: _.random(1000, 2000),
     },
   ]
 
