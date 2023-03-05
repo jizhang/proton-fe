@@ -49,6 +49,15 @@ export default observer(() => {
         <Button color="primary" onClick={gotoDashboard} block>
           Dashboard
         </Button>
+        <Button
+          color="primary"
+          block
+          onClick={() => {
+            navigate('/realtime')
+          }}
+        >
+          Realtive Overview
+        </Button>
       </Space>
     </div>
   )
