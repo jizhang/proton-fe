@@ -56,7 +56,7 @@ export default observer(() => {
             navigate('/realtime')
           }}
         >
-          Realtive Overview
+          Realtime Overview
         </Button>
       </Space>
     </div>

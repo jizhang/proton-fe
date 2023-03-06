@@ -1,13 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { NavBar } from 'antd-mobile'
-import Realtime from '../components/dashboard/Realtime'
+import Users from '../components/realtime/Users'
 import * as styles from './Dashboard.module.less'
 
 export default () => {
   const navigate = useNavigate()
 
-  const cards = [{ name: 'realtime', component: <Realtime /> }]
+  const cards = [{ name: 'realtime', component: <Users /> }]
 
   const gotoHome = () => {
     navigate('/')
