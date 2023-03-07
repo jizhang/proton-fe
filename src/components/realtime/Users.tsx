@@ -58,7 +58,7 @@ export default () => {
       <div className={styles.legendList}>
         {deviceData.map((item, index) => {
           return (
-            <div className={styles.legendItem}>
+            <div className={styles.legendItem} key={item.type}>
               <div className={styles.type}>
                 <span
                   className={styles.dot}
