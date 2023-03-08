@@ -2,7 +2,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { NavBar } from 'antd-mobile'
 import Users from '../components/realtime/Users'
-import ListPanel from '../components/realtime/ListPanel'
+import Acquisition from '../components/realtime/Acquisition'
+import Audience from '../components/realtime/Audience'
+import UserProperty from '../components/realtime/UserProperty'
 import * as styles from './Dashboard.module.less'
 
 export default () => {
@@ -10,7 +12,9 @@ export default () => {
 
   const cards = [
     { name: 'users', component: <Users /> },
-    { name: 'source', component: <ListPanel /> },
+    { name: 'acquisition', component: <Acquisition /> },
+    { name: 'audience', component: <Audience /> },
+    { name: 'userProperty', component: <UserProperty /> },
   ]
 
   const gotoHome = () => {
