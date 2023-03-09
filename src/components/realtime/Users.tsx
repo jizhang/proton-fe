@@ -4,12 +4,11 @@ import { Card } from 'antd-mobile'
 import { Chart, Interval, Axis, Coordinate, Legend, getTheme } from 'bizcharts'
 import CountUp from 'react-countup'
 import { formatPercent } from '~/src/common/utils'
+import BarChart from './BarChart'
 import * as styles from './Users.module.less'
 
 export default () => {
-  const data = _.times(30, (x) => {
-    return { x, y: _.random(1000, 2000) * _.random(0, 5) }
-  })
+  const data = _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
 
   const deviceData = [
     { type: 'DESKTOP', value: 0.7365 },
@@ -24,28 +23,9 @@ export default () => {
       <div className={styles.title} style={{ marginTop: '18px' }}>
         USER PER MINUTE
       </div>
-      <Chart
-        height={80}
-        autoFit
-        data={data}
-        scale={{
-          x: {
-            type: 'cat',
-          },
-        }}
-      >
-        <Interval position="x*y" size={10} tooltip={false} />
-        <Axis
-          name="x"
-          label={null}
-          line={{
-            style: {
-              stroke: getTheme().colors10[0],
-            },
-          }}
-        />
-        <Axis name="y" visible={false} />
-      </Chart>
+      <div style={{ height: '80px' }}>
+        <BarChart data={data} size={10} />
+      </div>
       <div className={styles.title} style={{ marginTop: '18px' }}>
         DEVICE CATEGORY IN LAST 30 MINUTES
       </div>

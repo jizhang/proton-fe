@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash'
 import { Card } from 'antd-mobile'
 import { LeftOutline, RightOutline } from 'antd-mobile-icons'
-import { Chart, Interval, Axis, getTheme } from 'bizcharts'
+import { getTheme } from 'bizcharts'
 import { formatInteger, formatPercent } from '~/src/common/utils'
+import BarChart from './BarChart'
 import * as styles from './ListPanel.module.less'
 
 interface Props {
@@ -18,8 +18,6 @@ interface Props {
 }
 
 export default (props: Props) => {
-  const chartData = _.map(props.chartData, (y, x) => ({ x, y }))
-
   const topData =
     props.listData.length > 0
       ? props.listData[0]
@@ -41,31 +39,7 @@ export default (props: Props) => {
           <div className={styles.percent}>{formatPercent(topData.percent)}</div>
         </div>
         <div className={styles.chart}>
-          {props.chartData.length > 0 ? (
-            <Chart
-              autoFit
-              data={chartData}
-              scale={{
-                x: {
-                  type: 'cat',
-                },
-              }}
-            >
-              <Interval position="x*y" size={6} tooltip={false} />
-              <Axis
-                name="x"
-                label={null}
-                line={{
-                  style: {
-                    stroke: getTheme().colors10[0],
-                  },
-                }}
-              />
-              <Axis name="y" visible={false} />
-            </Chart>
-          ) : (
-            <div className={styles.noData}>No data available</div>
-          )}
+          <BarChart data={props.chartData} size={6} />
         </div>
       </div>
       <div className={styles.listTitle}>
