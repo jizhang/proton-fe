@@ -4,6 +4,7 @@ import { NavBar } from 'antd-mobile'
 import Users from '../components/realtime/Users'
 import Acquisition from '../components/realtime/Acquisition'
 import Audience from '../components/realtime/Audience'
+import PageTitle from '../components/realtime/PageTitle'
 import UserProperty from '../components/realtime/UserProperty'
 import * as styles from './Dashboard.module.less'
 
@@ -14,6 +15,7 @@ export default () => {
     { name: 'users', component: <Users /> },
     { name: 'acquisition', component: <Acquisition /> },
     { name: 'audience', component: <Audience /> },
+    { name: 'pageTitle', component: <PageTitle /> },
     { name: 'userProperty', component: <UserProperty /> },
   ]
 
