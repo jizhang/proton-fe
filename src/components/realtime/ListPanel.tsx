@@ -1,10 +1,12 @@
-import React from 'react'
-import { Card } from 'antd-mobile'
+import React, { useState } from 'react'
+import { Card, Button } from 'antd-mobile'
 import { LeftOutline, RightOutline } from 'antd-mobile-icons'
 import { getTheme } from 'bizcharts'
 import { formatInteger, formatPercent } from '~/src/common/utils'
 import BarChart from './BarChart'
 import * as styles from './ListPanel.module.less'
+
+const PAGE_SIZE = 6
 
 interface Props {
   measureName: string
@@ -18,6 +20,8 @@ interface Props {
 }
 
 export default (props: Props) => {
+  const [page, setPage] = useState(1)
+
   const topData =
     props.listData.length > 0
       ? props.listData[0]
@@ -26,6 +30,8 @@ export default (props: Props) => {
           value: 0,
           percent: 0,
         }
+
+  const pageData = props.listData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
   return (
     <Card>
@@ -49,7 +55,7 @@ export default (props: Props) => {
       {props.listData.length > 0 ? (
         <React.Fragment>
           <div className={styles.listBody}>
-            {props.listData.map((item) => {
+            {pageData.map((item) => {
               return (
                 <div key={item.key} className={styles.listItem}>
                   <div className={styles.metric}>
@@ -68,7 +74,27 @@ export default (props: Props) => {
             })}
           </div>
           <div className={styles.pagination}>
-            1-{props.listData.length} of {props.listData.length} <LeftOutline /> <RightOutline />
+            {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, props.listData.length)}
+            {' of '}
+            {props.listData.length}
+            <Button
+              fill="none"
+              size="small"
+              className={styles.btn}
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+            >
+              <LeftOutline />
+            </Button>
+            <Button
+              fill="none"
+              size="small"
+              className={styles.btn}
+              disabled={page === Math.ceil(props.listData.length / PAGE_SIZE)}
+              onClick={() => setPage(page + 1)}
+            >
+              <RightOutline />
+            </Button>
           </div>
         </React.Fragment>
       ) : (
