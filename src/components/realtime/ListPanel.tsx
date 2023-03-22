@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Card, Button } from 'antd-mobile'
-import { LeftOutline, RightOutline } from 'antd-mobile-icons'
+import { Card, Button, Picker } from 'antd-mobile'
+import { LeftOutline, RightOutline, DownFill } from 'antd-mobile-icons'
 import { getTheme } from 'bizcharts'
 import { formatInteger, formatPercent } from '~/src/common/utils'
 import BarChart from './BarChart'
@@ -10,18 +10,20 @@ const PAGE_SIZE = 6
 
 interface Props {
   measureName: string
+  measureOptions?: string[]
   dimensionName: string
+  dimensionOptions?: string[]
   chartData: number[]
   listData: {
     key: string
     value: number
     percent: number
   }[]
+  onChangeMeasureName?: (value: string) => void
+  onChangeDimensionName?: (value: string) => void
 }
 
 export default (props: Props) => {
-  const [page, setPage] = useState(1)
-
   const topData =
     props.listData.length > 0
       ? props.listData[0]
@@ -31,12 +33,42 @@ export default (props: Props) => {
           percent: 0,
         }
 
+  const [page, setPage] = useState(1)
   const pageData = props.listData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+
+  const [measurePickerVisible, showMeasurePicker] = useState(false)
+  const [dimensionPickerVisible, showDimensionPicker] = useState(false)
 
   return (
     <Card>
       <div className={styles.title}>
-        {props.measureName} by {props.dimensionName}
+        {props.measureOptions && props.measureOptions.length > 0 ? (
+          <Button
+            fill="none"
+            className={styles.btn}
+            onClick={() => {
+              showMeasurePicker(true)
+            }}
+          >
+            {props.measureName} <DownFill className={styles.icon} />
+          </Button>
+        ) : (
+          props.measureName
+        )}
+        {' by '}
+        {props.dimensionOptions && props.dimensionOptions.length > 0 ? (
+          <Button
+            fill="none"
+            className={styles.btn}
+            onClick={() => {
+              showDimensionPicker(true)
+            }}
+          >
+            {props.dimensionName} <DownFill className={styles.icon} />
+          </Button>
+        ) : (
+          props.dimensionName
+        )}
       </div>
       <div className={styles.topKey}>#1 {topData.key}</div>
       <div className={styles.topContainer}>
@@ -76,19 +108,17 @@ export default (props: Props) => {
           <div className={styles.pagination}>
             {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, props.listData.length)}
             {' of '}
-            {props.listData.length}
+            {props.listData.length}{' '}
             <Button
               fill="none"
-              size="small"
               className={styles.btn}
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
             >
               <LeftOutline />
-            </Button>
+            </Button>{' '}
             <Button
               fill="none"
-              size="small"
               className={styles.btn}
               disabled={page === Math.ceil(props.listData.length / PAGE_SIZE)}
               onClick={() => setPage(page + 1)}
@@ -99,6 +129,36 @@ export default (props: Props) => {
         </React.Fragment>
       ) : (
         <div className={styles.listNoData}>No data available</div>
+      )}
+      {props.measureOptions && props.measureOptions.length > 0 && (
+        <Picker
+          columns={[props.measureOptions]}
+          visible={measurePickerVisible}
+          onClose={() => {
+            showMeasurePicker(false)
+          }}
+          value={[props.measureName]}
+          onConfirm={(value) => {
+            if (props.onChangeMeasureName) {
+              props.onChangeMeasureName(value[0] as string)
+            }
+          }}
+        />
+      )}
+      {props.dimensionOptions && props.dimensionOptions.length > 0 && (
+        <Picker
+          columns={[props.dimensionOptions]}
+          visible={dimensionPickerVisible}
+          onClose={() => {
+            showDimensionPicker(false)
+          }}
+          value={[props.dimensionName]}
+          onConfirm={(value) => {
+            if (props.onChangeDimensionName) {
+              props.onChangeDimensionName(value[0] as string)
+            }
+          }}
+        />
       )}
     </Card>
   )

@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash'
 import ListPanel from './ListPanel'
 
 export default () => {
+  const [measureName, setMeasureName] = useState('Users')
+
   const chartData = _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
 
   const listData = [
@@ -12,10 +14,14 @@ export default () => {
 
   return (
     <ListPanel
-      measureName="Users"
+      measureName={measureName}
+      measureOptions={['Users', 'New users']}
       dimensionName="Audience"
       chartData={chartData}
       listData={listData}
+      onChangeMeasureName={(value) => {
+        setMeasureName(value)
+      }}
     />
   )
 }
