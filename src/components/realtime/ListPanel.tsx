@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Card, Button, Picker } from 'antd-mobile'
 import { LeftOutline, RightOutline, DownFill } from 'antd-mobile-icons'
 import { getTheme } from 'bizcharts'
+import type { TopData, ListData } from '~/src/services/realtime-overview'
 import { formatInteger, formatPercent } from '~/src/common/utils'
 import BarChart from './BarChart'
 import * as styles from './ListPanel.module.less'
@@ -11,30 +12,54 @@ const PAGE_SIZE = 6
 interface Props {
   measureName: string
   measureOptions?: string[]
+  onChangeMeasureName?: (value: string) => void
   dimensionName: string
   dimensionOptions?: string[]
-  chartData: number[]
-  listData: {
+  onChangeDimensionName?: (value: string) => void
+  chartData?: number[]
+  listData?: {
     key: string
     value: number
     percent: number
   }[]
-  onChangeMeasureName?: (value: string) => void
-  onChangeDimensionName?: (value: string) => void
+  topData?: TopData
+  listDataV2?: ListData
+  page?: number
+  onChangePage?: (value: number) => void
 }
 
 export default (props: Props) => {
-  const topData =
-    props.listData.length > 0
-      ? props.listData[0]
-      : {
-          key: '-',
-          value: 0,
-          percent: 0,
-        }
+  let topData: TopData
+  let listData: ListData
 
-  const [page, setPage] = useState(1)
-  const pageData = props.listData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+  if (props.topData && props.listDataV2) {
+    topData = props.topData
+    listData = props.listDataV2
+  } else if (props.listData && props.listData.length > 0) {
+    topData = {
+      key: props.listData[0].key,
+      value: props.listData[0].value,
+      percent: props.listData[0].percent,
+      chart: props.chartData || [],
+    }
+    listData = {
+      data: props.listData,
+      total: props.listData.length,
+    }
+  } else {
+    topData = {
+      key: '-',
+      value: 0,
+      percent: 0,
+      chart: [],
+    }
+    listData = {
+      data: [],
+      total: 0,
+    }
+  }
+
+  const page = props.page || 1
 
   const [measurePickerVisible, showMeasurePicker] = useState(false)
   const [dimensionPickerVisible, showDimensionPicker] = useState(false)
@@ -77,17 +102,17 @@ export default (props: Props) => {
           <div className={styles.percent}>{formatPercent(topData.percent)}</div>
         </div>
         <div className={styles.chart}>
-          <BarChart data={props.chartData} size={6} />
+          <BarChart data={topData.chart} size={6} />
         </div>
       </div>
       <div className={styles.listTitle}>
         <div>{props.dimensionName}</div>
         <div>{props.measureName}</div>
       </div>
-      {props.listData.length > 0 ? (
+      {listData.data.length > 0 ? (
         <React.Fragment>
           <div className={styles.listBody}>
-            {pageData.map((item) => {
+            {listData.data.map((item) => {
               return (
                 <div key={item.key} className={styles.listItem}>
                   <div className={styles.metric}>
@@ -106,22 +131,30 @@ export default (props: Props) => {
             })}
           </div>
           <div className={styles.pagination}>
-            {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, props.listData.length)}
+            {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, listData.total)}
             {' of '}
-            {props.listData.length}{' '}
+            {listData.total}{' '}
             <Button
               fill="none"
               className={styles.btn}
               disabled={page === 1}
-              onClick={() => setPage(page - 1)}
+              onClick={() => {
+                if (props.onChangePage) {
+                  props.onChangePage(page - 1)
+                }
+              }}
             >
               <LeftOutline />
             </Button>{' '}
             <Button
               fill="none"
               className={styles.btn}
-              disabled={page === Math.ceil(props.listData.length / PAGE_SIZE)}
-              onClick={() => setPage(page + 1)}
+              disabled={page === Math.ceil(listData.total / PAGE_SIZE)}
+              onClick={() => {
+                if (props.onChangePage) {
+                  props.onChangePage(page + 1)
+                }
+              }}
             >
               <RightOutline />
             </Button>

@@ -1,27 +1,42 @@
-import React from 'react'
-import _ from 'lodash'
+import React, { useEffect, useState } from 'react'
+import * as service from '~/src/services/realtime-overview'
 import ListPanel from './ListPanel'
 
 export default () => {
-  const chartData = _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
+  const [page, setPage] = useState(1)
 
-  const listData = [
-    { key: 'RESTful API Authentication with Spring Security', value: 1512, percent: 0.3883 },
-    { key: 'Configure Git Line Endings Across OSes', value: 1054, percent: 0.2707 },
-    { key: 'Setup CI with GitHub Actions (Java/Node/Python)', value: 772, percent: 0.1983 },
-    { key: 'Mock API in Parcel Project', value: 274, percent: 0.0704 },
-    { key: 'Configure Logging for Flask SQLAlchemy Project', value: 154, percent: 0.0395 },
-    { key: 'Use Composition API and Pinia in Vue 2 Project', value: 100, percent: 0.0257 },
-    { key: 'Add TypeScript Support to Vue 2 Project', value: 20, percent: 0.0051 },
-    { key: 'Manage Multiple CommandLineRunner in Spring Boot', value: 8, percent: 0.0021 },
-  ]
+  const [topData, setTopData] = useState<service.TopData>({
+    key: '-',
+    value: 0,
+    percent: 0,
+    chart: [],
+  })
+
+  const [listData, setListData] = useState<service.ListData>({
+    data: [],
+    total: 0,
+  })
+
+  useEffect(() => {
+    service.getViewsByPageTitleTop().then((payload) => {
+      setTopData(payload)
+    })
+  }, [])
+
+  useEffect(() => {
+    service.getViewsByPageTitleList(page).then((payload) => {
+      setListData(payload)
+    })
+  }, [page])
 
   return (
     <ListPanel
       measureName="Views"
       dimensionName="Page title"
-      chartData={chartData}
-      listData={listData}
+      topData={topData}
+      listDataV2={listData}
+      page={page}
+      onChangePage={setPage}
     />
   )
 }
