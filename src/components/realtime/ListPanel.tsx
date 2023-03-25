@@ -16,51 +16,13 @@ interface Props {
   dimensionName: string
   dimensionOptions?: string[]
   onChangeDimensionName?: (value: string) => void
-  chartData?: number[]
-  listData?: {
-    key: string
-    value: number
-    percent: number
-  }[]
-  topData?: TopData
-  listDataV2?: ListData
-  page?: number
-  onChangePage?: (value: number) => void
+  topData: TopData
+  listData: ListData
+  page: number
+  onChangePage: (value: number) => void
 }
 
 export default (props: Props) => {
-  let topData: TopData
-  let listData: ListData
-
-  if (props.topData && props.listDataV2) {
-    topData = props.topData
-    listData = props.listDataV2
-  } else if (props.listData && props.listData.length > 0) {
-    topData = {
-      key: props.listData[0].key,
-      value: props.listData[0].value,
-      percent: props.listData[0].percent,
-      chart: props.chartData || [],
-    }
-    listData = {
-      data: props.listData,
-      total: props.listData.length,
-    }
-  } else {
-    topData = {
-      key: '-',
-      value: 0,
-      percent: 0,
-      chart: [],
-    }
-    listData = {
-      data: [],
-      total: 0,
-    }
-  }
-
-  const page = props.page || 1
-
   const [measurePickerVisible, showMeasurePicker] = useState(false)
   const [dimensionPickerVisible, showDimensionPicker] = useState(false)
 
@@ -95,24 +57,24 @@ export default (props: Props) => {
           props.dimensionName
         )}
       </div>
-      <div className={styles.topKey}>#1 {topData.key}</div>
+      <div className={styles.topKey}>#1 {props.topData.key}</div>
       <div className={styles.topContainer}>
         <div className={styles.metric}>
-          <div className={styles.value}>{formatInteger(topData.value)}</div>
-          <div className={styles.percent}>{formatPercent(topData.percent)}</div>
+          <div className={styles.value}>{formatInteger(props.topData.value)}</div>
+          <div className={styles.percent}>{formatPercent(props.topData.percent)}</div>
         </div>
         <div className={styles.chart}>
-          <BarChart data={topData.chart} size={6} />
+          <BarChart data={props.topData.chart} size={6} />
         </div>
       </div>
       <div className={styles.listTitle}>
         <div>{props.dimensionName}</div>
         <div>{props.measureName}</div>
       </div>
-      {listData.data.length > 0 ? (
+      {props.listData.data.length > 0 ? (
         <React.Fragment>
           <div className={styles.listBody}>
-            {listData.data.map((item) => {
+            {props.listData.data.map((item) => {
               return (
                 <div key={item.key} className={styles.listItem}>
                   <div className={styles.metric}>
@@ -131,17 +93,16 @@ export default (props: Props) => {
             })}
           </div>
           <div className={styles.pagination}>
-            {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, listData.total)}
+            {(props.page - 1) * PAGE_SIZE + 1}-
+            {Math.min(props.page * PAGE_SIZE, props.listData.total)}
             {' of '}
-            {listData.total}{' '}
+            {props.listData.total}{' '}
             <Button
               fill="none"
               className={styles.btn}
-              disabled={page === 1}
+              disabled={props.page === 1}
               onClick={() => {
-                if (props.onChangePage) {
-                  props.onChangePage(page - 1)
-                }
+                props.onChangePage(props.page - 1)
               }}
             >
               <LeftOutline />
@@ -149,11 +110,9 @@ export default (props: Props) => {
             <Button
               fill="none"
               className={styles.btn}
-              disabled={page === Math.ceil(listData.total / PAGE_SIZE)}
+              disabled={props.page === Math.ceil(props.listData.total / PAGE_SIZE)}
               onClick={() => {
-                if (props.onChangePage) {
-                  props.onChangePage(page + 1)
-                }
+                props.onChangePage(props.page + 1)
               }}
             >
               <RightOutline />

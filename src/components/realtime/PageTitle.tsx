@@ -33,7 +33,7 @@ export default () => {
       measureName="Views"
       dimensionName="Page title"
       topData={topData}
-      listDataV2={listData}
+      listData={listData}
       page={page}
       onChangePage={setPage}
     />

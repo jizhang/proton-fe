@@ -7,6 +7,10 @@ function parseQuery(req) {
   return qs.parse(url.parse(req.url).query)
 }
 
+function getRandomChart() {
+  return _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
+}
+
 const PAGE_SIZE = 6
 
 const USER_ACQUISITION = {
@@ -52,6 +56,24 @@ function getUserAcquisitionList(req, res) {
   })
 }
 
+const AUDIENCE_DATA = [
+  { key: 'All Users', value: 1166, percent: 0.8643 },
+  { key: 'Purchasers', value: 183, percent: 0.1357 },
+]
+
+function getAudienceTop(req, res) {
+  const payload = _.clone(AUDIENCE_DATA[0])
+  payload.chart = getRandomChart()
+  sendJson(req, res, payload)
+}
+
+function getAudienceList(req, res) {
+  sendJson(req, res, {
+    data: AUDIENCE_DATA,
+    total: AUDIENCE_DATA.length,
+  })
+}
+
 const PAGE_TITLES = [
   { key: 'RESTful API Authentication with Spring Security', value: 1512, percent: 0.3883 },
   { key: 'Configure Git Line Endings Across OSes', value: 1054, percent: 0.2707 },
@@ -79,9 +101,71 @@ function getViewsByPageTitleList(req, res) {
   })
 }
 
+const EVENT_COUNT = [
+  { key: 'page_view', value: 7844, percent: 0.2574 },
+  { key: 'session_start', value: 7727, percent: 0.2535 },
+  { key: 'user_engagement', value: 5914, percent: 0.1941 },
+  { key: 'first_visit', value: 4231, percent: 0.1388 },
+  { key: 'click', value: 2675, percent: 0.0878 },
+  { key: 'scroll', value: 2086, percent: 0.0684 },
+]
+
+function getEventCountTop(req, res) {
+  const payload = _.clone(EVENT_COUNT[0])
+  payload.chart = getRandomChart()
+  sendJson(req, res, payload)
+}
+
+function getEventCountList(req, res) {
+  sendJson(req, res, {
+    data: EVENT_COUNT,
+    total: EVENT_COUNT.length,
+  })
+}
+
+function getEventConversionTop(req, res) {
+  sendJson(req, res, {
+    key: '-',
+    value: 0,
+    percent: 0,
+    chart: [],
+  })
+}
+
+function getEventConvertionList(req, res) {
+  sendJson(req, res, {
+    data: [],
+    total: 0,
+  })
+}
+
+function getUserPropertyTop(req, res) {
+  sendJson(req, res, {
+    key: '-',
+    value: 0,
+    percent: 0,
+    chart: [],
+  })
+}
+
+function getUserPropertyList(req, res) {
+  sendJson(req, res, {
+    data: [],
+    total: 0,
+  })
+}
+
 module.exports = {
-  'GET /api/realtime-overview/views-by-page-title/top': getViewsByPageTitleTop,
-  'GET /api/realtime-overview/views-by-page-title/list': getViewsByPageTitleList,
   'GET /api/realtime-overview/user-acquisition/top': getUserAcquisitionTop,
   'GET /api/realtime-overview/user-acquisition/list': getUserAcquisitionList,
+  'GET /api/realtime-overview/audience/top': getAudienceTop,
+  'GET /api/realtime-overview/audience/list': getAudienceList,
+  'GET /api/realtime-overview/views-by-page-title/top': getViewsByPageTitleTop,
+  'GET /api/realtime-overview/views-by-page-title/list': getViewsByPageTitleList,
+  'GET /api/realtime-overview/event-count/top': getEventCountTop,
+  'GET /api/realtime-overview/event-count/list': getEventCountList,
+  'GET /api/realtime-overview/event-conversion/top': getEventConversionTop,
+  'GET /api/realtime-overview/event-conversion/list': getEventConvertionList,
+  'GET /api/realtime-overview/user-property/top': getUserPropertyTop,
+  'GET /api/realtime-overview/user-property/list': getUserPropertyList,
 }

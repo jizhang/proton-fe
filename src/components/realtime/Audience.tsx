@@ -1,27 +1,40 @@
-import React, { useState } from 'react'
-import _ from 'lodash'
+import React, { useState, useEffect } from 'react'
+import * as service from '~/src/services/realtime-overview'
 import ListPanel from './ListPanel'
 
 export default () => {
   const [measureName, setMeasureName] = useState('Users')
+  const [topData, setTopData] = useState<service.TopData>({
+    key: '-',
+    value: 0,
+    percent: 0,
+    chart: [],
+  })
 
-  const chartData = _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
+  useEffect(() => {
+    service.getAudienceTop(measureName).then(setTopData)
+  }, [measureName])
 
-  const listData = [
-    { key: 'All Users', value: 1166, percent: 0.8643 },
-    { key: 'Purchasers', value: 183, percent: 0.1357 },
-  ]
+  const [page, setPage] = useState(1)
+  const [listData, setListData] = useState<service.ListData>({
+    data: [],
+    total: 0,
+  })
+
+  useEffect(() => {
+    service.getAudienceList(measureName, page).then(setListData)
+  }, [measureName, page])
 
   return (
     <ListPanel
       measureName={measureName}
       measureOptions={['Users', 'New users']}
+      onChangeMeasureName={setMeasureName}
       dimensionName="Audience"
-      chartData={chartData}
+      topData={topData}
       listData={listData}
-      onChangeMeasureName={(value) => {
-        setMeasureName(value)
-      }}
+      page={page}
+      onChangePage={setPage}
     />
   )
 }

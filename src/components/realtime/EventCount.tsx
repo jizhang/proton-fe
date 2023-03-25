@@ -1,25 +1,37 @@
-import React from 'react'
-import _ from 'lodash'
+import React, { useState, useEffect } from 'react'
+import * as service from '~/src/services/realtime-overview'
 import ListPanel from './ListPanel'
 
 export default () => {
-  const chartData = _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
+  const [topData, setTopData] = useState<service.TopData>({
+    key: '-',
+    value: 0,
+    percent: 0,
+    chart: [],
+  })
 
-  const listData = [
-    { key: 'page_view', value: 7844, percent: 0.2574 },
-    { key: 'session_start', value: 7727, percent: 0.2535 },
-    { key: 'user_engagement', value: 5914, percent: 0.1941 },
-    { key: 'first_visit', value: 4231, percent: 0.1388 },
-    { key: 'click', value: 2675, percent: 0.0878 },
-    { key: 'scroll', value: 2086, percent: 0.0684 },
-  ]
+  useEffect(() => {
+    service.getEventCountTop().then(setTopData)
+  }, [])
+
+  const [page, setPage] = useState(1)
+  const [listData, setListData] = useState<service.ListData>({
+    data: [],
+    total: 0,
+  })
+
+  useEffect(() => {
+    service.getEventCountList(page).then(setListData)
+  }, [page])
 
   return (
     <ListPanel
       measureName="Event count"
       dimensionName="Event name"
-      chartData={chartData}
+      topData={topData}
       listData={listData}
+      page={page}
+      onChangePage={setPage}
     />
   )
 }
