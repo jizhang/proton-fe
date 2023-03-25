@@ -29,7 +29,7 @@ export default () => {
       measureName="Users"
       dimensionName="User property"
       topData={topData}
-      listDataV2={listData}
+      listData={listData}
       page={page}
       onChangePage={setPage}
     />

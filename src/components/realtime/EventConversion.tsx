@@ -29,7 +29,7 @@ export default () => {
       measureName="Conversions"
       dimensionName="Event name"
       topData={topData}
-      listDataV2={listData}
+      listData={listData}
       page={page}
       onChangePage={setPage}
     />

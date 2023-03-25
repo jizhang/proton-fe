@@ -32,7 +32,7 @@ export default () => {
       onChangeMeasureName={setMeasureName}
       dimensionName="Audience"
       topData={topData}
-      listDataV2={listData}
+      listData={listData}
       page={page}
       onChangePage={setPage}
     />

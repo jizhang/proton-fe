@@ -36,7 +36,7 @@ export default () => {
       dimensionOptions={['First user source', 'First user medium', 'First user source / medium']}
       onChangeDimensionName={setDimensionName}
       topData={topData}
-      listDataV2={listData}
+      listData={listData}
       page={page}
       onChangePage={setPage}
     />
