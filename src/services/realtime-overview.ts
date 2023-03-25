@@ -47,3 +47,19 @@ export async function getEventCountTop(): Promise<TopData> {
 export async function getEventCountList(page = 1): Promise<ListData> {
   return get('/api/realtime-overview/event-count/list', { page })
 }
+
+export async function getEventConversionTop(): Promise<TopData> {
+  return get('/api/realtime-overview/event-conversion/top')
+}
+
+export async function getEventConversionList(page = 1): Promise<ListData> {
+  return get('/api/realtime-overview/event-conversion/list', { page })
+}
+
+export async function getUserPropertyTop(): Promise<TopData> {
+  return get('/api/realtime-overview/user-property/top')
+}
+
+export async function getUserPropertyList(page = 1): Promise<ListData> {
+  return get('/api/realtime-overview/user-property/list', { page })
+}

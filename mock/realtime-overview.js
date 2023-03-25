@@ -123,6 +123,38 @@ function getEventCountList(req, res) {
   })
 }
 
+function getEventConversionTop(req, res) {
+  sendJson(req, res, {
+    key: '-',
+    value: 0,
+    percent: 0,
+    chart: [],
+  })
+}
+
+function getEventConvertionList(req, res) {
+  sendJson(req, res, {
+    data: [],
+    total: 0,
+  })
+}
+
+function getUserPropertyTop(req, res) {
+  sendJson(req, res, {
+    key: '-',
+    value: 0,
+    percent: 0,
+    chart: [],
+  })
+}
+
+function getUserPropertyList(req, res) {
+  sendJson(req, res, {
+    data: [],
+    total: 0,
+  })
+}
+
 module.exports = {
   'GET /api/realtime-overview/user-acquisition/top': getUserAcquisitionTop,
   'GET /api/realtime-overview/user-acquisition/list': getUserAcquisitionList,
@@ -132,4 +164,8 @@ module.exports = {
   'GET /api/realtime-overview/views-by-page-title/list': getViewsByPageTitleList,
   'GET /api/realtime-overview/event-count/top': getEventCountTop,
   'GET /api/realtime-overview/event-count/list': getEventCountList,
+  'GET /api/realtime-overview/event-conversion/top': getEventConversionTop,
+  'GET /api/realtime-overview/event-conversion/list': getEventConvertionList,
+  'GET /api/realtime-overview/user-property/top': getUserPropertyTop,
+  'GET /api/realtime-overview/user-property/list': getUserPropertyList,
 }
