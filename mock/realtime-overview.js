@@ -7,7 +7,7 @@ function parseQuery(req) {
   return qs.parse(url.parse(req.url).query)
 }
 
-function generateRandomChart() {
+function getRandomChart() {
   return _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
 }
 
@@ -63,7 +63,7 @@ const AUDIENCE_DATA = [
 
 function getAudienceTop(req, res) {
   const payload = _.clone(AUDIENCE_DATA[0])
-  payload.chart = generateRandomChart()
+  payload.chart = getRandomChart()
   sendJson(req, res, payload)
 }
 
@@ -101,6 +101,28 @@ function getViewsByPageTitleList(req, res) {
   })
 }
 
+const EVENT_COUNT = [
+  { key: 'page_view', value: 7844, percent: 0.2574 },
+  { key: 'session_start', value: 7727, percent: 0.2535 },
+  { key: 'user_engagement', value: 5914, percent: 0.1941 },
+  { key: 'first_visit', value: 4231, percent: 0.1388 },
+  { key: 'click', value: 2675, percent: 0.0878 },
+  { key: 'scroll', value: 2086, percent: 0.0684 },
+]
+
+function getEventCountTop(req, res) {
+  const payload = _.clone(EVENT_COUNT[0])
+  payload.chart = getRandomChart()
+  sendJson(req, res, payload)
+}
+
+function getEventCountList(req, res) {
+  sendJson(req, res, {
+    data: EVENT_COUNT,
+    total: EVENT_COUNT.length,
+  })
+}
+
 module.exports = {
   'GET /api/realtime-overview/user-acquisition/top': getUserAcquisitionTop,
   'GET /api/realtime-overview/user-acquisition/list': getUserAcquisitionList,
@@ -108,4 +130,6 @@ module.exports = {
   'GET /api/realtime-overview/audience/list': getAudienceList,
   'GET /api/realtime-overview/views-by-page-title/top': getViewsByPageTitleTop,
   'GET /api/realtime-overview/views-by-page-title/list': getViewsByPageTitleList,
+  'GET /api/realtime-overview/event-count/top': getEventCountTop,
+  'GET /api/realtime-overview/event-count/list': getEventCountList,
 }

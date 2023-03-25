@@ -39,3 +39,11 @@ export async function getViewsByPageTitleTop(): Promise<TopData> {
 export async function getViewsByPageTitleList(page = 1): Promise<ListData> {
   return get('/api/realtime-overview/views-by-page-title/list', { page })
 }
+
+export async function getEventCountTop(): Promise<TopData> {
+  return get('/api/realtime-overview/event-count/top')
+}
+
+export async function getEventCountList(page = 1): Promise<ListData> {
+  return get('/api/realtime-overview/event-count/list', { page })
+}
