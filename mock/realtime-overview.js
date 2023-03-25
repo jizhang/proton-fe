@@ -7,6 +7,10 @@ function parseQuery(req) {
   return qs.parse(url.parse(req.url).query)
 }
 
+function generateRandomChart() {
+  return _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
+}
+
 const PAGE_SIZE = 6
 
 const USER_ACQUISITION = {
@@ -52,6 +56,24 @@ function getUserAcquisitionList(req, res) {
   })
 }
 
+const AUDIENCE_DATA = [
+  { key: 'All Users', value: 1166, percent: 0.8643 },
+  { key: 'Purchasers', value: 183, percent: 0.1357 },
+]
+
+function getAudienceTop(req, res) {
+  const payload = _.clone(AUDIENCE_DATA[0])
+  payload.chart = generateRandomChart()
+  sendJson(req, res, payload)
+}
+
+function getAudienceList(req, res) {
+  sendJson(req, res, {
+    data: AUDIENCE_DATA,
+    total: AUDIENCE_DATA.length,
+  })
+}
+
 const PAGE_TITLES = [
   { key: 'RESTful API Authentication with Spring Security', value: 1512, percent: 0.3883 },
   { key: 'Configure Git Line Endings Across OSes', value: 1054, percent: 0.2707 },
@@ -80,8 +102,10 @@ function getViewsByPageTitleList(req, res) {
 }
 
 module.exports = {
-  'GET /api/realtime-overview/views-by-page-title/top': getViewsByPageTitleTop,
-  'GET /api/realtime-overview/views-by-page-title/list': getViewsByPageTitleList,
   'GET /api/realtime-overview/user-acquisition/top': getUserAcquisitionTop,
   'GET /api/realtime-overview/user-acquisition/list': getUserAcquisitionList,
+  'GET /api/realtime-overview/audience/top': getAudienceTop,
+  'GET /api/realtime-overview/audience/list': getAudienceList,
+  'GET /api/realtime-overview/views-by-page-title/top': getViewsByPageTitleTop,
+  'GET /api/realtime-overview/views-by-page-title/list': getViewsByPageTitleList,
 }
