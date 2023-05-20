@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { NavBar } from 'antd-mobile'
-import Users from '../components/realtime/Users'
+import UserSummary from '../components/realtime/UserSummary'
 import Acquisition from '../components/realtime/Acquisition'
 import Audience from '../components/realtime/Audience'
 import PageTitle from '../components/realtime/PageTitle'
@@ -14,7 +14,7 @@ export default () => {
   const navigate = useNavigate()
 
   const cards = [
-    { name: 'users', component: <Users /> },
+    { name: 'users', component: <UserSummary /> },
     { name: 'acquisition', component: <Acquisition /> },
     { name: 'audience', component: <Audience /> },
     { name: 'pageTitle', component: <PageTitle /> },

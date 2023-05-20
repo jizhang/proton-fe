@@ -11,6 +11,22 @@ function getRandomChart() {
   return _.times(30, () => _.random(1000, 2000) * _.random(0, 5))
 }
 
+function getUserSummary(req, res) {
+  const devices = _.map(['Desktop', 'Mobile', 'Other'], (key) => {
+    return { key, value: _.random(1, true) }
+  })
+  const valueSum = _(devices).map('value').sum()
+  _.forEach(devices, (item) => {
+    item.value /= valueSum
+  })
+
+  sendJson(req, res, {
+    userCount: _.random(1000, 2000),
+    minutes: getRandomChart(),
+    devices,
+  })
+}
+
 const PAGE_SIZE = 6
 
 const USER_ACQUISITION = {
@@ -156,6 +172,7 @@ function getUserPropertyList(req, res) {
 }
 
 module.exports = {
+  'GET /api/realtime-overview/user-summary': getUserSummary,
   'GET /api/realtime-overview/user-acquisition/top': getUserAcquisitionTop,
   'GET /api/realtime-overview/user-acquisition/list': getUserAcquisitionList,
   'GET /api/realtime-overview/audience/top': getAudienceTop,

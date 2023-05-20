@@ -1,5 +1,18 @@
 import { get } from '~/src/common/request'
 
+export interface UserSummary {
+  userCount: number
+  minutes: number[]
+  devices: {
+    key: string
+    value: number
+  }[]
+}
+
+export async function getUserSummary(): Promise<UserSummary> {
+  return get('/api/realtime-overview/user-summary')
+}
+
 export interface TopData {
   key: string
   value: number
