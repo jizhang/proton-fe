@@ -11,6 +11,7 @@
     "sourceMap": true,
     "jsx": "preserve",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
